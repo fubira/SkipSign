@@ -2,7 +2,6 @@ package mods.skipsign;
 
 import org.lwjgl.input.Keyboard;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
-import mods.skipsign.DrawableApi;
 
 @SideOnly(Side.CLIENT)
 public class TileEntitySignRendererEx extends TileEntitySignRenderer

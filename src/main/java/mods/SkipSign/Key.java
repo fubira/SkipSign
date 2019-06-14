@@ -1,7 +1,5 @@
 package mods.skipsign;
 
-import net.minecraftforge.fml.common.FMLLog;
-
 public class Key
 {
     public Object Value;

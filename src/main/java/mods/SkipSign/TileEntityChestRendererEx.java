@@ -7,13 +7,11 @@ import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
-import mods.skipsign.DrawableApi;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityChestRendererEx extends TileEntityChestRenderer
