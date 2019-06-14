@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 public class Setting 
 {

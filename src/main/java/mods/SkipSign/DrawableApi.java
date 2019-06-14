@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;

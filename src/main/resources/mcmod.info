@@ -1,17 +1,17 @@
 [
 {
-    "modid": "skipsigngui",
-    "name": "SkipSignGUI",
+    "modid": "SkipSign",
+    "name": "SkipSign",
     "description": "Make rendering faster by omitting distant entities.",
     "mcversion": "$mcversion",
     "version": "$version",
-    "url": "https://github.com/TTTA2/SkipSignGUI",
+    "url": "https://github.com/fubira/SkipSign",
     "updateUrl": "",
     "authors": [
         "TTTA2",
         "fubira"
     ],
-    "credits": "By TTTA2, updated by Kenmo Minecraft Club",
+    "credits": "Original By TTTA2, updated by Kenmo Minecraft Club",
     "screenshots": [],
     "dependencies": []
 }

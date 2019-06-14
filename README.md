@@ -7,4 +7,4 @@ And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 
 ## Getting the source ##
 
-[GitHub](https://github.com/TTTA2/SkipSignGUI.git)
+[GitHub](https://github.com/fubira/SkipSign.git)
