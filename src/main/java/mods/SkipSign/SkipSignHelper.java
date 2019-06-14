@@ -1,4 +1,4 @@
-package mods.SkipSign;
+package mods.skipsign;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

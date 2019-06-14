@@ -1,4 +1,4 @@
-package mods.SkipSign;
+package mods.skipsign;
 
 public class Setting 
 {
