@@ -38,7 +38,7 @@ public class GuiConfigScreen extends GuiScreen
 		this.parentScreen = parentScreen;
     }
 
-    private OptionButton DrawMode, ShowBoard, ChangeKey, ZoomKey, ScrGui;
+    private OptionButton ShowBoard, ChangeKey, ZoomKey, ScrGui;
     private OptionButton ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
     private OptionButton SignDO, ChestDO, SkullDO;
 
@@ -48,56 +48,53 @@ public class GuiConfigScreen extends GuiScreen
         super.initGui();
         this.buttons.clear();
 
-        int x = this.width / 2;
-        int y = this.height / 2;
+        int left = (this.width - 360) / 2;
+        int top = (this.height - 200) / 2;
         
-        SignDO = addButton(new OptionButton(0, x + 65, y - 75, 120, 20, "範囲外を描画しない", this::onButtonClicked));
-        ChestDO = addButton(new OptionButton(0, x + 65, y - 25, 120, 20, "範囲外を描画しない", this::onButtonClicked));
-        SkullDO = addButton(new OptionButton(0, x + 65, y , 120, 20, "範囲外を描画しない", this::onButtonClicked));
-        ScrGui = addButton(new OptionButton(0, x - 172, y - 5, 195, 20, "画面外のチェスト・看板を非表示", this::onButtonClicked));
-        DrawMode = addButton(new OptionButton(0, x - 172, y - 75, 60, 20, "範囲描画", this::onButtonClicked));
-        ApplySign = addButton(new OptionButton(0, x - 120, y - 75, 75, 20, "範囲描画", this::onButtonClicked));
-        ApplyItemFrame = addButton(new OptionButton(0, x - 120, y - 50, 75, 20, "範囲描画", this::onButtonClicked));
-        ApplyChest = addButton(new OptionButton(0, x - 120, y - 25, 75, 20, "範囲描画", this::onButtonClicked));
-        ApplySkull = addButton(new OptionButton(0, x - 120, y , 75, 20, "範囲描画", this::onButtonClicked));
+        SignDO          = addButton(new OptionButton(0, left + 225, top +  25, 120, 20, "範囲外を描画しない", this::onButtonClicked));
+        ChestDO         = addButton(new OptionButton(0, left + 225, top +  75, 120, 20, "範囲外を描画しない", this::onButtonClicked));
+        SkullDO         = addButton(new OptionButton(0, left + 225, top + 100, 120, 20, "範囲外を描画しない", this::onButtonClicked));
 
-        signRange = addButton(new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", Config.viewRangeSign.get(), (float)maxRange));
-        frameRange = addButton(new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", Config.viewRangeFrame.get(), (float)maxRange));
-        chestRange = addButton(new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", Config.viewRangeChest.get(), (float)maxRange));
-        skullRange = addButton(new GuiOptionSliderEx(5, x - 40, y, "描画範囲", Config.viewRangeSkull.get(), (float)maxRange));
-        //AllDraw = new GuiButton(1, x - 107, y - 75, 60, 20, "すべて描画");
-        //SkipDraw = new GuiButton(2, x - 42, y - 75, 60, 20, "描画しない");
+        ApplySign       = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, "範囲描画", this::onButtonClicked));
+        ApplyItemFrame  = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, "範囲描画", this::onButtonClicked));
+        ApplyChest      = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, "範囲描画", this::onButtonClicked));
+        ApplySkull      = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, "範囲描画", this::onButtonClicked));
 
-        ChangeKey = addButton(new OptionButton(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName()), this::onButtonClicked));
-        ShowBoard = addButton(new OptionButton(4, x - 172, y + 45, 90, 20, "本体を表示", this::onButtonClicked));
-        ZoomKey = addButton(new OptionButton(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName()), this::onButtonClicked));
+        signRange       = addButton(new GuiOptionSliderEx(5, left + 120, top +  25, "描画範囲", Config.viewRangeSign.get(), (float)maxRange));
+        frameRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  50, "描画範囲", Config.viewRangeFrame.get(), (float)maxRange));
+        chestRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  75, "描画範囲", Config.viewRangeChest.get(), (float)maxRange));
+        skullRange      = addButton(new GuiOptionSliderEx(5, left + 120, top + 100, "描画範囲", Config.viewRangeSkull.get(), (float)maxRange));
+
+        ShowBoard       = addButton(new OptionButton(4, left +   0, top + 140, 100, 20, "本体を表示", this::onButtonClicked));
+        ChangeKey       = addButton(new OptionButton(3, left +   0, top + 165, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName()), this::onButtonClicked));
+        ZoomKey         = addButton(new OptionButton(7, left + 105, top + 165, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName()), this::onButtonClicked));
 
         update();
+    }
+
+    @Override
+    public void render(int mouseX, int mouseY, float partialTicks)
+    {
+        FontRenderer fontRenderer = this.fontRenderer;
+
+        int left = (this.width - 360) / 2;
+        int top = (this.height - 200) / 2;
+        
+        this.drawDefaultBackground();
+
+        this.drawString(fontRenderer, "SkipSign Configuration"  , left, top          , 0xffffff);
+        this.drawString(fontRenderer, "看板"                    , left, top +  25 + 5, 0xffffff);
+        this.drawString(fontRenderer, "フレーム"                , left, top +  50 + 5, 0xffffff);
+        this.drawString(fontRenderer, "チェスト"                , left, top +  75 + 5, 0xffffff);
+        this.drawString(fontRenderer, "ヘッド"                  , left, top + 100 + 5, 0xffffff);
+        
+        super.render(mouseX, mouseY, partialTicks);
     }
     
 	private void onButtonClicked(GuiButton btn) {
         SkipSignMod.logger.info(btn.id);
     }
     
-
-    @Override
-    public void render(int mouseX, int mouseY, float partialTicks)
-    {
-        FontRenderer fontRenderer = this.fontRenderer;
-        int x = this.width / 2;
-        int y = this.height / 2;
-        
-        this.drawDefaultBackground();
-
-        this.drawString(fontRenderer, "環境設定", x - 172, y - 90, 16777215);
-        
-        this.drawString(fontRenderer, "看板", x - 172, y - 75 + 5, 16777215);
-        this.drawString(fontRenderer, "フレーム", x - 172, y - 50 + 5, 16777215);
-        this.drawString(fontRenderer, "チェスト", x - 172, y - 25 + 5, 16777215);
-        this.drawString(fontRenderer, "ヘッド", x - 172, y + 5, 16777215);
-        
-        super.render(mouseX, mouseY, partialTicks);
-    }
 
     private boolean KeyChange_OpenSetting = false;
     private boolean KeyChange_ZoomKey = false;
