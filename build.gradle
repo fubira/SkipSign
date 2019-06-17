@@ -13,13 +13,13 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.12.1-a"
-group = "mods.SkipSignGUI"
-archivesBaseName = "SkipSignGUI"
+version = "1.12.2.1"
+group = "mods.SkipSign"
+archivesBaseName = "SkipSign"
 
 minecraft {
-    version = "14.22.0.2458"
-    mappings = "snapshot_20170624"
+    version = "1.12.2-14.23.5.2768"
+    mappings = "stable_39"
 
     runDir = "run"
     makeObfSourceJar = false

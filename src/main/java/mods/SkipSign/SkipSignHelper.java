@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ public class SkipSignHelper
     public static double GetDistancePlayerToEntity(Entity entity)
     {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        return player.getDistanceToEntity(entity);
+        return player.getDistance(entity);
     }
 
     public static boolean IsInRangeToRenderDist(double dist, double range)

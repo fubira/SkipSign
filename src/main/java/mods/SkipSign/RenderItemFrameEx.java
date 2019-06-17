@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import org.lwjgl.input.Keyboard;
 
@@ -16,8 +16,8 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.SkipSignGUI.SkipSignCore;
-import mods.SkipSignGUI.SkipSignHelper;
+import mods.SkipSign.SkipSignCore;
+import mods.SkipSign.SkipSignHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderItemFrameEx extends RenderItemFrame

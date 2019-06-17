@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = "skipsigngui",
+@Mod(modid = "SkipSign",
      dependencies = "required-after:forge@[13.19.1,)",
      acceptableRemoteVersions = "*",
      acceptedMinecraftVersions = "",

@@ -1,30 +1,29 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntitySkull;
 
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.SkipSignGUI.SkipSignCore;
-import mods.SkipSignGUI.SkipSignHelper;
-import mods.SkipSignGUI.DrawableApi;
+import mods.SkipSign.SkipSignCore;
+import mods.SkipSign.SkipSignHelper;
+import mods.SkipSign.DrawableApi;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityChestRendererEx extends TileEntityChestRenderer
+public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 {
-    public TileEntityChestRendererEx()
+    public TileEntitySkullRendererEx()
     {
         super();
     }
 
     @Override
-    public void render(TileEntityChest entity, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage, float partial)
     {
         if (!isDropOff(entity, x, y, z))
             return;
@@ -41,19 +40,19 @@ public class TileEntityChestRendererEx extends TileEntityChestRenderer
         return true;
     }
 
-    public boolean CheckVisibleState(TileEntityChest tileEntityChest)
+    public boolean CheckVisibleState(TileEntitySkull tileEntitySkull)
     {
-        if (SkipSignCore.ModSetting.ChestVisible.Int() == 1)
+        if (SkipSignCore.ModSetting.SkullVisible.Int() == 1)
             return true;
-        if (SkipSignCore.ModSetting.ChestVisible.Int() == 2)
+        if (SkipSignCore.ModSetting.SkullVisible.Int() == 2)
             return false;
 
         if (Keyboard.isKeyDown(SkipSignCore.ModSetting.Zoom_Key.Int()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntityChest),
-                SkipSignCore.ModSetting.ChestRange.Int()))
+                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
+                SkipSignCore.ModSetting.SkullRange.Int()))
             return true;
 
         return false;

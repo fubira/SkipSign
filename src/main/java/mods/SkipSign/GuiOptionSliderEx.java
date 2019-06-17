@@ -1,4 +1,4 @@
-package mods.SkipSignGUI;
+package mods.SkipSign;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
