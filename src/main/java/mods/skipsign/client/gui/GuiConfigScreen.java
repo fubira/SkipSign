@@ -213,27 +213,26 @@ public class GuiConfigScreen extends GuiScreen
         }
     }
 
+    @Override
     public boolean charTyped(char par1, int par2)
     {
         boolean result = false;
-        /*
+
         try {
             result = super.charTyped(par1, par2);
-        } catch(IOException e) {
-            ModLog.Error("charTyped: " + e.toString());
+        } catch(Exception e) {
+            SkipSignMod.logger.error("charTyped: " + e.toString());
         }
         
-        if (KeyChange_ZoomKey && par2 != 1)
-        {
-            SkipSignConfig.GENERAL.zoomKeyId = par2;
+        if (KeyChange_ZoomKey && par2 != 1) {
+            SkipSignMod.config.set(Config.keyCodeZoom, par2);
             KeyChange_ZoomKey = false;
         }
 
-        if (KeyChange_OpenSetting && par2 != 1)
-        {
-            SkipSignConfig.GENERAL.visibleKeyId = par2;
+        if (KeyChange_OpenSetting && par2 != 1) {
+            SkipSignMod.config.set(Config.keyCodeVisible, par2);
             KeyChange_OpenSetting = false;
-        }*/
+        }
 
         update();
         return result;
