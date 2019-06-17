@@ -1,6 +1,6 @@
 [
 {
-    "modid": "SkipSign",
+    "modid": "skipsign",
     "name": "SkipSign",
     "description": "Make rendering faster by omitting distant entities.",
     "mcversion": "$mcversion",
