@@ -2,6 +2,7 @@ package mods.skipsign.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 
 import org.lwjgl.opengl.GL11;
 
@@ -28,15 +29,10 @@ public class GuiOptionSliderEx extends GuiButton
     }
 
     public void updateText() {
-        this.displayString = String.format("%s:%dブロック", this.text, this.getValue());
+        this.displayString = I18n.format("setting.slider.range", this.getValue());
     }
 
-    /**
-     * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
-     * this button.
-     */
-    public int getHoverState(boolean par1)
-    {
+    public int getHoverState(boolean par1) {
         return 0;
     }
 

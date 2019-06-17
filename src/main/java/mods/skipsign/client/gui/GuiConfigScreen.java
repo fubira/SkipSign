@@ -2,15 +2,16 @@ package mods.skipsign.client.gui;
 
 import java.io.IOException;
 import java.util.function.Consumer;
+import javax.annotation.Nullable;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.config.GuiSlider;
 
 import mods.skipsign.Config;
 import mods.skipsign.SkipSignConfig;
@@ -18,7 +19,7 @@ import mods.skipsign.SkipSignMod;
 import mods.skipsign.ViewMode;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiConfigScreen extends GuiScreen
+public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
 {
     private class OptionButton extends GuiButton {
         private final Consumer<OptionButton> clickHandler;
@@ -35,6 +36,12 @@ public class GuiConfigScreen extends GuiScreen
         }
     }
 
+    private class OptionSlider extends GuiSlider {
+        public OptionSlider(int id, int x, int y, int w, int h, String prefix, float minValue, float maxValue, float value, @Nullable GuiSlider.ISlider par) {
+            super(id, x, y, w, h, prefix, "", minValue, maxValue, value, true, true, par);
+        }
+    }
+
     private final GuiScreen parentScreen;
 	
 	public GuiConfigScreen(GuiScreen parentScreen){
@@ -44,6 +51,9 @@ public class GuiConfigScreen extends GuiScreen
     private OptionButton ShowBoard, ScrGui;
     private OptionButton ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
     private OptionButton SignDO, ChestDO, SkullDO;
+    private GuiSlider signRange, frameRange, skullRange, chestRange;
+    private static int maxRange = 128;
+
 
     @Override
     public void initGui()
@@ -53,22 +63,28 @@ public class GuiConfigScreen extends GuiScreen
 
         int left = (this.width - 360) / 2;
         int top = (this.height - 200) / 2;
-        
-        SignDO          = addButton(new OptionButton(0, left + 225, top +  25, 120, 20, "範囲外を描画しない", this::onButtonClicked));
-        ChestDO         = addButton(new OptionButton(0, left + 225, top +  75, 120, 20, "範囲外を描画しない", this::onButtonClicked));
-        SkullDO         = addButton(new OptionButton(0, left + 225, top + 100, 120, 20, "範囲外を描画しない", this::onButtonClicked));
+    
+        SignDO          = addButton(new OptionButton(0, left + 225, top +  25, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
+        ChestDO         = addButton(new OptionButton(0, left + 225, top +  75, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
+        SkullDO         = addButton(new OptionButton(0, left + 225, top + 100, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
 
-        ApplySign       = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, "範囲描画", this::onButtonClicked));
-        ApplyItemFrame  = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, "範囲描画", this::onButtonClicked));
-        ApplyChest      = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, "範囲描画", this::onButtonClicked));
-        ApplySkull      = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, "範囲描画", this::onButtonClicked));
+        ApplySign       = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        ApplyItemFrame  = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        ApplyChest      = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        ApplySkull      = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
 
-        signRange       = addButton(new GuiOptionSliderEx(5, left + 120, top +  25, "描画範囲", Config.viewRangeSign.get(), (float)maxRange));
-        frameRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  50, "描画範囲", Config.viewRangeFrame.get(), (float)maxRange));
-        chestRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  75, "描画範囲", Config.viewRangeChest.get(), (float)maxRange));
-        skullRange      = addButton(new GuiOptionSliderEx(5, left + 120, top + 100, "描画範囲", Config.viewRangeSkull.get(), (float)maxRange));
+        /*
+        signRange       = addButton(new GuiOptionSliderEx(5, left + 120, top +  25, Config.viewRangeSign.get(), (float)maxRange));
+        frameRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  50, Config.viewRangeFrame.get(), (float)maxRange));
+        chestRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  75, Config.viewRangeChest.get(), (float)maxRange));
+        skullRange      = addButton(new GuiOptionSliderEx(5, left + 120, top + 100, Config.viewRangeSkull.get(), (float)maxRange));
+        */
+        signRange       = addButton(new GuiSlider(5, left + 120, top +  25, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), true, true, this));
+        frameRange      = addButton(new GuiSlider(5, left + 120, top +  50, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), true, true, this));
+        chestRange      = addButton(new GuiSlider(5, left + 120, top +  75, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), true, true, this));
+        skullRange      = addButton(new GuiSlider(5, left + 120, top + 100, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), true, true, this));
 
-        ShowBoard       = addButton(new OptionButton(4, left +   0, top + 140, 100, 20, "本体を表示", this::onButtonClicked));
+        ShowBoard       = addButton(new OptionButton(4, left +   0, top + 140, 100, 20, I18n.format("setting.framebase.show"), this::onButtonClicked));
         update();
     }
 
@@ -82,11 +98,11 @@ public class GuiConfigScreen extends GuiScreen
         
         this.drawDefaultBackground();
 
-        this.drawString(fontRenderer, "SkipSign config", left, top          , 0xffffff);
-        this.drawString(fontRenderer, "看板"           , left, top +  25 + 5, 0xffffff);
-        this.drawString(fontRenderer, "フレーム"       , left, top +  50 + 5, 0xffffff);
-        this.drawString(fontRenderer, "チェスト"       , left, top +  75 + 5, 0xffffff);
-        this.drawString(fontRenderer, "ヘッド"         , left, top + 100 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("setting.title")             , left, top          , 0xffffff);
+        this.drawString(fontRenderer, I18n.format("setting.description.sign")  , left, top +  25 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("setting.description.frame") , left, top +  50 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("setting.description.chest") , left, top +  75 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("setting.description.skull") , left, top + 100 + 5, 0xffffff);
         
         super.render(mouseX, mouseY, partialTicks);
     }
@@ -136,51 +152,51 @@ public class GuiConfigScreen extends GuiScreen
         }
 
         if (btn == skullRange) {
-            SkipSignMod.config.set(Config.viewRangeSkull, skullRange.getValue());
+            SkipSignMod.config.set(Config.viewRangeSkull, skullRange.getValueInt());
         }
         if (btn == signRange) {
-            SkipSignMod.config.set(Config.viewRangeSign, signRange.getValue());
+            SkipSignMod.config.set(Config.viewRangeSign, signRange.getValueInt());
         }
         if (btn == frameRange) {
-            SkipSignMod.config.set(Config.viewRangeFrame, frameRange.getValue());
+            SkipSignMod.config.set(Config.viewRangeFrame, frameRange.getValueInt());
         }
         if (btn == chestRange) {
-            SkipSignMod.config.set(Config.viewRangeChest, chestRange.getValue());
+            SkipSignMod.config.set(Config.viewRangeChest, chestRange.getValueInt());
         }
         update();
 
     }
-    
 
-    private GuiOptionSliderEx signRange, frameRange, skullRange, chestRange;
-    private static int maxRange = 128;
+    public void onChangeSliderValue(GuiSlider slider) {
+        SkipSignMod.logger.info(slider.getValue());
+    }
 
     private void update()
     {
         switch (Config.viewModeSign.get()) {
-            case NORMAL: ApplySign.displayString = "範囲描画"; break;
-            case FORCE:  ApplySign.displayString = "すべて描画"; break;
-            case NONE:   ApplySign.displayString = "描画しない"; break;
+            case NORMAL: ApplySign.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  ApplySign.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   ApplySign.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeFrame.get()) {
-            case NORMAL: ApplyItemFrame.displayString = "範囲描画"; break;
-            case FORCE:  ApplyItemFrame.displayString = "すべて描画"; break;
-            case NONE:   ApplyItemFrame.displayString = "描画しない"; break;
+            case NORMAL: ApplyItemFrame.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  ApplyItemFrame.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   ApplyItemFrame.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeChest.get()) {
-            case NORMAL: ApplyChest.displayString = "範囲描画"; break;
-            case FORCE:  ApplyChest.displayString = "すべて描画"; break;
-            case NONE:   ApplyChest.displayString = "描画しない"; break;
+            case NORMAL: ApplyChest.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  ApplyChest.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   ApplyChest.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeSkull.get()) {
-            case NORMAL: ApplySkull.displayString = "範囲描画"; break;
-            case FORCE:  ApplySkull.displayString = "すべて描画"; break;
-            case NONE:   ApplySkull.displayString = "描画しない"; break;
+            case NORMAL: ApplySkull.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  ApplySkull.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   ApplySkull.displayString = I18n.format("setting.viewmode.none"); break;
         }
         
-        SignDO.displayString = Config.dropOffSign.get() ? "範囲外を描画しない" : "範囲外を描画する";
-        ChestDO.displayString = Config.dropOffChest.get() ? "範囲外を描画しない" : "範囲外を描画する";
-        SkullDO.displayString = Config.dropOffSkull.get() ? "範囲外を描画しない" : "範囲外を描画する";
-        ShowBoard.displayString = Config.dropOffFrameBase.get() ? "背景を非表示" : "背景を表示";
+        SignDO.displayString = Config.dropOffSign.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
+        ChestDO.displayString = Config.dropOffChest.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
+        SkullDO.displayString = Config.dropOffSkull.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
+        ShowBoard.displayString = Config.dropOffFrameBase.get() ? I18n.format("setting.framebase.show") : I18n.format("setting.framebase.hide");
     }
 }

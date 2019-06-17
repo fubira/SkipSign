@@ -1,5 +1,24 @@
 {
     "keybinding.category.skipsign": "SkipSign",
     "keybinding.desc.option": "設定画面を開く",
-    "keybinding.desc.zoom": "一時無効"
+    "keybinding.desc.zoom": "一時無効",
+
+    "setting.title": "SkipSign 設定",
+    "setting.description.sign": "看板",
+    "setting.description.frame": "フレーム",
+    "setting.description.chest": "チェスト",
+    "setting.description.skull": "ヘッド",
+
+    "setting.viewmode.normal": "範囲描画",
+    "setting.viewmode.force": "すべて描画",
+    "setting.viewmode.none": "描画しない",
+
+    "setting.renderarea.range": "範囲外を描画しない",
+    "setting.renderarea.full": "範囲外を描画する",
+
+    "setting.framebase.show": "背景を表示",
+    "setting.framebase.hide": "背景を非表示",
+
+    "setting.slider.range.prefix": "範囲:",
+    "setting.slider.range.postfix": "m"
 }

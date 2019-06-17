@@ -1,5 +1,24 @@
 {
     "keybinding.category.skipsign": "SkipSign",
     "keybinding.desc.option": "Open setting menu",
-    "keybinding.desc.zoom": "Temporarily disable"
+    "keybinding.desc.zoom": "Temporarily disable",
+
+    "setting.title": "SkipSign Settings",
+    "setting.description.sign": "Sign",
+    "setting.description.frame": "Frame",
+    "setting.description.chest": "Chest",
+    "setting.description.skull": "Head",
+
+    "setting.viewmode.normal": "Range",
+    "setting.viewmode.force": "Force",
+    "setting.viewmode.none": "None",
+
+    "setting.renderarea.range": "Within range",
+    "setting.renderarea.full": "Force all",
+
+    "setting.framebase.show": "Show board",
+    "setting.framebase.hide": "Hide board",
+
+    "setting.slider.range.prefix": "Range:",
+    "setting.slider.range.postfix": "m"
 }
