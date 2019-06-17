@@ -10,7 +10,7 @@ public class SkipSignHelper
 {
     public static double GetDistancePlayerToTileEntity(TileEntity tileEntity)
     {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = Minecraft.getInstance().player;
         BlockPos pos = tileEntity.getPos();
 
         double x = pos.getX();
@@ -22,7 +22,7 @@ public class SkipSignHelper
 
     public static double GetDistancePlayerToEntity(Entity entity)
     {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = Minecraft.getInstance().player;
         return player.getDistance(entity);
     }
 

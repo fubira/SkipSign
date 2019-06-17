@@ -1,9 +1,8 @@
 package mods.skipsign;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 
@@ -18,15 +17,15 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
     }
 
     @Override
-    public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!isDropOff(entity, x, y, z))
             return;
 
-        if (Minecraft.getMinecraft().player == null || entity.getWorld() == null ||
+        if (Minecraft.getInstance().player == null || entity.getWorld() == null ||
             CheckVisibleState(entity))
         {
-            super.render(entity, x, y, z, partialTicks, destroyStage, partial);
+            super.render(entity, x, y, z, partialTicks, destroyStage);
         }
     }
 
@@ -37,17 +36,17 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 
     public boolean CheckVisibleState(TileEntitySkull tileEntitySkull)
     {
-        if (SkipSignCore.ModSetting.SkullVisible.Int() == 1)
+        if (SkipSignConfig.GENERAL.skullViewMode.get() == 1)
             return true;
-        if (SkipSignCore.ModSetting.SkullVisible.Int() == 2)
+        if (SkipSignConfig.GENERAL.skullViewMode.get() == 2)
             return false;
 
-        if (Keyboard.isKeyDown(SkipSignCore.ModSetting.Zoom_Key.Int()))
+        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
-                SkipSignCore.ModSetting.SkullRange.Int()))
+                SkipSignConfig.GENERAL.skullVisibleRange.get()))
             return true;
 
         return false;

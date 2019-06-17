@@ -1,21 +1,22 @@
 package mods.skipsign;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.renderer.entity.RenderItemFrame;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.eventbus.api.Cancelable;
+import net.minecraftforge.eventbus.api.Event;
 
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
 
 public class RenderItemFrameEx extends RenderItemFrame
 {
-    public RenderItemFrameEx(RenderManager renderManager, RenderItem renderItem)
+    public RenderItemFrameEx(RenderManager renderManager, ItemRenderer itemRenderer)
     {
-        super(renderManager, renderItem);
+        super(renderManager, itemRenderer);
     }
 
     @Override
@@ -29,8 +30,8 @@ public class RenderItemFrameEx extends RenderItemFrame
             entity.setDisplayedItem(ItemStack.EMPTY);
         }
 
-        if ((!SkipSignCore.ModSetting.HideBoard.Bool()) ||
-            (SkipSignCore.ModSetting.HideBoard.Bool() && CheckVisibleState(entity)))
+        if ((!SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) ||
+            (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get() && CheckVisibleState(entity)))
         {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
@@ -43,17 +44,17 @@ public class RenderItemFrameEx extends RenderItemFrame
 
     public boolean CheckVisibleState(EntityItemFrame entityItemFrame)
     {
-        if (SkipSignCore.ModSetting.FrameVisible.Int() == 1)
+        if (SkipSignConfig.GENERAL.frameViewMode.get() == 1)
             return true;
-        if (SkipSignCore.ModSetting.FrameVisible.Int() == 2)
+        if (SkipSignConfig.GENERAL.frameViewMode.get() == 2)
             return false;
 
-        if (Keyboard.isKeyDown(SkipSignCore.ModSetting.Zoom_Key.Int()))
+        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToEntity(entityItemFrame),
-                SkipSignCore.ModSetting.FrameRange.Int()))
+                SkipSignConfig.GENERAL.frameVisibleRange.get()))
             return true;
         return false;
     }

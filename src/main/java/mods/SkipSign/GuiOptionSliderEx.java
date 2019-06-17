@@ -7,26 +7,28 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiOptionSliderEx extends GuiButton
 {
-    /** The value of this slider control. */
-    public float sliderValue = 1.0F;
-
-    private float Hurihaba = 128;
-
-    /** Is this slider control being dragged. */
+    private float sliderValue = 1.0f;
+    private float maxValue = 128;
     public boolean dragging;
-
-    public Key key;
-
     private String text;
 
-    public GuiOptionSliderEx(int par1, int par2, int par3, String par5Str, Key k, float h)
+    public GuiOptionSliderEx(int id, int x, int y, String text, float startValue, float maxValue)
     {
-        super(par1, par2, par3, 100, 20, par5Str);
-        this.key = k;
-        this.sliderValue = k.Float() / h;
-        text = par5Str;
-        this.displayString = String.format("%s:%dブロック", text, (int)(this.sliderValue * h));
-        this.Hurihaba = h;
+        super(id, x, y, 100, 20, text);
+
+        this.sliderValue = startValue / maxValue;
+        this.maxValue = maxValue;
+        this.text = text;
+
+        this.updateText();
+    }
+
+    public int getValue() {
+        return (int)(this.sliderValue * this.maxValue);
+    }
+
+    public void updateText() {
+        this.displayString = String.format("%s:%dブロック", this.text, this.getValue());
     }
 
     /**
@@ -41,61 +43,53 @@ public class GuiOptionSliderEx extends GuiButton
     /**
      * Fired when the mouse button is dragged. Equivalent of MouseListener.mouseDragged(MouseEvent e).
      */
-    protected void mouseDragged(Minecraft par1Minecraft, int par2, int par3)
+    @Override
+    public boolean mouseDragged(double par1, double par2, int par3, double par4, double par5)
     {
-        if (this.enabled)
-        {
-            if (this.dragging)
-            {
-                this.sliderValue = (float)(par2 - (this.x + 4)) / (float)(this.width - 8);
+        if (this.enabled) {
+            if (this.dragging) {
+                this.sliderValue = (float)(par1 - (this.x + 4)) / (float)(this.width - 8);
 
-                if (this.sliderValue < 0.0F)
-                {
-                    this.sliderValue = 0.0F;
+                if (this.sliderValue < 0.0f) {
+                    this.sliderValue = 0.0f;
                 }
 
-                if (this.sliderValue > 1.0F)
-                {
-                    this.sliderValue = 1.0F;
+                if (this.sliderValue > 1.0f) {
+                    this.sliderValue = 1.0f;
                 }
 
-                key.Value = (int)(this.sliderValue * Hurihaba);
-                this.displayString = String.format("%s:%dブロック", text, key.Int());
+                updateText();
             }
 
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             this.drawTexturedModalRect(this.x + (int)(this.sliderValue * (float)(this.width - 8)), this.y, 0, 66, 4, 20);
             this.drawTexturedModalRect(this.x + (int)(this.sliderValue * (float)(this.width - 8)) + 4, this.y, 196, 66, 4, 20);
         }
+        return super.mouseDragged(par1, par2, par3, par4, par5);
     }
 
     /**
      * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
      * e).
      */
-    public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3)
+    @Override
+    public boolean mouseClicked(double par1, double par2, int par3)
     {
-        if (super.mousePressed(par1Minecraft, par2, par3))
-        {
-            this.sliderValue = (float)(par2 - (this.x + 4)) / (float)(this.width - 8);
+        if (super.mouseClicked(par1, par2, par3)) {
+            this.sliderValue = (float)(par1 - (this.x + 4)) / (float)(this.width - 8);
 
-            if (this.sliderValue < 0.0F)
-            {
-                this.sliderValue = 0.0F;
+            if (this.sliderValue < 0.0f) {
+                this.sliderValue = 0.0f;
             }
 
-            if (this.sliderValue > 1.0F)
-            {
-                this.sliderValue = 1.0F;
+            if (this.sliderValue > 1.0f) {
+                this.sliderValue = 1.0f;
             }
 
-            key.Value = (int)(this.sliderValue * this.Hurihaba);
-            this.displayString = String.format("%s:%dブロック", text, key.Int());
+            updateText();
             this.dragging = true;
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -103,8 +97,10 @@ public class GuiOptionSliderEx extends GuiButton
     /**
      * Fired when the mouse button is released. Equivalent of MouseListener.mouseReleased(MouseEvent e).
      */
-    public void mouseReleased(int par1, int par2)
+    @Override
+    public boolean mouseReleased(double par1, double par2, int par3)
     {
         this.dragging = false;
+        return super.mouseReleased(par1, par2, par3);
     }
 }

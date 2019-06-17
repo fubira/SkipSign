@@ -1,16 +1,16 @@
 package mods.skipsign;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.client.util.InputMappings;
+import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
 
-public class TileEntityChestRendererEx extends TileEntityChestRenderer
+public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends TileEntityChestRenderer<T>
 {
     public TileEntityChestRendererEx()
     {
@@ -18,36 +18,36 @@ public class TileEntityChestRendererEx extends TileEntityChestRenderer
     }
 
     @Override
-    public void render(TileEntityChest entity, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(T entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!isDropOff(entity, x, y, z))
             return;
 
-        if (Minecraft.getMinecraft().player == null || entity.getWorld() == null ||
+        if (Minecraft.getInstance().player == null || entity.getWorld() == null ||
             CheckVisibleState(entity))
         {
-            super.render(entity, x, y, z, partialTicks, destroyStage, partial);
+            super.render(entity, x, y, z, partialTicks, destroyStage);
         }
     }
 
-    public boolean isDropOff(TileEntity tile, double x, double y, double z)
+    public boolean isDropOff(T tile, double x, double y, double z)
     {
         return true;
     }
 
-    public boolean CheckVisibleState(TileEntityChest tileEntityChest)
+    public boolean CheckVisibleState(T tileEntityChest)
     {
-        if (SkipSignCore.ModSetting.ChestVisible.Int() == 1)
+        if (SkipSignConfig.GENERAL.chestViewMode.get() == 1)
             return true;
-        if (SkipSignCore.ModSetting.ChestVisible.Int() == 2)
+        if (SkipSignConfig.GENERAL.chestViewMode.get() == 2)
             return false;
 
-        if (Keyboard.isKeyDown(SkipSignCore.ModSetting.Zoom_Key.Int()))
+        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntityChest),
-                SkipSignCore.ModSetting.ChestRange.Int()))
+                SkipSignConfig.GENERAL.chestVisibleRange.get()))
             return true;
 
         return false;

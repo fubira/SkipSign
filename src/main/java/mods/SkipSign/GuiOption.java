@@ -5,13 +5,19 @@ import java.io.IOException;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import org.lwjgl.input.Keyborad;
+import net.minecraft.client.util.InputMappings;
 
-import mods.skipsign.ModLog;
+import mods.skipsign.SkipSignConfig;
 
 public class GuiOption extends GuiScreen
 {
-    public void drawScreen(int par1, int par2, float par3)
+    private class Button extends GuiButton {
+        public Button(int id, int x, int y, int w, int h, String label) {
+            super(id, x, y, w, h, label);
+        }
+    }
+
+    public void render(int par1, int par2, float par3)
     {
         FontRenderer fontRenderer = this.fontRenderer;
         int x = this.width / 2;
@@ -26,157 +32,157 @@ public class GuiOption extends GuiScreen
         this.drawString(fontRenderer, "チェスト", x - 172, y - 25 + 5, 16777215);
         this.drawString(fontRenderer, "ヘッド", x - 172, y + 5, 16777215);
         
-        super.drawScreen(par1, par2, par3);
+        super.render(par1, par2, par3);
     }
 
-    private GuiButton drawMode, ShowBoard, ChangeKey, ChangeMode, ZoomKey, ScrGui;
-    private GuiButton ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
-    private GuiButton SignDO, ChestDO, SkullDO;
+    private Button DrawMode, ShowBoard, ChangeKey, ZoomKey, ScrGui;
+    private Button ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
+    private Button SignDO, ChestDO, SkullDO;
     private boolean KeyChange_OpenSetting = false;
     private boolean KeyChange_ZoomKey = false;
+    private GuiOptionSliderEx signRange, frameRange, skullRange, chestRange;
+    private static int maxRange = 128;
 
     public void initGui()
     {
         FontRenderer fontRenderer = this.fontRenderer;
         
-        this.buttonList.clear();
+        this.children.clear();
 
         int x = this.width / 2;
         int y = this.height / 2;
         
-        SignDO = new GuiButton(0, x + 65, y - 75, 120, 20, "範囲外を描画しない");
-        ChestDO = new GuiButton(0, x + 65, y - 25, 120, 20, "範囲外を描画しない");
-        SkullDO = new GuiButton(0, x + 65, y , 120, 20, "範囲外を描画しない");
+        SignDO = new Button(0, x + 65, y - 75, 120, 20, "範囲外を描画しない");
+        ChestDO = new Button(0, x + 65, y - 25, 120, 20, "範囲外を描画しない");
+        SkullDO = new Button(0, x + 65, y , 120, 20, "範囲外を描画しない");
         
-        ScrGui = new GuiButton(0, x - 172, y - 5, 195, 20, "画面外のチェスト・看板を非表示"); 
+        ScrGui = new Button(0, x - 172, y - 5, 195, 20, "画面外のチェスト・看板を非表示"); 
 
-        drawMode = new GuiButton(0, x - 172, y - 75, 60, 20, "範囲描画");
+        DrawMode = new Button(0, x - 172, y - 75, 60, 20, "範囲描画");
         
-        ApplySign = new GuiButton(0, x - 120, y - 75, 75, 20, "範囲描画");
-        ApplyItemFrame = new GuiButton(0, x - 120, y - 50, 75, 20, "範囲描画");
-        ApplyChest = new GuiButton(0, x - 120, y - 25, 75, 20, "範囲描画");
-        ApplySkull = new GuiButton(0, x - 120, y , 75, 20, "範囲描画");
+        ApplySign = new Button(0, x - 120, y - 75, 75, 20, "範囲描画");
+        ApplyItemFrame = new Button(0, x - 120, y - 50, 75, 20, "範囲描画");
+        ApplyChest = new Button(0, x - 120, y - 25, 75, 20, "範囲描画");
+        ApplySkull = new Button(0, x - 120, y , 75, 20, "範囲描画");
         
-        GuiOptionSliderEx Srange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", SkipSignCore.ModSetting.SignRange, (float)SkipSignCore.ModSetting.Hurihaba);
-        GuiOptionSliderEx Frange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", SkipSignCore.ModSetting.FrameRange, (float)SkipSignCore.ModSetting.Hurihaba);
-        GuiOptionSliderEx Crange = new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", SkipSignCore.ModSetting.ChestRange, (float)SkipSignCore.ModSetting.Hurihaba);
-        GuiOptionSliderEx SKrange = new GuiOptionSliderEx(5, x - 40, y, "描画範囲", SkipSignCore.ModSetting.SkullRange, (float)SkipSignCore.ModSetting.Hurihaba);
+        signRange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", SkipSignConfig.GENERAL.signVisibleRange.get(), (float)maxRange);
+        frameRange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", SkipSignConfig.GENERAL.frameVisibleRange.get(), (float)maxRange);
+        chestRange = new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", SkipSignConfig.GENERAL.chestVisibleRange.get(), (float)maxRange);
+        skullRange = new GuiOptionSliderEx(5, x - 40, y, "描画範囲", SkipSignConfig.GENERAL.skullVisibleRange.get(), (float)maxRange);
         
         //AllDraw = new GuiButton(1, x - 107, y - 75, 60, 20, "すべて描画");
         //SkipDraw = new GuiButton(2, x - 42, y - 75, 60, 20, "描画しない");
 
-        ChangeKey = new GuiButton(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", org.lwjgl.input.Keyboard.getKeyName((SkipSignCore.ModSetting.VisibleKey.Int()))));
-        ShowBoard = new GuiButton(4, x - 172, y + 45, 90, 20, "本体を表示");
+        ChangeKey = new Button(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.visibleKeyId.get(), 0).getName()));
+        ShowBoard = new Button(4, x - 172, y + 45, 90, 20, "本体を表示");
 
-        ChangeMode = new GuiButton(6, x - 172, y + 70, 90, 20, "距離算出式:0");
+        ZoomKey = new Button(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName()));
 
-        ZoomKey = new GuiButton(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", org.lwjgl.input.Keyboard.getKeyName(SkipSignCore.ModSetting.VisibleKey.Int())));
+        update();
 
-
-        Invalidate();
-
-        this.buttonList.add(ApplySign);
-        this.buttonList.add(ApplyItemFrame);
-        this.buttonList.add(ApplyChest);
-        this.buttonList.add(ApplySkull);
+        this.children.add(ApplySign);
+        this.children.add(ApplyItemFrame);
+        this.children.add(ApplyChest);
+        this.children.add(ApplySkull);
         
-        this.buttonList.add(Srange);
-        this.buttonList.add(Frange);
-        this.buttonList.add(Crange);
-        this.buttonList.add(SKrange);
+        this.children.add(signRange);
+        this.children.add(frameRange);
+        this.children.add(chestRange);
+        this.children.add(skullRange);
         
-        this.buttonList.add(SignDO);
-        this.buttonList.add(ChestDO);
-        this.buttonList.add(SkullDO);
+        this.children.add(SignDO);
+        this.children.add(ChestDO);
+        this.children.add(SkullDO);
         
-        this.buttonList.add(ChangeKey);
-        this.buttonList.add(ShowBoard);
-        this.buttonList.add(ChangeMode);
-        this.buttonList.add(ZoomKey);
+        this.children.add(ChangeKey);
+        this.children.add(ShowBoard);
+        this.children.add(ZoomKey);
     }
     
     
 
-    protected void actionPerformed(GuiButton p_146284_1_)
+    protected void actionPerformed(GuiButton button)
     {
         KeyChange_OpenSetting = false;
         KeyChange_ZoomKey = false;
-        
-        if (ApplySign == p_146284_1_)
+        /*
+        if (ApplySign == button)
         {
-            int vis = SkipSignCore.ModSetting.SignVisible.Int();
+            int vis = SkipSignConfig.GENERAL.signViewMode.get();
             vis++; if (vis > 2) vis = 0;
-            SkipSignCore.ModSetting.SignVisible.Value = vis;
+            SkipSignConfig.GENERAL.signViewMode = vis;
         }
         
-        if (ApplyItemFrame == p_146284_1_)
+        if (ApplyItemFrame == button)
         {
-            int vis = SkipSignCore.ModSetting.FrameVisible.Int();
+            int vis = SkipSignConfig.GENERAL.frameViewMode.get();
             vis++; if (vis > 2) vis = 0;
-            SkipSignCore.ModSetting.FrameVisible.Value = vis;
+            SkipSignConfig.GENERAL.frameViewMode = vis;
         }
         
-        if (ApplyChest == p_146284_1_)
+        if (ApplyChest == button)
         {
-            int vis = SkipSignCore.ModSetting.ChestVisible.Int();
+            int vis = SkipSignConfig.GENERAL.chestViewMode.get();
             vis++; if (vis > 2) vis = 0;
-            SkipSignCore.ModSetting.ChestVisible.Value = vis;
+            SkipSignConfig.GENERAL.chestViewMode = vis;
         }
         
-        if (ApplySkull == p_146284_1_)
+        if (ApplySkull == button)
         {
-            int vis = SkipSignCore.ModSetting.SkullVisible.Int();
+            int vis = SkipSignConfig.GENERAL.skullViewMode.get();
             vis++; if (vis > 2) vis = 0;
-            SkipSignCore.ModSetting.SkullVisible.Value = vis;
+            SkipSignConfig.GENERAL.skullViewMode = vis;
         }
         
-        if (SignDO == p_146284_1_)
+        if (SignDO == button)
         {
-            int vis = SkipSignCore.ModSetting.DropOffSign.Int();
-            vis++; if (vis > 1) vis = 0;
-            SkipSignCore.ModSetting.DropOffSign.Value = vis;
+            SkipSignConfig.GENERAL.dropoffSign = !SkipSignConfig.GENERAL.dropoffSign;
         }
         
-        if (ChestDO == p_146284_1_)
+        if (ChestDO == button)
         {
-            int vis = SkipSignCore.ModSetting.DropOffChest.Int();
-            vis++; if (vis > 1) vis = 0;
-            SkipSignCore.ModSetting.DropOffChest.Value = vis;
+            SkipSignConfig.GENERAL.dropoffChest = !SkipSignConfig.GENERAL.dropoffChest;
         }
         
-        if (SkullDO == p_146284_1_)
+        if (SkullDO == button)
         {
-            int vis = SkipSignCore.ModSetting.DropOffSkull.Int();
-            vis++; if (vis > 1) vis = 0;
-            SkipSignCore.ModSetting.DropOffSkull.Value = vis;
+            SkipSignConfig.GENERAL.dropoffSkull = !SkipSignConfig.GENERAL.dropoffSkull;
         }
         
-        if (p_146284_1_.id == 4)
+        if (button.id == 4)
         {
-            SkipSignCore.ModSetting.HideBoard.Value = !SkipSignCore.ModSetting.HideBoard.Bool();
+            SkipSignConfig.GENERAL.hideInvisibleFrameBoard = !SkipSignConfig.GENERAL.hideInvisibleFrameBoard;
         }
 
-        if (p_146284_1_.id == 3)
+        if (button.id == 3)
         {
             KeyChange_OpenSetting = !KeyChange_OpenSetting;
         }
         
-        if (p_146284_1_.id == 7)
+        if (button.id == 7)
         {
             KeyChange_ZoomKey = !KeyChange_ZoomKey;
         }
 
-        if (p_146284_1_.id == 6)
-        {
-            SkipSignCore.ModSetting.CheckDist.Value = ((SkipSignCore.ModSetting.CheckDist.Int() == 0)) ?  1 : 0;
+        if(button == skullRange) {
+            SkipSignConfig.GENERAL.skullVisibleRange = skullRange.getValue();
         }
+        if(button == signRange) {
+            SkipSignConfig.GENERAL.signVisibleRange = signRange.getValue();
+        }
+        if(button == frameRange) {
+            SkipSignConfig.GENERAL.frameVisibleRange = frameRange.getValue();
+        }
+        if(button == chestRange) {
+            SkipSignConfig.GENERAL.chestVisibleRange = chestRange.getValue();
+        }*/
 
-        Invalidate();
+        update();
     }
 
-    private void Invalidate()
+    private void update()
     {
-        switch (SkipSignCore.ModSetting.SignVisible.Int())
+        switch (SkipSignConfig.GENERAL.signViewMode.get())
         {
         case 0:
             ApplySign.displayString = "範囲描画";
@@ -189,7 +195,7 @@ public class GuiOption extends GuiScreen
             break;
         }
         
-        switch (SkipSignCore.ModSetting.FrameVisible.Int())
+        switch (SkipSignConfig.GENERAL.frameViewMode.get())
         {
         case 0:
             ApplyItemFrame.displayString = "範囲描画";
@@ -202,7 +208,7 @@ public class GuiOption extends GuiScreen
             break;
         }
         
-        switch (SkipSignCore.ModSetting.ChestVisible.Int())
+        switch (SkipSignConfig.GENERAL.chestViewMode.get())
         {
         case 0:
             ApplyChest.displayString = "範囲描画";
@@ -215,7 +221,7 @@ public class GuiOption extends GuiScreen
             break;
         }
         
-        switch (SkipSignCore.ModSetting.SkullVisible.Int())
+        switch (SkipSignConfig.GENERAL.skullViewMode.get())
         {
         case 0:
             ApplySkull.displayString = "範囲描画";
@@ -228,93 +234,71 @@ public class GuiOption extends GuiScreen
             break;
         }
         
-        switch (SkipSignCore.ModSetting.DropOffSign.Int())
-        {
-        case 0:
-            SignDO.displayString = "範囲外を描画する";
-            break;
-        case 1:
+        if (SkipSignConfig.GENERAL.dropoffSign.get()) {
             SignDO.displayString = "範囲外を描画しない";
-            break;
+        } else {
+            SignDO.displayString = "範囲外を描画する";
         }
-        
-        switch (SkipSignCore.ModSetting.DropOffChest.Int())
-        {
-        case 0:
-            ChestDO.displayString = "範囲外を描画する";
-            break;
-        case 1:
+
+        if (SkipSignConfig.GENERAL.dropoffChest.get()) {
             ChestDO.displayString = "範囲外を描画しない";
-            break;
+        } else {
+            ChestDO.displayString = "範囲外を描画する";
         }
 
-        switch (SkipSignCore.ModSetting.DropOffSkull.Int())
-        {
-        case 0:
-            SkullDO.displayString = "範囲外を描画する";
-            break;
-        case 1:
+        if (SkipSignConfig.GENERAL.dropoffSkull.get()) {
             SkullDO.displayString = "範囲外を描画しない";
-            break;
+        } else {
+            SkullDO.displayString = "範囲外を描画する";
         }
 
-        if (SkipSignCore.ModSetting.HideBoard.Bool())
-        {
+        if (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) {
             ShowBoard.displayString = "背景を非表示";
-        }
-        else
-        {
+        } else {
             ShowBoard.displayString = "背景を表示";
         }
 
-        if (KeyChange_OpenSetting)
-        {
+        if (KeyChange_OpenSetting) {
             ChangeKey.displayString = "キーを入力してください";
-        }
-        else
-        {
-            ChangeKey.displayString = String.format("設定画面:%s", org.lwjgl.input.Keyboard.getKeyName(SkipSignCore.ModSetting.VisibleKey.Int()));
+        } else {
+            ChangeKey.displayString = String.format("設定画面:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.visibleKeyId.get(), 0).getName());
         }
         
-        if (KeyChange_ZoomKey)
-        {
+        if (KeyChange_ZoomKey) {
             ZoomKey.displayString = "キーを入力してください";
+        } else {
+            ZoomKey.displayString = String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName());
         }
-        else
-        {
-            ZoomKey.displayString = String.format("一時解除:%s", org.lwjgl.input.Keyboard.getKeyName(SkipSignCore.ModSetting.Zoom_Key.Int()));
-        }
-
-        ChangeMode.displayString = String.format("距離算出式:%d", SkipSignCore.ModSetting.CheckDist.Int());
     }
 
     public void func_146281_b()
     {
-        SkipSignCore.SaveConfig();
+        // SkipSignCore.SaveConfig();
     }
 
-    protected void keyTyped(char par1, int par2)
+    public boolean charTyped(char par1, int par2)
     {
+        boolean result = false;
+        /*
         try {
-            super.keyTyped(par1, par2);
+            result = super.charTyped(par1, par2);
         } catch(IOException e) {
-            ModLog.Error("keyTyped: " + e.toString());
+            ModLog.Error("charTyped: " + e.toString());
         }
         
         if (KeyChange_ZoomKey && par2 != 1)
         {
-            SkipSignCore.ModSetting.Zoom_Key.Value = par2;
-
+            SkipSignConfig.GENERAL.zoomKeyId = par2;
             KeyChange_ZoomKey = false;
         }
 
         if (KeyChange_OpenSetting && par2 != 1)
         {
-            SkipSignCore.ModSetting.VisibleKey.Value = par2;
-
+            SkipSignConfig.GENERAL.visibleKeyId = par2;
             KeyChange_OpenSetting = false;
-        }
+        }*/
 
-        Invalidate();
+        update();
+        return result;
     }
 }

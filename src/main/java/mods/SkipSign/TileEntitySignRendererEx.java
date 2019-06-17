@@ -1,8 +1,7 @@
 package mods.skipsign;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.ITextComponent;
@@ -37,7 +36,7 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
     }
 
     @Override
-    public void render(TileEntitySign entity, double x, double y, double z, float partialTicks, int destroyStage, float partial)
+    public void render(TileEntitySign entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!isDropOff(entity, x, y, z))
             return;
@@ -49,10 +48,10 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
             deleteSignText(entity);
         }
 
-        if ((!SkipSignCore.ModSetting.HideBoard.Bool()) ||
-            (SkipSignCore.ModSetting.HideBoard.Bool() && CheckVisibleState(entity)))
+        if ((!SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) ||
+            (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get() && CheckVisibleState(entity)))
         {
-            super.render(entity, x, y, z, partialTicks, destroyStage, partial);
+            super.render(entity, x, y, z, partialTicks, destroyStage);
         }
 
         if (temporaryText != null)
@@ -66,17 +65,17 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
 
     public boolean CheckVisibleState(TileEntitySign tileEntitySign)
     {
-        if (SkipSignCore.ModSetting.SignVisible.Int() == 1)
+        if (SkipSignConfig.GENERAL.signViewMode.get() == 1)
             return true;
-        if (SkipSignCore.ModSetting.SignVisible.Int() == 2)
+        if (SkipSignConfig.GENERAL.signViewMode.get() == 2)
             return false;
 
-        if (Keyboard.isKeyDown(SkipSignCore.ModSetting.Zoom_Key.Int()))
+        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySign),
-                SkipSignCore.ModSetting.SignRange.Int()))
+                SkipSignConfig.GENERAL.signVisibleRange.get()))
             return true;
 
         return false;
