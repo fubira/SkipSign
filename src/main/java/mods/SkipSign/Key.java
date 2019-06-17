@@ -1,4 +1,4 @@
-package mods.SkipSign;
+package mods.skipsign;
 
 import net.minecraftforge.fml.common.FMLLog;
 

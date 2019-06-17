@@ -1,4 +1,4 @@
-package mods.SkipSign;
+package mods.skipsign;
 
 import org.lwjgl.input.Keyboard;
 
@@ -11,9 +11,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mods.SkipSign.SkipSignCore;
-import mods.SkipSign.SkipSignHelper;
-import mods.SkipSign.DrawableApi;
+import mods.skipsign.SkipSignCore;
+import mods.skipsign.SkipSignHelper;
+import mods.skipsign.DrawableApi;
 
 @SideOnly(Side.CLIENT)
 public class TileEntitySignRendererEx extends TileEntitySignRenderer
