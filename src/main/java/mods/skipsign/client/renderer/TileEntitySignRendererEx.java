@@ -55,16 +55,13 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
                 // Hide text/signboard
                 temporaryText = getSignText(entity);
                 deleteSignText(entity);
-                SkipSignMod.logger.info("invisible:" + temporaryText);
             }
 
             if (!Config.dropOffSignBoard.get() || (Config.dropOffSignBoard.get() && visible)) {
-                SkipSignMod.logger.info("render:" + entity.signText[0]);
                 super.render(entity, x, y, z, partialTicks, destroyStage);
             }
 
             if (temporaryText != null) {
-                SkipSignMod.logger.info("reset:" + temporaryText);
                 setSignText(entity, temporaryText);
             }
         }

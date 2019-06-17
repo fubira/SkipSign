@@ -28,8 +28,6 @@ public class ClientRenderer {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         RenderItemFrameEx renderItemFrame = new RenderItemFrameEx(renderManager, itemRenderer);
 
-        SkipSignMod.logger.info(renderManager);
-        SkipSignMod.logger.info(renderManager.entityRenderMap);
         renderManager.entityRenderMap.remove(EntityItemFrame.class);
         renderManager.entityRenderMap.put(EntityItemFrame.class, renderItemFrame);
     }
