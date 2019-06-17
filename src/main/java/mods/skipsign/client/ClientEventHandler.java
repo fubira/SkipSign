@@ -34,12 +34,13 @@ public final class ClientEventHandler {
     public void onClientSetup(FMLClientSetupEvent event) {
         SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
         ClientKeyBindings.register();
-        ClientRenderer.register();
+        ClientRenderer.registerTileEntity();
     }
 
     @SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
         SkipSignMod.logger.info("ClientEventHandler::InterModEnqueueEvent");
+        ClientRenderer.registerItemFrame();
     }
 
     @SubscribeEvent

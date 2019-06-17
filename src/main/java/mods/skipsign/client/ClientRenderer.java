@@ -17,12 +17,13 @@ import mods.skipsign.client.renderer.TileEntitySkullRendererEx;
 
 public class ClientRenderer {
 
-    public static void register() {
+    public static void registerTileEntity() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySign.class, new TileEntitySignRendererEx());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChest.class, new TileEntityChestRendererEx());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkull.class, new TileEntitySkullRendererEx());
+    }
 
-        /*
+    public static void registerItemFrame() {
         RenderManager renderManager = Minecraft.getInstance().getRenderManager();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         RenderItemFrameEx renderItemFrame = new RenderItemFrameEx(renderManager, itemRenderer);
@@ -31,6 +32,5 @@ public class ClientRenderer {
         SkipSignMod.logger.info(renderManager.entityRenderMap);
         renderManager.entityRenderMap.remove(EntityItemFrame.class);
         renderManager.entityRenderMap.put(EntityItemFrame.class, renderItemFrame);
-        */
     }
 }

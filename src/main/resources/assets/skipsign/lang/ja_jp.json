@@ -13,18 +13,15 @@
     "setting.viewmode.force": "すべて描画",
     "setting.viewmode.none": "描画しない",
 
-    "setting.renderarea.range": "範囲外を描画しない",
-    "setting.renderarea.full": "範囲外を描画する",
-
     "setting.outofrange.sign.show": "文字列を非表示",
     "setting.outofrange.sign.hide": "看板ごと非表示",
 
     "setting.outofrange.frame.show": "内容物を非表示",
     "setting.outofrange.frame.hide": "額縁ごと非表示",
 
-    "setting.mod.isenabled": "SkipSign 有効",
-    "setting.mod.isdisabled": "SkipSign 無効",
+    "setting.mod.isenabled": "SkipSign有効",
+    "setting.mod.isdisabled": "SkipSign無効",
 
-    "setting.slider.range.prefix": "範囲:",
+    "setting.slider.range.prefix": "描画範囲:",
     "setting.slider.range.postfix": "m"
 }

@@ -14,21 +14,18 @@
     "setting.viewmode.force": "Force",
     "setting.viewmode.none": "None",
 
-    "setting.outofrange.sign.show": "Hide text only",
+    "setting.outofrange.sign.show": "Hide only text",
     "setting.outofrange.sign.hide": "Hide signboard",
 
-    "setting.outofrange.frame.show": "Hide content only",
+    "setting.outofrange.frame.show": "Hide only content",
     "setting.outofrange.frame.hide": "Hide frameboard",
-
-    "setting.renderarea.range": "Within range",
-    "setting.renderarea.full": "Force all",
 
     "setting.framebase.show": "Show board",
     "setting.framebase.hide": "Hide board",
 
-    "setting.mod.isenabled": "SkipSign is Enabled",
-    "setting.mod.isdisabled": "SkipSign is Disabled",
+    "setting.mod.isenabled": "SkipSign Enabled",
+    "setting.mod.isdisabled": "SkipSign Disabled",
 
-    "setting.slider.range.prefix": "Range:",
+    "setting.slider.range.prefix": "Visible Range:",
     "setting.slider.range.postfix": "m"
 }
