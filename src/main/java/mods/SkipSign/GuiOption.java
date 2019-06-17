@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.InputMappings;
 
-import mods.skipsign.SkipSignConfig;
+import mods.skipsign.Config;
 
 public class GuiOption extends GuiScreen
 {
@@ -64,20 +64,20 @@ public class GuiOption extends GuiScreen
         ApplyItemFrame = new Button(0, x - 120, y - 50, 75, 20, "範囲描画");
         ApplyChest = new Button(0, x - 120, y - 25, 75, 20, "範囲描画");
         ApplySkull = new Button(0, x - 120, y , 75, 20, "範囲描画");
-        
-        signRange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", SkipSignConfig.GENERAL.signVisibleRange.get(), (float)maxRange);
-        frameRange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", SkipSignConfig.GENERAL.frameVisibleRange.get(), (float)maxRange);
+        /*
+        signRange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", SkipSignSettings.viewRangeSign.get(), (float)maxRange);
+        frameRange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", SkipSignSettings.viewRangeSign.get(), (float)maxRange);
         chestRange = new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", SkipSignConfig.GENERAL.chestVisibleRange.get(), (float)maxRange);
         skullRange = new GuiOptionSliderEx(5, x - 40, y, "描画範囲", SkipSignConfig.GENERAL.skullVisibleRange.get(), (float)maxRange);
-        
+        */
         //AllDraw = new GuiButton(1, x - 107, y - 75, 60, 20, "すべて描画");
         //SkipDraw = new GuiButton(2, x - 42, y - 75, 60, 20, "描画しない");
-
+/*
         ChangeKey = new Button(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.visibleKeyId.get(), 0).getName()));
         ShowBoard = new Button(4, x - 172, y + 45, 90, 20, "本体を表示");
 
         ZoomKey = new Button(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName()));
-
+*/
         update();
 
         this.children.add(ApplySign);
@@ -182,6 +182,7 @@ public class GuiOption extends GuiScreen
 
     private void update()
     {
+        /*
         switch (SkipSignConfig.GENERAL.signViewMode.get())
         {
         case 0:
@@ -269,11 +270,7 @@ public class GuiOption extends GuiScreen
         } else {
             ZoomKey.displayString = String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName());
         }
-    }
-
-    public void func_146281_b()
-    {
-        // SkipSignCore.SaveConfig();
+        */
     }
 
     public boolean charTyped(char par1, int par2)

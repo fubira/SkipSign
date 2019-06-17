@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
@@ -6,8 +6,9 @@ import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 
-import mods.skipsign.SkipSignCore;
+import mods.skipsign.Config;
 import mods.skipsign.SkipSignHelper;
+import mods.skipsign.ViewMode;
 
 public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 {
@@ -36,17 +37,17 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 
     public boolean CheckVisibleState(TileEntitySkull tileEntitySkull)
     {
-        if (SkipSignConfig.GENERAL.skullViewMode.get() == 1)
+        if (Config.viewModeSkull.get() == ViewMode.FORCE)
             return true;
-        if (SkipSignConfig.GENERAL.skullViewMode.get() == 2)
+        if (Config.viewModeSkull.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
+        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
-                SkipSignConfig.GENERAL.skullVisibleRange.get()))
+                Config.viewRangeSkull.get()))
             return true;
 
         return false;

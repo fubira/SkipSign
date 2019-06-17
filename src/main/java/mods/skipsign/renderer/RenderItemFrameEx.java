@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.renderer;
 
 import net.minecraft.client.renderer.entity.RenderItemFrame;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -9,8 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
-import mods.skipsign.SkipSignCore;
+import mods.skipsign.Config;
 import mods.skipsign.SkipSignHelper;
+import mods.skipsign.ViewMode;
 
 public class RenderItemFrameEx extends RenderItemFrame
 {
@@ -30,8 +31,8 @@ public class RenderItemFrameEx extends RenderItemFrame
             entity.setDisplayedItem(ItemStack.EMPTY);
         }
 
-        if ((!SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) ||
-            (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get() && CheckVisibleState(entity)))
+        if ((!Config.dropOffFrameBase.get()) ||
+            (Config.dropOffFrameBase.get() && CheckVisibleState(entity)))
         {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
@@ -44,17 +45,17 @@ public class RenderItemFrameEx extends RenderItemFrame
 
     public boolean CheckVisibleState(EntityItemFrame entityItemFrame)
     {
-        if (SkipSignConfig.GENERAL.frameViewMode.get() == 1)
+        if (Config.viewModeFrame.get() == ViewMode.FORCE)
             return true;
-        if (SkipSignConfig.GENERAL.frameViewMode.get() == 2)
+        if (Config.viewModeFrame.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
+        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToEntity(entityItemFrame),
-                SkipSignConfig.GENERAL.frameVisibleRange.get()))
+                Config.viewRangeFrame.get()))
             return true;
         return false;
     }

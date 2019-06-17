@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
@@ -7,8 +7,9 @@ import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
-import mods.skipsign.SkipSignCore;
+import mods.skipsign.Config;
 import mods.skipsign.SkipSignHelper;
+import mods.skipsign.ViewMode;
 
 public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends TileEntityChestRenderer<T>
 {
@@ -37,17 +38,17 @@ public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends
 
     public boolean CheckVisibleState(T tileEntityChest)
     {
-        if (SkipSignConfig.GENERAL.chestViewMode.get() == 1)
+        if (Config.viewModeChest.get() == ViewMode.FORCE)
             return true;
-        if (SkipSignConfig.GENERAL.chestViewMode.get() == 2)
+        if (Config.viewModeChest.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
+        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntityChest),
-                SkipSignConfig.GENERAL.chestVisibleRange.get()))
+                Config.viewRangeChest.get()))
             return true;
 
         return false;

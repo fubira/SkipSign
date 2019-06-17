@@ -21,7 +21,7 @@ public class DrawableApi
 
     public static void beginFrustum()
     {
-        float f = SkipSignCore.renderPartialTicks;
+        float f = SkipSignMod.renderPartialTicks;
 
         EntityPlayer player = Minecraft.getInstance().player;
 

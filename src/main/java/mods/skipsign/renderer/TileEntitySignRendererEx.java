@@ -1,10 +1,14 @@
-package mods.skipsign;
+package mods.skipsign.renderer;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.ITextComponent;
+
+import mods.skipsign.Config;
+import mods.skipsign.SkipSignHelper;
+import mods.skipsign.ViewMode;
 
 public class TileEntitySignRendererEx extends TileEntitySignRenderer
 {
@@ -48,8 +52,8 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
             deleteSignText(entity);
         }
 
-        if ((!SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) ||
-            (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get() && CheckVisibleState(entity)))
+        if ((!Config.dropOffFrameBase.get()) ||
+            (Config.dropOffFrameBase.get() && CheckVisibleState(entity)))
         {
             super.render(entity, x, y, z, partialTicks, destroyStage);
         }
@@ -65,17 +69,17 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
 
     public boolean CheckVisibleState(TileEntitySign tileEntitySign)
     {
-        if (SkipSignConfig.GENERAL.signViewMode.get() == 1)
+        if (Config.viewModeSign.get() == ViewMode.FORCE)
             return true;
-        if (SkipSignConfig.GENERAL.signViewMode.get() == 2)
+        if (Config.viewModeSign.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(SkipSignConfig.GENERAL.zoomKeyId.get()))
+        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
                 SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySign),
-                SkipSignConfig.GENERAL.signVisibleRange.get()))
+                Config.viewRangeSign.get()))
             return true;
 
         return false;
