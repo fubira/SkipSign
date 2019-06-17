@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
-import mods.skipsign.DrawableApi;
 
 @SideOnly(Side.CLIENT)
 public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
