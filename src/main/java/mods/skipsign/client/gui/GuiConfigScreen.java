@@ -12,7 +12,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import mods.skipsign.Config;
+import mods.skipsign.SkipSignConfig;
 import mods.skipsign.SkipSignMod;
+import mods.skipsign.ViewMode;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiConfigScreen extends GuiScreen
@@ -82,17 +84,86 @@ public class GuiConfigScreen extends GuiScreen
         
         this.drawDefaultBackground();
 
-        this.drawString(fontRenderer, "SkipSign Configuration"  , left, top          , 0xffffff);
-        this.drawString(fontRenderer, "看板"                    , left, top +  25 + 5, 0xffffff);
-        this.drawString(fontRenderer, "フレーム"                , left, top +  50 + 5, 0xffffff);
-        this.drawString(fontRenderer, "チェスト"                , left, top +  75 + 5, 0xffffff);
-        this.drawString(fontRenderer, "ヘッド"                  , left, top + 100 + 5, 0xffffff);
+        this.drawString(fontRenderer, "SkipSign config", left, top          , 0xffffff);
+        this.drawString(fontRenderer, "看板"           , left, top +  25 + 5, 0xffffff);
+        this.drawString(fontRenderer, "フレーム"       , left, top +  50 + 5, 0xffffff);
+        this.drawString(fontRenderer, "チェスト"       , left, top +  75 + 5, 0xffffff);
+        this.drawString(fontRenderer, "ヘッド"         , left, top + 100 + 5, 0xffffff);
         
         super.render(mouseX, mouseY, partialTicks);
     }
+
+    private ViewMode toggleViewMode(final ViewMode current) {
+        ViewMode next;
+        switch(current) {
+            case NORMAL:
+                next = ViewMode.FORCE;
+                break;
+            case FORCE:
+                next = ViewMode.NONE;
+                break;
+            default:
+                next = ViewMode.NORMAL;
+                break;
+        }
+        return next;
+    }  
     
 	private void onButtonClicked(GuiButton btn) {
-        SkipSignMod.logger.info(btn.id);
+        SkipSignMod.logger.info("BTN: " + btn.id);
+
+        KeyChange_OpenSetting = false;
+        KeyChange_ZoomKey = false;
+
+        if (btn == ApplySign) {
+            SkipSignMod.config.set(Config.viewModeSign, toggleViewMode(Config.viewModeSign.get()));
+        }        
+        if (btn == ApplyItemFrame) {
+            SkipSignMod.config.set(Config.viewModeFrame, toggleViewMode(Config.viewModeFrame.get()));
+        }
+        if (btn == ApplyChest) {
+            SkipSignMod.config.set(Config.viewModeChest, toggleViewMode(Config.viewModeChest.get()));
+        }
+        if (btn == ApplySkull) {
+            SkipSignMod.config.set(Config.viewModeSkull, toggleViewMode(Config.viewModeSkull.get()));
+        }
+        
+        if (btn == SignDO) {
+            SkipSignMod.config.set(Config.dropOffSign, !Config.dropOffSign.get());
+        }
+        if (btn == ChestDO) {
+            SkipSignMod.config.set(Config.dropOffChest, !Config.dropOffChest.get());
+        }
+        if (btn == SkullDO) {
+            SkipSignMod.config.set(Config.dropOffSkull, !Config.dropOffSkull.get());
+        }
+        
+        if (btn.id == 4) {
+            SkipSignMod.config.set(Config.dropOffFrameBase, !Config.dropOffFrameBase.get());
+        }
+
+        if (btn.id == 3) {
+            KeyChange_OpenSetting = !KeyChange_OpenSetting;
+        }
+        
+        if (btn.id == 7) {
+            KeyChange_ZoomKey = !KeyChange_ZoomKey;
+        }
+
+        if (btn == skullRange) {
+            SkipSignMod.config.set(Config.viewRangeSkull, skullRange.getValue());
+        }
+        if (btn == signRange) {
+            SkipSignMod.config.set(Config.viewRangeSign, signRange.getValue());
+        }
+        if (btn == frameRange) {
+            SkipSignMod.config.set(Config.viewRangeFrame, frameRange.getValue());
+        }
+        if (btn == chestRange) {
+            SkipSignMod.config.set(Config.viewRangeChest, chestRange.getValue());
+        }
+        update();
+
     }
     
 
@@ -101,177 +172,45 @@ public class GuiConfigScreen extends GuiScreen
     private GuiOptionSliderEx signRange, frameRange, skullRange, chestRange;
     private static int maxRange = 128;
 
-    
-    protected void actionPerformed(GuiButton button)
-    {
-        KeyChange_OpenSetting = false;
-        KeyChange_ZoomKey = false;
-        /*
-        if (ApplySign == button)
-        {
-            int vis = SkipSignConfig.GENERAL.signViewMode.get();
-            vis++; if (vis > 2) vis = 0;
-            SkipSignConfig.GENERAL.signViewMode = vis;
-        }
-        
-        if (ApplyItemFrame == button)
-        {
-            int vis = SkipSignConfig.GENERAL.frameViewMode.get();
-            vis++; if (vis > 2) vis = 0;
-            SkipSignConfig.GENERAL.frameViewMode = vis;
-        }
-        
-        if (ApplyChest == button)
-        {
-            int vis = SkipSignConfig.GENERAL.chestViewMode.get();
-            vis++; if (vis > 2) vis = 0;
-            SkipSignConfig.GENERAL.chestViewMode = vis;
-        }
-        
-        if (ApplySkull == button)
-        {
-            int vis = SkipSignConfig.GENERAL.skullViewMode.get();
-            vis++; if (vis > 2) vis = 0;
-            SkipSignConfig.GENERAL.skullViewMode = vis;
-        }
-        
-        if (SignDO == button)
-        {
-            SkipSignConfig.GENERAL.dropoffSign = !SkipSignConfig.GENERAL.dropoffSign;
-        }
-        
-        if (ChestDO == button)
-        {
-            SkipSignConfig.GENERAL.dropoffChest = !SkipSignConfig.GENERAL.dropoffChest;
-        }
-        
-        if (SkullDO == button)
-        {
-            SkipSignConfig.GENERAL.dropoffSkull = !SkipSignConfig.GENERAL.dropoffSkull;
-        }
-        
-        if (button.id == 4)
-        {
-            SkipSignConfig.GENERAL.hideInvisibleFrameBoard = !SkipSignConfig.GENERAL.hideInvisibleFrameBoard;
-        }
-
-        if (button.id == 3)
-        {
-            KeyChange_OpenSetting = !KeyChange_OpenSetting;
-        }
-        
-        if (button.id == 7)
-        {
-            KeyChange_ZoomKey = !KeyChange_ZoomKey;
-        }
-
-        if(button == skullRange) {
-            SkipSignConfig.GENERAL.skullVisibleRange = skullRange.getValue();
-        }
-        if(button == signRange) {
-            SkipSignConfig.GENERAL.signVisibleRange = signRange.getValue();
-        }
-        if(button == frameRange) {
-            SkipSignConfig.GENERAL.frameVisibleRange = frameRange.getValue();
-        }
-        if(button == chestRange) {
-            SkipSignConfig.GENERAL.chestVisibleRange = chestRange.getValue();
-        }*/
-
-        update();
-    }
-
     private void update()
     {
-        /*
-        switch (SkipSignConfig.GENERAL.signViewMode.get())
-        {
-        case 0:
-            ApplySign.displayString = "範囲描画";
-            break;
-        case 1:
-            ApplySign.displayString = "すべて描画";
-            break;
-        case 2:
-            ApplySign.displayString = "描画しない";
-            break;
+        switch (Config.viewModeSign.get()) {
+            case NORMAL: ApplySign.displayString = "範囲描画"; break;
+            case FORCE:  ApplySign.displayString = "すべて描画"; break;
+            case NONE:   ApplySign.displayString = "描画しない"; break;
+        }
+        switch (Config.viewModeFrame.get()) {
+            case NORMAL: ApplyItemFrame.displayString = "範囲描画"; break;
+            case FORCE:  ApplyItemFrame.displayString = "すべて描画"; break;
+            case NONE:   ApplyItemFrame.displayString = "描画しない"; break;
+        }
+        switch (Config.viewModeChest.get()) {
+            case NORMAL: ApplyChest.displayString = "範囲描画"; break;
+            case FORCE:  ApplyChest.displayString = "すべて描画"; break;
+            case NONE:   ApplyChest.displayString = "描画しない"; break;
+        }
+        switch (Config.viewModeSkull.get()) {
+            case NORMAL: ApplySkull.displayString = "範囲描画"; break;
+            case FORCE:  ApplySkull.displayString = "すべて描画"; break;
+            case NONE:   ApplySkull.displayString = "描画しない"; break;
         }
         
-        switch (SkipSignConfig.GENERAL.frameViewMode.get())
-        {
-        case 0:
-            ApplyItemFrame.displayString = "範囲描画";
-            break;
-        case 1:
-            ApplyItemFrame.displayString = "すべて描画";
-            break;
-        case 2:
-            ApplyItemFrame.displayString = "描画しない";
-            break;
-        }
-        
-        switch (SkipSignConfig.GENERAL.chestViewMode.get())
-        {
-        case 0:
-            ApplyChest.displayString = "範囲描画";
-            break;
-        case 1:
-            ApplyChest.displayString = "すべて描画";
-            break;
-        case 2:
-            ApplyChest.displayString = "描画しない";
-            break;
-        }
-        
-        switch (SkipSignConfig.GENERAL.skullViewMode.get())
-        {
-        case 0:
-            ApplySkull.displayString = "範囲描画";
-            break;
-        case 1:
-            ApplySkull.displayString = "すべて描画";
-            break;
-        case 2:
-            ApplySkull.displayString = "描画しない";
-            break;
-        }
-        
-        if (SkipSignConfig.GENERAL.dropoffSign.get()) {
-            SignDO.displayString = "範囲外を描画しない";
-        } else {
-            SignDO.displayString = "範囲外を描画する";
-        }
-
-        if (SkipSignConfig.GENERAL.dropoffChest.get()) {
-            ChestDO.displayString = "範囲外を描画しない";
-        } else {
-            ChestDO.displayString = "範囲外を描画する";
-        }
-
-        if (SkipSignConfig.GENERAL.dropoffSkull.get()) {
-            SkullDO.displayString = "範囲外を描画しない";
-        } else {
-            SkullDO.displayString = "範囲外を描画する";
-        }
-
-        if (SkipSignConfig.GENERAL.hideInvisibleFrameBoard.get()) {
-            ShowBoard.displayString = "背景を非表示";
-        } else {
-            ShowBoard.displayString = "背景を表示";
-        }
+        SignDO.displayString = Config.dropOffSign.get() ? "範囲外を描画しない" : "範囲外を描画する";
+        ChestDO.displayString = Config.dropOffChest.get() ? "範囲外を描画しない" : "範囲外を描画する";
+        SkullDO.displayString = Config.dropOffSkull.get() ? "範囲外を描画しない" : "範囲外を描画する";
+        ShowBoard.displayString = Config.dropOffFrameBase.get() ? "背景を非表示" : "背景を表示";
 
         if (KeyChange_OpenSetting) {
             ChangeKey.displayString = "キーを入力してください";
         } else {
-            ChangeKey.displayString = String.format("設定画面:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.visibleKeyId.get(), 0).getName());
+            ChangeKey.displayString = String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName());
         }
         
         if (KeyChange_ZoomKey) {
             ZoomKey.displayString = "キーを入力してください";
         } else {
-            ZoomKey.displayString = String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName());
+            ZoomKey.displayString = String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName());
         }
-        */
     }
 
     public boolean charTyped(char par1, int par2)
