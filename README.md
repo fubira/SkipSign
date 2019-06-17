@@ -1,14 +1,10 @@
 SkipSign
 ========
 
-SkipSign - To reduce the rendering load by hiding Sign / ItemFrame / Chest in
-the distance.
+Optimization mod that reduces the load of multibyte character fonts by limiting
+the drawing of Sign. It is effective for languages ​​with many characters.
+And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 
 ## Getting the source ##
 
 [GitHub](https://github.com/TTTA2/SkipSignGUI.git)
-
-## Getting JAR ##
-
--   [for Forge 1.8](http://bit.ly/1QoO56G)
--   [for Forge 1.7](http://bit.ly/1RhPIml)
