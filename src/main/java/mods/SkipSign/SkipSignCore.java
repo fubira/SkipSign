@@ -29,6 +29,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(SkipSignCore.modId)
@@ -38,80 +39,66 @@ public class SkipSignCore
     public static final String buildId = "2019-6";
     public static String modVersion;
 
-
     private boolean key_down = false;
     private int HoldTime = 0;
 
     public static float renderPartialTicks;
 
-    SkipSignCore() {
-		ModLoadingContext ctx = ModLoadingContext.get();
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		
-		modVersion = ctx.getActiveContainer().getModInfo().getVersion().toString();
-		
-		bus.register(this);
+    public SkipSignCore() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void setup(final FMLCommonSetupEvent event) {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SkipSignConfig.SPEC);
+        modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
+        ModLog.Log("*** SkipSign " + modVersion + " ***");
     }
 
     @SubscribeEvent
-    public void onClientSetup(FMLClientSetupEvent event)
-    {
+    public void onClientSetup(FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySign.class, new TileEntitySignRendererEx());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChest.class, new TileEntityChestRendererEx());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkull.class, new TileEntitySkullRendererEx());
     }
 
     @SubscribeEvent
-    public void onRegistry(RegistryEvent event)
-    {
+    public void onRegistry(RegistryEvent event) {
         RenderManager renderManager = Minecraft.getInstance().getRenderManager();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         RenderItemFrameEx renderItemFrame = new RenderItemFrameEx(renderManager, itemRenderer);
         renderManager.entityRenderMap.remove(EntityItemFrame.class);
         renderManager.entityRenderMap.put(EntityItemFrame.class, renderItemFrame);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SkipSignConfig.SPEC);
-        
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event)
-    {
-        if (Minecraft.getInstance().currentScreen == null)
-        {
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (Minecraft.getInstance().currentScreen == null) {
             EntityPlayer player = Minecraft.getInstance().player;
 
-            if (!key_down && InputMappings.isKeyDown(SkipSignConfig.GENERAL.visibleKeyId.get()))
-            {
+            if (!key_down && InputMappings.isKeyDown(SkipSignConfig.GENERAL.visibleKeyId.get())) {
                 Minecraft.getInstance().displayGuiScreen(new GuiOption());
-
                 key_down = true;
             }
-            else if (key_down && !InputMappings.isKeyDown(SkipSignConfig.GENERAL.visibleKeyId.get()))
-            {
+            else if (key_down && !InputMappings.isKeyDown(SkipSignConfig.GENERAL.visibleKeyId.get())) {
                 key_down = false;
             }
         }
     }
 
-    public boolean GetHoldKey()
-    {
+    public boolean GetHoldKey() {
          return key_down;
     }
 
     @SubscribeEvent
-    public void RenderTickEvent(TickEvent.RenderTickEvent event)
-    {
-        if (event.phase == TickEvent.Phase.START)
-        {
+    public void RenderTickEvent(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
             renderPartialTicks = event.renderTickTime;
-
-            if (Minecraft.getInstance().player != null) DrawableApi.beginFrustum();
+            if (Minecraft.getInstance().player != null)
+                DrawableApi.beginFrustum();
         }
-        else if (event.phase == TickEvent.Phase.END)
-        {
+        else if (event.phase == TickEvent.Phase.END) {
         }
     }
 }

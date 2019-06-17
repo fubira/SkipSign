@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[25,)" 
+
+author="fubira"
+issueTrackerURL="https://github.com/fubira/SkipSign/issues"
+
+[[mods]] #mandatory
+# The modid of the mod
+modId="skipsign"
+version="${file.jarVersion}"
+displayName="SkipSign"
+displayURL="https://github.com/fubira/SkipSign/"
+credits="Original by TTTA2, Maintained by fubira/KenmoMinecraftClub"
+author="TTTA2,fubira"
+
+description='''
+SkipSign is optimization mod that reduces the load of multibyte character fonts by limiting the drawing of Sign.
+It is effective for languages ​​with many characters. And you can also limit the drawing of ItemFrame, Chest, Head, etc.
+'''
+
+[[dependencies.examplemod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.skipsign]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+
