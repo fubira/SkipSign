@@ -7,13 +7,9 @@ import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
 
-@SideOnly(Side.CLIENT)
 public class TileEntityChestRendererEx extends TileEntityChestRenderer
 {
     public TileEntityChestRendererEx()

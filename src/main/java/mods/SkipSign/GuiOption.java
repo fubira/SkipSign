@@ -2,16 +2,13 @@ package mods.skipsign;
 
 import java.io.IOException;
 
-import org.apache.logging.log4j.Level;
-
-import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.input.Keyborad;
 
-@SideOnly(Side.CLIENT)
+import mods.skipsign.ModLog;
+
 public class GuiOption extends GuiScreen
 {
     public void drawScreen(int par1, int par2, float par3)
@@ -301,7 +298,7 @@ public class GuiOption extends GuiScreen
         try {
             super.keyTyped(par1, par2);
         } catch(IOException e) {
-            FMLLog.log(Level.FATAL, "keyTyped: %s", e.toString());
+            ModLog.Error("keyTyped: " + e.toString());
         }
         
         if (KeyChange_ZoomKey && par2 != 1)

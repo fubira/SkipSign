@@ -8,12 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.logging.log4j.Level;
+import javax.security.auth.login.Configuration;
+
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,32 +22,43 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid = "skipsign",
-     dependencies = "required-after:forge@[14.23,)",
-     acceptableRemoteVersions = "*",
-     acceptedMinecraftVersions = "",
-     version = "@VERSION@")
+import mods.skipsign.ModLog;
+
+@Mod(SkipSignCore.modId)
 public class SkipSignCore
 {
+    public static final String modId = "skipsign";
+    public static final String buildId = "2019-6";
+    public static String modVersion;
+
+
     private boolean key_down = false;
     private int HoldTime = 0;
 
     public static Setting ModSetting;
     public static float renderPartialTicks;
 
-    @EventHandler
+    SkipSignCore() {
+		ModLoadingContext ctx = ModLoadingContext.get();
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		
+		modVersion = ctx.getActiveContainer().getModInfo().getVersion().toString();
+		
+		bus.register(this);
+    }
+
+    @SubscribeEvent
     public void preInit(FMLPreInitializationEvent event)
     {
         Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
@@ -81,7 +93,7 @@ public class SkipSignCore
         }
         catch (Exception e)
         {
-            FMLLog.log(Level.FATAL, "preInit failed: %s", e.toString());
+            ModLog.Error("preInit failed: " + e.toString());
         }
         finally
         {
@@ -89,7 +101,7 @@ public class SkipSignCore
         }
     }
 
-    @EventHandler
+    @SubscribeEvent
     public void init(FMLInitializationEvent event)
     {
         RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
@@ -118,7 +130,6 @@ public class SkipSignCore
         FMLCommonHandler.instance().bus().register(this);
     }
 
-    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event)
     {

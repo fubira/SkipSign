@@ -7,13 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.ITextComponent;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import mods.skipsign.SkipSignCore;
-import mods.skipsign.SkipSignHelper;
-
-@SideOnly(Side.CLIENT)
 public class TileEntitySignRendererEx extends TileEntitySignRenderer
 {
     public TileEntitySignRendererEx()

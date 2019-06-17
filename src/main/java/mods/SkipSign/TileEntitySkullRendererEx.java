@@ -7,13 +7,9 @@ import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
 
-@SideOnly(Side.CLIENT)
 public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 {
     public TileEntitySkullRendererEx()

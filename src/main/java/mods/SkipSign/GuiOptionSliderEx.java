@@ -5,10 +5,6 @@ import net.minecraft.client.gui.GuiButton;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-@SideOnly(Side.CLIENT)
 public class GuiOptionSliderEx extends GuiButton
 {
     /** The value of this slider control. */

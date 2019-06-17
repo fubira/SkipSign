@@ -8,13 +8,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.ItemStack;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import mods.skipsign.SkipSignCore;
 import mods.skipsign.SkipSignHelper;
 
-@SideOnly(Side.CLIENT)
 public class RenderItemFrameEx extends RenderItemFrame
 {
     public RenderItemFrameEx(RenderManager renderManager, RenderItem renderItem)

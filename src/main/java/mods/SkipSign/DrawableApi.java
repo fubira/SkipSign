@@ -13,9 +13,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 public class DrawableApi
 {
     public static Frustum frustum = new Frustum();
@@ -73,7 +70,6 @@ public class DrawableApi
         return DrawableApi.isDraw1(tileEntity, DX, DY, DZ) && (ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(bb));
     }
 
-    @SideOnly(Side.CLIENT)
     public static boolean isDraw1(World w, int x, int y, int z, double dx, double dy, double dz)
     {
         double d3 = x - dx;
@@ -83,7 +79,6 @@ public class DrawableApi
         return isInRangeToRenderDist(w, x, y, z, d6);
     }
 
-    @SideOnly(Side.CLIENT)
     public static boolean isDraw1(TileEntity chest, double dx, double dy, double dz)
     {
         double d3 = (double)chest.getPos().getX() - dx;
@@ -93,7 +88,6 @@ public class DrawableApi
         return isInRangeToRenderDist(chest, d6);
     }
 
-    @SideOnly(Side.CLIENT)
     public static boolean isInRangeToRenderDist(World w, int x, int y, int z, double par1)
     {
         Block c = Blocks.STONE;
@@ -103,7 +97,6 @@ public class DrawableApi
         return par1 < d1 * d1;
     }
 
-    @SideOnly(Side.CLIENT)
     public static boolean isInRangeToRenderDist(TileEntity chest, double par1)
     {
         Block c = Blocks.STONE;
