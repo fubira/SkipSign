@@ -48,12 +48,20 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
 		this.parentScreen = parentScreen;
     }
 
-    private OptionButton ShowBoard, ScrGui;
-    private OptionButton ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
-    private OptionButton SignDO, ChestDO, SkullDO;
-    private GuiSlider signRange, frameRange, skullRange, chestRange;
-    private static int maxRange = 128;
+    private OptionButton btnEnableMod;
+    private OptionButton btnOutofRangeSign;
+    private OptionButton btnOutofRangeFrame;
+    private OptionButton btnViewModeSign;
+    private OptionButton btnViewModeFrame;
+    private OptionButton btnViewModeChest;
+    private OptionButton btnViewModeSkull;
 
+    private GuiSlider sliderRangeSign;
+    private GuiSlider sliderRangeFrame;
+    private GuiSlider sliderRangeSkull;
+    private GuiSlider sliderRangeChest;
+
+    private static final int maxRange = 128;
 
     @Override
     public void initGui()
@@ -63,28 +71,21 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
 
         int left = (this.width - 360) / 2;
         int top = (this.height - 200) / 2;
-    
-        SignDO          = addButton(new OptionButton(0, left + 225, top +  25, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
-        ChestDO         = addButton(new OptionButton(0, left + 225, top +  75, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
-        SkullDO         = addButton(new OptionButton(0, left + 225, top + 100, 120, 20, I18n.format("setting.renderarea.range"), this::onButtonClicked));
 
-        ApplySign       = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        ApplyItemFrame  = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        ApplyChest      = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        ApplySkull      = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeSign     = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeFrame    = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeChest    = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeSkull    = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
 
-        /*
-        signRange       = addButton(new GuiOptionSliderEx(5, left + 120, top +  25, Config.viewRangeSign.get(), (float)maxRange));
-        frameRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  50, Config.viewRangeFrame.get(), (float)maxRange));
-        chestRange      = addButton(new GuiOptionSliderEx(5, left + 120, top +  75, Config.viewRangeChest.get(), (float)maxRange));
-        skullRange      = addButton(new GuiOptionSliderEx(5, left + 120, top + 100, Config.viewRangeSkull.get(), (float)maxRange));
-        */
-        signRange       = addButton(new GuiSlider(5, left + 120, top +  25, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), true, true, this));
-        frameRange      = addButton(new GuiSlider(5, left + 120, top +  50, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), true, true, this));
-        chestRange      = addButton(new GuiSlider(5, left + 120, top +  75, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), true, true, this));
-        skullRange      = addButton(new GuiSlider(5, left + 120, top + 100, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), true, true, this));
+        sliderRangeSign     = addButton(new GuiSlider(5, left + 120, top +  25, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), true, true, this));
+        sliderRangeFrame    = addButton(new GuiSlider(5, left + 120, top +  50, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), true, true, this));
+        sliderRangeSkull    = addButton(new GuiSlider(5, left + 120, top +  75, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), true, true, this));
+        sliderRangeChest    = addButton(new GuiSlider(5, left + 120, top + 100, 100, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), true, true, this));
 
-        ShowBoard       = addButton(new OptionButton(4, left +   0, top + 140, 100, 20, I18n.format("setting.framebase.show"), this::onButtonClicked));
+        btnOutofRangeSign   = addButton(new OptionButton(0, left + 225, top +  25, 120, 20, I18n.format("setting.outofrange.sign.show"), this::onButtonClicked));
+        btnOutofRangeFrame  = addButton(new OptionButton(0, left + 225, top +  50, 120, 20, I18n.format("setting.outofrange.frame.show"), this::onButtonClicked));
+
+        btnEnableMod        = addButton(new OptionButton(0, left, top + 140, 100, 20, I18n.format("setting.mod.enable"), this::onButtonClicked));
         update();
     }
 
@@ -124,79 +125,75 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
     }  
     
 	private void onButtonClicked(GuiButton btn) {
-        if (btn == ApplySign) {
+        if (btn == btnViewModeSign) {
             SkipSignMod.config.set(Config.viewModeSign, toggleViewMode(Config.viewModeSign.get()));
         }        
-        if (btn == ApplyItemFrame) {
+        if (btn == btnViewModeFrame) {
             SkipSignMod.config.set(Config.viewModeFrame, toggleViewMode(Config.viewModeFrame.get()));
         }
-        if (btn == ApplyChest) {
+        if (btn == btnViewModeChest) {
             SkipSignMod.config.set(Config.viewModeChest, toggleViewMode(Config.viewModeChest.get()));
         }
-        if (btn == ApplySkull) {
+        if (btn == btnViewModeSkull) {
             SkipSignMod.config.set(Config.viewModeSkull, toggleViewMode(Config.viewModeSkull.get()));
         }
         
-        if (btn == SignDO) {
-            SkipSignMod.config.set(Config.dropOffSign, !Config.dropOffSign.get());
+        if (btn == btnOutofRangeSign) {
+            SkipSignMod.config.set(Config.dropOffSignBoard, !Config.dropOffSignBoard.get());
         }
-        if (btn == ChestDO) {
-            SkipSignMod.config.set(Config.dropOffChest, !Config.dropOffChest.get());
-        }
-        if (btn == SkullDO) {
-            SkipSignMod.config.set(Config.dropOffSkull, !Config.dropOffSkull.get());
-        }
-        
-        if (btn.id == 4) {
-            SkipSignMod.config.set(Config.dropOffFrameBase, !Config.dropOffFrameBase.get());
+        if (btn == btnOutofRangeFrame) {
+            SkipSignMod.config.set(Config.dropOffFrameBoard, !Config.dropOffFrameBoard.get());
         }
 
-        if (btn == skullRange) {
-            SkipSignMod.config.set(Config.viewRangeSkull, skullRange.getValueInt());
-        }
-        if (btn == signRange) {
-            SkipSignMod.config.set(Config.viewRangeSign, signRange.getValueInt());
-        }
-        if (btn == frameRange) {
-            SkipSignMod.config.set(Config.viewRangeFrame, frameRange.getValueInt());
-        }
-        if (btn == chestRange) {
-            SkipSignMod.config.set(Config.viewRangeChest, chestRange.getValueInt());
+        if (btn == btnEnableMod) {
+            SkipSignMod.config.set(Config.enableMod, !Config.enableMod.get());
         }
         update();
 
     }
 
     public void onChangeSliderValue(GuiSlider slider) {
-        SkipSignMod.logger.info(slider.getValue());
+        if (slider == sliderRangeSkull && Config.viewRangeSkull.get() != sliderRangeSkull.getValueInt()) {
+            SkipSignMod.config.set(Config.viewRangeSkull, sliderRangeSkull.getValueInt());
+        }
+        if (slider == sliderRangeSign && Config.viewRangeSign.get() != sliderRangeSign.getValueInt()) {
+            SkipSignMod.config.set(Config.viewRangeSign, sliderRangeSign.getValueInt());
+        }
+        if (slider == sliderRangeFrame && Config.viewRangeFrame.get() != sliderRangeSign.getValueInt()) {
+            SkipSignMod.config.set(Config.viewRangeFrame, sliderRangeSign.getValueInt());
+        }
+        if (slider == sliderRangeChest && Config.viewRangeChest.get() != sliderRangeChest.getValueInt()) {
+            SkipSignMod.config.set(Config.viewRangeChest, sliderRangeChest.getValueInt());
+        }
+        update();
     }
 
     private void update()
     {
         switch (Config.viewModeSign.get()) {
-            case NORMAL: ApplySign.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  ApplySign.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   ApplySign.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeSign.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeSign.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   btnViewModeSign.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeFrame.get()) {
-            case NORMAL: ApplyItemFrame.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  ApplyItemFrame.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   ApplyItemFrame.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeFrame.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeFrame.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   btnViewModeFrame.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeChest.get()) {
-            case NORMAL: ApplyChest.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  ApplyChest.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   ApplyChest.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeFrame.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeFrame.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   btnViewModeFrame.displayString = I18n.format("setting.viewmode.none"); break;
         }
         switch (Config.viewModeSkull.get()) {
-            case NORMAL: ApplySkull.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  ApplySkull.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   ApplySkull.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeFrame.displayString = I18n.format("setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeFrame.displayString = I18n.format("setting.viewmode.force"); break;
+            case NONE:   btnViewModeFrame.displayString = I18n.format("setting.viewmode.none"); break;
         }
         
-        SignDO.displayString = Config.dropOffSign.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
-        ChestDO.displayString = Config.dropOffChest.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
-        SkullDO.displayString = Config.dropOffSkull.get() ? I18n.format("setting.renderarea.range") : I18n.format("setting.renderarea.full");
-        ShowBoard.displayString = Config.dropOffFrameBase.get() ? I18n.format("setting.framebase.show") : I18n.format("setting.framebase.hide");
+        btnOutofRangeSign.displayString = Config.dropOffSignBoard.get() ? I18n.format("setting.outofrange.sign.hide") : I18n.format("setting.outofrange.sign.show");
+        btnOutofRangeFrame.displayString = Config.dropOffFrameBoard.get() ? I18n.format("setting.outofrange.frame.hide") : I18n.format("setting.outofrange.frame.show");
+
+        btnEnableMod.displayString = Config.enableMod.get() ? I18n.format("setting.mod.isenabled") : I18n.format("setting.mod.isdisabled");
     }
 }

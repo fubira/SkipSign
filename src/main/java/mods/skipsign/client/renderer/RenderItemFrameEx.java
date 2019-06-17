@@ -22,27 +22,30 @@ public class RenderItemFrameEx extends RenderItemFrame
     @Override
     public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        ItemStack frameItemStack = ItemStack.EMPTY;
-
-        if (!CheckVisibleState(entity))
-        {
-            frameItemStack = entity.getDisplayedItem();
-            entity.setDisplayedItem(ItemStack.EMPTY);
-        }
-
-        if ((!Config.dropOffFrameBase.get()) ||
-            (Config.dropOffFrameBase.get() && CheckVisibleState(entity)))
-        {
+        if (!Config.enableMod.get()) {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
+        } else {
+            ItemStack frameItemStack = ItemStack.EMPTY;
+            boolean visible = isVisible(entity);
+    
+            if (!visible) {
+                frameItemStack = entity.getDisplayedItem();
+                entity.setDisplayedItem(ItemStack.EMPTY);
+            }
+    
+            if ((!Config.dropOffFrameBoard.get()) || (Config.dropOffFrameBoard.get() && visible)) {
+                super.doRender(entity, x, y, z, entityYaw, partialTicks);
+            }
+    
+            if (!frameItemStack.isEmpty()) {
+                entity.setDisplayedItem(frameItemStack);
+            }
         }
 
-        if (!frameItemStack.isEmpty())
-        {
-            entity.setDisplayedItem(frameItemStack);
-        }
+
     }
 
-    public boolean CheckVisibleState(EntityItemFrame entityItemFrame)
+    public boolean isVisible(EntityItemFrame entityItemFrame)
     {
         if (Config.viewModeFrame.get() == ViewMode.FORCE)
             return true;
@@ -56,6 +59,7 @@ public class RenderItemFrameEx extends RenderItemFrame
                 RendererHelper.GetDistancePlayerToEntity(entityItemFrame),
                 Config.viewRangeFrame.get()))
             return true;
+
         return false;
     }
 }

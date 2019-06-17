@@ -4,6 +4,7 @@
     "keybinding.desc.zoom": "Temporarily disable",
 
     "setting.title": "SkipSign Settings",
+
     "setting.description.sign": "Sign",
     "setting.description.frame": "Frame",
     "setting.description.chest": "Chest",
@@ -13,11 +14,20 @@
     "setting.viewmode.force": "Force",
     "setting.viewmode.none": "None",
 
+    "setting.outofrange.sign.show": "Hide text only",
+    "setting.outofrange.sign.hide": "Hide signboard",
+
+    "setting.outofrange.frame.show": "Hide content only",
+    "setting.outofrange.frame.hide": "Hide frameboard",
+
     "setting.renderarea.range": "Within range",
     "setting.renderarea.full": "Force all",
 
     "setting.framebase.show": "Show board",
     "setting.framebase.hide": "Hide board",
+
+    "setting.mod.isenabled": "SkipSign is Enabled",
+    "setting.mod.isdisabled": "SkipSign is Disabled",
 
     "setting.slider.range.prefix": "Range:",
     "setting.slider.range.postfix": "m"

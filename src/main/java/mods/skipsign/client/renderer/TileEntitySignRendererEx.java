@@ -5,9 +5,11 @@ import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
+import mods.skipsign.SkipSignMod;
 
 public class TileEntitySignRendererEx extends TileEntitySignRenderer
 {
@@ -21,52 +23,54 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
         ITextComponent [] tempSignText = new ITextComponent[entity.signText.length];
 
         for (int i = 0; i < entity.signText.length; i++)
-            tempSignText[i] = entity.signText[i];
+            tempSignText[i] = entity.func_212366_a(i);  // TileEntitySign.getText(i)
 
         return tempSignText;
     }
 
     public void setSignText(TileEntitySign entity, ITextComponent [] text)
     {
-        for (int i = 0; i < entity.signText.length; i++)
-            entity.signText[i] = text[i];
+        for (int i = 0; i < entity.signText.length; i++) {
+            entity.func_212365_a(i, text[i]);   // TileEntitySign.setText(i)
+        }
     }
 
     public void deleteSignText(TileEntitySign entity)
     {
-        for (int i = 0; i < entity.signText.length; i++)
-            entity.signText[i] = null;
+        for (int i = 0; i < entity.signText.length; i++) {
+            entity.func_212365_a(i, null);      // TileEntitySign.getText(i)
+        }
     }
 
     @Override
     public void render(TileEntitySign entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if (!isDropOff(entity, x, y, z))
-            return;
-
-        ITextComponent [] temporaryText = null;
-        if (!CheckVisibleState(entity))
-        {
-            temporaryText = getSignText(entity);
-            deleteSignText(entity);
-        }
-
-        if ((!Config.dropOffFrameBase.get()) ||
-            (Config.dropOffFrameBase.get() && CheckVisibleState(entity)))
-        {
+        if (!Config.enableMod.get()) {
             super.render(entity, x, y, z, partialTicks, destroyStage);
+        } else {
+            ITextComponent [] temporaryText = null;
+            boolean visible = isVisible(entity);
+
+            if (!visible) {
+                // Hide text/signboard
+                temporaryText = getSignText(entity);
+                deleteSignText(entity);
+                SkipSignMod.logger.info("invisible:" + temporaryText);
+            }
+
+            if (!Config.dropOffSignBoard.get() || (Config.dropOffSignBoard.get() && visible)) {
+                SkipSignMod.logger.info("render:" + entity.signText[0]);
+                super.render(entity, x, y, z, partialTicks, destroyStage);
+            }
+
+            if (temporaryText != null) {
+                SkipSignMod.logger.info("reset:" + temporaryText);
+                setSignText(entity, temporaryText);
+            }
         }
-
-        if (temporaryText != null)
-            setSignText(entity, temporaryText);
     }
 
-    public boolean isDropOff(TileEntity tile, double x, double y, double z)
-    {
-        return true;
-    }
-
-    public boolean CheckVisibleState(TileEntitySign tileEntitySign)
+    public boolean isVisible(TileEntitySign tileEntitySign)
     {
         if (Config.viewModeSign.get() == ViewMode.FORCE)
             return true;

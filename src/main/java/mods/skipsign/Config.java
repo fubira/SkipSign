@@ -23,11 +23,10 @@ public class Config {
     public static final IntValue viewRangeChest;
     public static final IntValue viewRangeSkull;
 
-    public static final BooleanValue dropOffSign;
-    public static final BooleanValue dropOffFrameBase;
-    public static final BooleanValue dropOffChest;
-    public static final BooleanValue dropOffSkull;
-    public static final BooleanValue disableMod;
+    public static final BooleanValue dropOffSignBoard;
+    public static final BooleanValue dropOffFrameBoard;
+
+    public static final BooleanValue enableMod;
 
     public static final ForgeConfigSpec spec;
 
@@ -50,14 +49,12 @@ public class Config {
         
         viewRangeSign   = builder.defineInRange("viewRangeSign", 20, 1, 128); 
         viewRangeFrame  = builder.defineInRange("viewRangeFrame", 20, 1, 128); 
-        viewRangeChest  = builder.defineInRange("viewRangeChest", 20, 1, 128); 
-        viewRangeSkull  = builder.defineInRange("viewRangeSkull", 20, 1, 128); 
+        viewRangeChest  = builder.defineInRange("viewRangeChest", 64, 1, 128); 
+        viewRangeSkull  = builder.defineInRange("viewRangeSkull", 64, 1, 128); 
 
-        dropOffSign     = builder.define("dropOffSign", true);
-        dropOffFrameBase= builder.define("dropOffFrameBase", true);
-        dropOffChest    = builder.define("dropOffChest", true);
-        dropOffSkull    = builder.define("dropOffSkull", true);
-        disableMod      = builder.define("disableMod", false);
+        dropOffSignBoard  = builder.define("dropOffSignBoard", false);
+        dropOffFrameBoard = builder.define("dropOffFrameBoard", false);
+        enableMod      = builder.define("enableMod", true);
 
         builder.pop();
         spec = builder.build();

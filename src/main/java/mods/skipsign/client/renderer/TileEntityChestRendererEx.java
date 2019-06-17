@@ -20,22 +20,13 @@ public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends
     @Override
     public void render(T entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if (!isDropOff(entity, x, y, z))
-            return;
-
-        if (Minecraft.getInstance().player == null || entity.getWorld() == null ||
-            CheckVisibleState(entity))
+        if (!Config.enableMod.get() || Minecraft.getInstance().player == null || entity.getWorld() == null || isVisible(entity))
         {
             super.render(entity, x, y, z, partialTicks, destroyStage);
         }
     }
 
-    public boolean isDropOff(T tile, double x, double y, double z)
-    {
-        return true;
-    }
-
-    public boolean CheckVisibleState(T tileEntityChest)
+    public boolean isVisible(T tileEntityChest)
     {
         if (Config.viewModeChest.get() == ViewMode.FORCE)
             return true;

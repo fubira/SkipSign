@@ -19,22 +19,13 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
     @Override
     public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        if (!isDropOff(entity, x, y, z))
-            return;
-
-        if (Minecraft.getInstance().player == null || entity.getWorld() == null ||
-            CheckVisibleState(entity))
+        if (!Config.enableMod.get() || Minecraft.getInstance().player == null || entity.getWorld() == null || isVisible(entity))
         {
             super.render(entity, x, y, z, partialTicks, destroyStage);
         }
     }
 
-    public boolean isDropOff(TileEntity tile, double x, double y, double z)
-    {
-        return true;
-    }
-
-    public boolean CheckVisibleState(TileEntitySkull tileEntitySkull)
+    public boolean isVisible(TileEntitySkull tileEntitySkull)
     {
         if (Config.viewModeSkull.get() == ViewMode.FORCE)
             return true;
