@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.client;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -13,21 +13,21 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import mods.skipsign.SkipSignMod;
+
 public class DrawableApi
 {
     public static Frustum frustum = new Frustum();
 
     public static double DX = 0, DY = 0, DZ = 0;
 
-    public static void beginFrustum()
+    public static void beginFrustum(float tick)
     {
-        float f = SkipSignMod.renderPartialTicks;
-
         EntityPlayer player = Minecraft.getInstance().player;
 
-        DX = player.prevPosX + (player.posX - player.prevPosX) * (double)f;
-        DY = player.prevPosY + (player.posY - player.prevPosY) * (double)f;
-        DZ = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)f;
+        DX = player.prevPosX + (player.posX - player.prevPosX) * (double)tick;
+        DY = player.prevPosY + (player.posY - player.prevPosY) * (double)tick;
+        DZ = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)tick;
 
         frustum.setPosition(DX, DY, DZ);
 

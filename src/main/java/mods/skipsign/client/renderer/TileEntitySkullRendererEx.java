@@ -1,25 +1,24 @@
-package mods.skipsign.renderer;
+package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntitySkull;
 
 import mods.skipsign.Config;
 import mods.skipsign.SkipSignHelper;
 import mods.skipsign.ViewMode;
 
-public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends TileEntityChestRenderer<T>
+public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
 {
-    public TileEntityChestRendererEx()
+    public TileEntitySkullRendererEx()
     {
         super();
     }
 
     @Override
-    public void render(T entity, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!isDropOff(entity, x, y, z))
             return;
@@ -31,24 +30,24 @@ public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends
         }
     }
 
-    public boolean isDropOff(T tile, double x, double y, double z)
+    public boolean isDropOff(TileEntity tile, double x, double y, double z)
     {
         return true;
     }
 
-    public boolean CheckVisibleState(T tileEntityChest)
+    public boolean CheckVisibleState(TileEntitySkull tileEntitySkull)
     {
-        if (Config.viewModeChest.get() == ViewMode.FORCE)
+        if (Config.viewModeSkull.get() == ViewMode.FORCE)
             return true;
-        if (Config.viewModeChest.get() == ViewMode.NONE)
+        if (Config.viewModeSkull.get() == ViewMode.NONE)
             return false;
 
         if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
         if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntityChest),
-                Config.viewRangeChest.get()))
+                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
+                Config.viewRangeSkull.get()))
             return true;
 
         return false;

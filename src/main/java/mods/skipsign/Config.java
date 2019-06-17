@@ -40,7 +40,7 @@ public class Config {
 
         builder.push("general");
     
-        keyCodeVisible  = builder.defineInRange("keyCodeVisible", GLFW.GLFW_KEY_LEFT_CONTROL, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        keyCodeVisible  = builder.defineInRange("keyCodeVisible", GLFW.GLFW_KEY_F8, Integer.MIN_VALUE, Integer.MAX_VALUE);
         keyCodeZoom     = builder.defineInRange("keyCodeZoom", GLFW.GLFW_KEY_RIGHT_ALT, Integer.MIN_VALUE, Integer.MAX_VALUE);
         
         viewModeSign    = builder.defineEnum("viewModeSign", () -> ViewMode.NORMAL, obj -> true, ViewMode.class);

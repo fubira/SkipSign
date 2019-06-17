@@ -1,4 +1,4 @@
-package mods.skipsign.renderer;
+package mods.skipsign.client.renderer;
 
 import net.minecraft.client.renderer.entity.RenderItemFrame;
 import net.minecraft.client.renderer.ItemRenderer;

@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.client.gui;
 
 import java.io.IOException;
 
@@ -64,20 +64,20 @@ public class GuiOption extends GuiScreen
         ApplyItemFrame = new Button(0, x - 120, y - 50, 75, 20, "範囲描画");
         ApplyChest = new Button(0, x - 120, y - 25, 75, 20, "範囲描画");
         ApplySkull = new Button(0, x - 120, y , 75, 20, "範囲描画");
-        /*
-        signRange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", SkipSignSettings.viewRangeSign.get(), (float)maxRange);
-        frameRange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", SkipSignSettings.viewRangeSign.get(), (float)maxRange);
-        chestRange = new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", SkipSignConfig.GENERAL.chestVisibleRange.get(), (float)maxRange);
-        skullRange = new GuiOptionSliderEx(5, x - 40, y, "描画範囲", SkipSignConfig.GENERAL.skullVisibleRange.get(), (float)maxRange);
-        */
+
+        signRange = new GuiOptionSliderEx(5, x - 40, y - 75, "描画範囲", Config.viewRangeSign.get(), (float)maxRange);
+        frameRange = new GuiOptionSliderEx(5, x - 40, y - 50, "描画範囲", Config.viewRangeFrame.get(), (float)maxRange);
+        chestRange = new GuiOptionSliderEx(5, x - 40, y - 25, "描画範囲", Config.viewRangeChest.get(), (float)maxRange);
+        skullRange = new GuiOptionSliderEx(5, x - 40, y, "描画範囲", Config.viewRangeSkull.get(), (float)maxRange);
+
         //AllDraw = new GuiButton(1, x - 107, y - 75, 60, 20, "すべて描画");
         //SkipDraw = new GuiButton(2, x - 42, y - 75, 60, 20, "描画しない");
-/*
-        ChangeKey = new Button(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.visibleKeyId.get(), 0).getName()));
+
+        ChangeKey = new Button(3, x - 77, y + 45, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName()));
         ShowBoard = new Button(4, x - 172, y + 45, 90, 20, "本体を表示");
 
-        ZoomKey = new Button(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(SkipSignConfig.GENERAL.zoomKeyId.get(), 0).getName()));
-*/
+        ZoomKey = new Button(7, x - 77, y + 70, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName()));
+
         update();
 
         this.children.add(ApplySign);
