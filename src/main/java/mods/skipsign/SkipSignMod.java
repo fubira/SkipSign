@@ -1,13 +1,5 @@
 package mods.skipsign;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -15,7 +7,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,12 +25,12 @@ public class SkipSignMod
 
     public SkipSignMod() {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        ClientEventHandler.register();
+        new ClientEventHandler();
 
         Config.register(ModLoadingContext.get());
         modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
 
-        SkipSignMod.logger.info("*** SkipSign " + modVersion + " ***");
+        SkipSignMod.logger.info("*** SkipSign " + modVersion + " initialized ***");
     }
     
 	@SubscribeEvent

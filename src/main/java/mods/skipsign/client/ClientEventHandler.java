@@ -11,6 +11,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import mods.skipsign.Config;
 import mods.skipsign.SkipSignConfig;
@@ -23,19 +24,22 @@ public final class ClientEventHandler {
     private boolean key_down = false;
     private int HoldTime = 0;
 
-    public static void register(){
-		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+    public ClientEventHandler(){
+        SkipSignMod.logger.info("ClientEventHandler::register");
+        FMLJavaModLoadingContext.get().getModEventBus().register(this);
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event) {
+        SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
         ClientKeyBindings.register();
         ClientRenderer.register();
     }
 
     @SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
-        SkipSignMod.logger.info("SkipSignMod::onInterModEnqueue");
+        SkipSignMod.logger.info("ClientEventHandler::InterModEnqueueEvent");
     }
 
     @SubscribeEvent
@@ -44,14 +48,10 @@ public final class ClientEventHandler {
             return;
         }
 
-        if (InputMappings.isKeyDown(297)) {
-            SkipSignMod.logger.info("keydown 297");
-        }
-        if (!key_down && InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
+        if (!key_down && ClientKeyBindings.keyBindingOption.isPressed()) {
             Minecraft.getInstance().displayGuiScreen(new GuiConfigScreen(null));
             key_down = true;
-        }
-        else if (key_down && !InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
+        } else if (key_down && !ClientKeyBindings.keyBindingOption.isPressed()) {
             key_down = false;
         }
     }

@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 
 import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,7 +41,7 @@ public class GuiConfigScreen extends GuiScreen
 		this.parentScreen = parentScreen;
     }
 
-    private OptionButton ShowBoard, ChangeKey, ZoomKey, ScrGui;
+    private OptionButton ShowBoard, ScrGui;
     private OptionButton ApplySign, ApplyItemFrame, ApplyChest, ApplySkull;
     private OptionButton SignDO, ChestDO, SkullDO;
 
@@ -68,9 +69,6 @@ public class GuiConfigScreen extends GuiScreen
         skullRange      = addButton(new GuiOptionSliderEx(5, left + 120, top + 100, "描画範囲", Config.viewRangeSkull.get(), (float)maxRange));
 
         ShowBoard       = addButton(new OptionButton(4, left +   0, top + 140, 100, 20, "本体を表示", this::onButtonClicked));
-        ChangeKey       = addButton(new OptionButton(3, left +   0, top + 165, 100, 20, String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName()), this::onButtonClicked));
-        ZoomKey         = addButton(new OptionButton(7, left + 105, top + 165, 100, 20, String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName()), this::onButtonClicked));
-
         update();
     }
 
@@ -110,11 +108,6 @@ public class GuiConfigScreen extends GuiScreen
     }  
     
 	private void onButtonClicked(GuiButton btn) {
-        SkipSignMod.logger.info("BTN: " + btn.id);
-
-        KeyChange_OpenSetting = false;
-        KeyChange_ZoomKey = false;
-
         if (btn == ApplySign) {
             SkipSignMod.config.set(Config.viewModeSign, toggleViewMode(Config.viewModeSign.get()));
         }        
@@ -142,14 +135,6 @@ public class GuiConfigScreen extends GuiScreen
             SkipSignMod.config.set(Config.dropOffFrameBase, !Config.dropOffFrameBase.get());
         }
 
-        if (btn.id == 3) {
-            KeyChange_OpenSetting = !KeyChange_OpenSetting;
-        }
-        
-        if (btn.id == 7) {
-            KeyChange_ZoomKey = !KeyChange_ZoomKey;
-        }
-
         if (btn == skullRange) {
             SkipSignMod.config.set(Config.viewRangeSkull, skullRange.getValue());
         }
@@ -167,8 +152,6 @@ public class GuiConfigScreen extends GuiScreen
     }
     
 
-    private boolean KeyChange_OpenSetting = false;
-    private boolean KeyChange_ZoomKey = false;
     private GuiOptionSliderEx signRange, frameRange, skullRange, chestRange;
     private static int maxRange = 128;
 
@@ -199,42 +182,5 @@ public class GuiConfigScreen extends GuiScreen
         ChestDO.displayString = Config.dropOffChest.get() ? "範囲外を描画しない" : "範囲外を描画する";
         SkullDO.displayString = Config.dropOffSkull.get() ? "範囲外を描画しない" : "範囲外を描画する";
         ShowBoard.displayString = Config.dropOffFrameBase.get() ? "背景を非表示" : "背景を表示";
-
-        if (KeyChange_OpenSetting) {
-            ChangeKey.displayString = "キーを入力してください";
-        } else {
-            ChangeKey.displayString = String.format("設定画面:%s", InputMappings.getInputByCode(Config.keyCodeVisible.get(), 0).getName());
-        }
-        
-        if (KeyChange_ZoomKey) {
-            ZoomKey.displayString = "キーを入力してください";
-        } else {
-            ZoomKey.displayString = String.format("一時解除:%s", InputMappings.getInputByCode(Config.keyCodeZoom.get(), 0).getName());
-        }
-    }
-
-    @Override
-    public boolean charTyped(char par1, int par2)
-    {
-        boolean result = false;
-
-        try {
-            result = super.charTyped(par1, par2);
-        } catch(Exception e) {
-            SkipSignMod.logger.error("charTyped: " + e.toString());
-        }
-        
-        if (KeyChange_ZoomKey && par2 != 1) {
-            SkipSignMod.config.set(Config.keyCodeZoom, par2);
-            KeyChange_ZoomKey = false;
-        }
-
-        if (KeyChange_OpenSetting && par2 != 1) {
-            SkipSignMod.config.set(Config.keyCodeVisible, par2);
-            KeyChange_OpenSetting = false;
-        }
-
-        update();
-        return result;
     }
 }
