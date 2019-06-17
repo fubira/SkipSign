@@ -1,4 +1,4 @@
-package mods.skipsign;
+package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 
-public class SkipSignHelper
+public class RendererHelper
 {
     public static double GetDistancePlayerToTileEntity(TileEntity tileEntity)
     {

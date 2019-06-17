@@ -8,7 +8,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 
 import mods.skipsign.Config;
-import mods.skipsign.SkipSignHelper;
 import mods.skipsign.ViewMode;
 
 public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends TileEntityChestRenderer<T>
@@ -46,8 +45,8 @@ public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends
         if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
-        if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntityChest),
+        if (RendererHelper.IsInRangeToRenderDist(
+                RendererHelper.GetDistancePlayerToTileEntity(tileEntityChest),
                 Config.viewRangeChest.get()))
             return true;
 

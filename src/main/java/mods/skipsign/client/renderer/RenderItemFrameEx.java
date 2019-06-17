@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 
 import mods.skipsign.Config;
-import mods.skipsign.SkipSignHelper;
 import mods.skipsign.ViewMode;
 
 public class RenderItemFrameEx extends RenderItemFrame
@@ -53,8 +52,8 @@ public class RenderItemFrameEx extends RenderItemFrame
         if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
-        if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToEntity(entityItemFrame),
+        if (RendererHelper.IsInRangeToRenderDist(
+                RendererHelper.GetDistancePlayerToEntity(entityItemFrame),
                 Config.viewRangeFrame.get()))
             return true;
         return false;

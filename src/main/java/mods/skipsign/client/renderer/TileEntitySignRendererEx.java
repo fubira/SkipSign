@@ -7,7 +7,6 @@ import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.text.ITextComponent;
 
 import mods.skipsign.Config;
-import mods.skipsign.SkipSignHelper;
 import mods.skipsign.ViewMode;
 
 public class TileEntitySignRendererEx extends TileEntitySignRenderer
@@ -77,8 +76,8 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
         if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
-        if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySign),
+        if (RendererHelper.IsInRangeToRenderDist(
+                RendererHelper.GetDistancePlayerToTileEntity(tileEntitySign),
                 Config.viewRangeSign.get()))
             return true;
 

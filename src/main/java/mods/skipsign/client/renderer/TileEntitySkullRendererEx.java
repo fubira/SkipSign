@@ -7,7 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 
 import mods.skipsign.Config;
-import mods.skipsign.SkipSignHelper;
 import mods.skipsign.ViewMode;
 
 public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
@@ -45,8 +44,8 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
         if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
             return true;
 
-        if (SkipSignHelper.IsInRangeToRenderDist(
-                SkipSignHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
+        if (RendererHelper.IsInRangeToRenderDist(
+                RendererHelper.GetDistancePlayerToTileEntity(tileEntitySkull),
                 Config.viewRangeSkull.get()))
             return true;
 
