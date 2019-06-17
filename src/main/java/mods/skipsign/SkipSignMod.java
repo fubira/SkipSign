@@ -56,13 +56,7 @@ public class SkipSignMod
     public static float renderPartialTicks;
 
     public SkipSignMod() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        // MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-        SkipSignMod.logger.info("SkipSignMod::setup");
 
         Config.register(ModLoadingContext.get());
         modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
