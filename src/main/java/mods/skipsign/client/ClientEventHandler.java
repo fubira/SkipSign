@@ -16,12 +16,10 @@ import mods.skipsign.Config;
 import mods.skipsign.SkipSignConfig;
 import mods.skipsign.SkipSignMod;
 import mods.skipsign.client.DrawableApi;
-import mods.skipsign.client.gui.GuiOption;
+import mods.skipsign.client.gui.GuiConfigScreen;
 
 @OnlyIn(Dist.CLIENT)
 public final class ClientEventHandler {
-    private static final Minecraft instance = Minecraft.getInstance();
-
     private boolean key_down = false;
     private int HoldTime = 0;
 
@@ -42,17 +40,19 @@ public final class ClientEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (instance.currentScreen == null) {
-            if (InputMappings.isKeyDown(297)) {
-                SkipSignMod.logger.info("keydown 297");
-            }
-            if (!key_down && InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
-                Minecraft.getInstance().displayGuiScreen(new GuiOption());
-                key_down = true;
-            }
-            else if (key_down && !InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
-                key_down = false;
-            }
+        if (Minecraft.getInstance().currentScreen != null) {
+            return;
+        }
+
+        if (InputMappings.isKeyDown(297)) {
+            SkipSignMod.logger.info("keydown 297");
+        }
+        if (!key_down && InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
+            Minecraft.getInstance().displayGuiScreen(new GuiConfigScreen(null));
+            key_down = true;
+        }
+        else if (key_down && !InputMappings.isKeyDown(Config.keyCodeVisible.get())) {
+            key_down = false;
         }
     }
 
