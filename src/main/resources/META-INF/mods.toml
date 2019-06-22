@@ -18,7 +18,7 @@ It is effective for languages with many characters.
 And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 '''
 
-[[dependencies.examplemod]]
+[[dependencies.skipsign]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.13.2]"
