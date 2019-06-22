@@ -1,31 +1,31 @@
 {
-    "keybinding.category.skipsign": "SkipSign",
-    "keybinding.desc.option": "Open setting menu",
-    "keybinding.desc.zoom": "Temporarily disable",
+    "skipsign.keybinding.category": "SkipSign",
+    "skipsign.keybinding.desc.option": "Open setting menu",
+    "skipsign.keybinding.desc.zoom": "Temporarily disable",
 
-    "setting.title": "SkipSign Settings",
+    "skipsign.setting.title": "SkipSign Settings",
 
-    "setting.description.sign": "Sign",
-    "setting.description.frame": "Frame",
-    "setting.description.chest": "Chest",
-    "setting.description.skull": "Head",
+    "skipsign.setting.description.sign": "Sign",
+    "skipsign.setting.description.frame": "Frame",
+    "skipsign.setting.description.chest": "Chest",
+    "skipsign.setting.description.skull": "Head",
 
-    "setting.viewmode.normal": "Range",
-    "setting.viewmode.force": "Force",
-    "setting.viewmode.none": "None",
+    "skipsign.setting.viewmode.normal": "Range",
+    "skipsign.setting.viewmode.force": "Force",
+    "skipsign.setting.viewmode.none": "None",
 
-    "setting.outofrange.sign.show": "Hide only text",
-    "setting.outofrange.sign.hide": "Hide signboard",
+    "skipsign.setting.outofrange.sign.show": "Hide only text",
+    "skipsign.setting.outofrange.sign.hide": "Hide signboard",
 
-    "setting.outofrange.frame.show": "Hide only content",
-    "setting.outofrange.frame.hide": "Hide frameboard",
+    "skipsign.setting.outofrange.frame.show": "Hide only content",
+    "skipsign.setting.outofrange.frame.hide": "Hide frameboard",
 
-    "setting.framebase.show": "Show board",
-    "setting.framebase.hide": "Hide board",
+    "skipsign.setting.framebase.show": "Show board",
+    "skipsign.setting.framebase.hide": "Hide board",
 
-    "setting.mod.isenabled": "SkipSign Enabled",
-    "setting.mod.isdisabled": "SkipSign Disabled",
+    "skipsign.setting.mod.isenabled": "SkipSign Enabled",
+    "skipsign.setting.mod.isdisabled": "SkipSign Disabled",
 
-    "setting.slider.range.prefix": "Visible Range:",
-    "setting.slider.range.postfix": "m"
+    "skipsign.setting.slider.range.prefix": "Visible Range:",
+    "skipsign.setting.slider.range.postfix": "m"
 }

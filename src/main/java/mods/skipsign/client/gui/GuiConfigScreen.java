@@ -66,20 +66,20 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
         int left = (this.width - 360) / 2;
         int top = (this.height - 200) / 2;
 
-        btnViewModeSign     = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        btnViewModeFrame    = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        btnViewModeChest    = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
-        btnViewModeSkull    = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, I18n.format("setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeSign     = addButton(new OptionButton(0, left +  55, top +   25, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeFrame    = addButton(new OptionButton(0, left +  55, top +   50, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeChest    = addButton(new OptionButton(0, left +  55, top +   75, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onButtonClicked));
+        btnViewModeSkull    = addButton(new OptionButton(0, left +  55, top +  100, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onButtonClicked));
 
-        sliderRangeSign     = addButton(new GuiSlider(5, left + 120, top +  25, 128, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), false, true, this));
-        sliderRangeFrame    = addButton(new GuiSlider(5, left + 120, top +  50, 128, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), false, true, this));
-        sliderRangeChest    = addButton(new GuiSlider(5, left + 120, top +  75, 128, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), false, true, this));
-        sliderRangeSkull    = addButton(new GuiSlider(5, left + 120, top + 100, 128, 20, I18n.format("setting.slider.range.prefix"), I18n.format("setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), false, true, this));
+        sliderRangeSign     = addButton(new GuiSlider(5, left + 120, top +  25, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), false, true, this));
+        sliderRangeFrame    = addButton(new GuiSlider(5, left + 120, top +  50, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), false, true, this));
+        sliderRangeChest    = addButton(new GuiSlider(5, left + 120, top +  75, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), false, true, this));
+        sliderRangeSkull    = addButton(new GuiSlider(5, left + 120, top + 100, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), false, true, this));
 
-        btnOutofRangeSign   = addButton(new OptionButton(0, left + 253, top +  25, 120, 20, I18n.format("setting.outofrange.sign.show"), this::onButtonClicked));
-        btnOutofRangeFrame  = addButton(new OptionButton(0, left + 253, top +  50, 120, 20, I18n.format("setting.outofrange.frame.show"), this::onButtonClicked));
+        btnOutofRangeSign   = addButton(new OptionButton(0, left + 253, top +  25, 120, 20, I18n.format("skipsign.setting.outofrange.sign.show"), this::onButtonClicked));
+        btnOutofRangeFrame  = addButton(new OptionButton(0, left + 253, top +  50, 120, 20, I18n.format("skipsign.setting.outofrange.frame.show"), this::onButtonClicked));
 
-        btnEnableMod        = addButton(new OptionButton(0, left, top + 140, 100, 20, I18n.format("setting.mod.enable"), this::onButtonClicked));
+        btnEnableMod        = addButton(new OptionButton(0, left, top + 140, 100, 20, I18n.format("skipsign.setting.mod.enable"), this::onButtonClicked));
         update();
     }
 
@@ -93,11 +93,11 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
         
         this.drawDefaultBackground();
 
-        this.drawString(fontRenderer, I18n.format("setting.title")             , left, top          , 0xffffff);
-        this.drawString(fontRenderer, I18n.format("setting.description.sign")  , left, top +  25 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("setting.description.frame") , left, top +  50 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("setting.description.chest") , left, top +  75 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("setting.description.skull") , left, top + 100 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("skipsign.setting.title")             , left, top          , 0xffffff);
+        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.sign")  , left, top +  25 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.frame") , left, top +  50 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.chest") , left, top +  75 + 5, 0xffffff);
+        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.skull") , left, top + 100 + 5, 0xffffff);
         
         super.render(mouseX, mouseY, partialTicks);
     }
@@ -165,29 +165,29 @@ public class GuiConfigScreen extends GuiScreen implements GuiSlider.ISlider
     private void update()
     {
         switch (Config.viewModeSign.get()) {
-            case NORMAL: btnViewModeSign.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  btnViewModeSign.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   btnViewModeSign.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeSign.displayString = I18n.format("skipsign.setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeSign.displayString = I18n.format("skipsign.setting.viewmode.force"); break;
+            case NONE:   btnViewModeSign.displayString = I18n.format("skipsign.setting.viewmode.none"); break;
         }
         switch (Config.viewModeFrame.get()) {
-            case NORMAL: btnViewModeFrame.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  btnViewModeFrame.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   btnViewModeFrame.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeFrame.displayString = I18n.format("skipsign.setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeFrame.displayString = I18n.format("skipsign.setting.viewmode.force"); break;
+            case NONE:   btnViewModeFrame.displayString = I18n.format("skipsign.setting.viewmode.none"); break;
         }
         switch (Config.viewModeChest.get()) {
-            case NORMAL: btnViewModeChest.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  btnViewModeChest.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   btnViewModeChest.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeChest.displayString = I18n.format("skipsign.setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeChest.displayString = I18n.format("skipsign.setting.viewmode.force"); break;
+            case NONE:   btnViewModeChest.displayString = I18n.format("skipsign.setting.viewmode.none"); break;
         }
         switch (Config.viewModeSkull.get()) {
-            case NORMAL: btnViewModeSkull.displayString = I18n.format("setting.viewmode.normal"); break;
-            case FORCE:  btnViewModeSkull.displayString = I18n.format("setting.viewmode.force"); break;
-            case NONE:   btnViewModeSkull.displayString = I18n.format("setting.viewmode.none"); break;
+            case NORMAL: btnViewModeSkull.displayString = I18n.format("skipsign.setting.viewmode.normal"); break;
+            case FORCE:  btnViewModeSkull.displayString = I18n.format("skipsign.setting.viewmode.force"); break;
+            case NONE:   btnViewModeSkull.displayString = I18n.format("skipsign.setting.viewmode.none"); break;
         }
         
-        btnOutofRangeSign.displayString = Config.dropOffSignBoard.get() ? I18n.format("setting.outofrange.sign.hide") : I18n.format("setting.outofrange.sign.show");
-        btnOutofRangeFrame.displayString = Config.dropOffFrameBoard.get() ? I18n.format("setting.outofrange.frame.hide") : I18n.format("setting.outofrange.frame.show");
+        btnOutofRangeSign.displayString = Config.dropOffSignBoard.get() ? I18n.format("skipsign.setting.outofrange.sign.hide") : I18n.format("skipsign.setting.outofrange.sign.show");
+        btnOutofRangeFrame.displayString = Config.dropOffFrameBoard.get() ? I18n.format("skipsign.setting.outofrange.frame.hide") : I18n.format("skipsign.setting.outofrange.frame.show");
 
-        btnEnableMod.displayString = Config.enableMod.get() ? I18n.format("setting.mod.isenabled") : I18n.format("setting.mod.isdisabled");
+        btnEnableMod.displayString = Config.enableMod.get() ? I18n.format("skipsign.setting.mod.isenabled") : I18n.format("skipsign.setting.mod.isdisabled");
     }
 }
