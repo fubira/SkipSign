@@ -12,29 +12,38 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 
-def mc_version = "1.13.2"
-def forge_version = "25.0.193"
-def postfix_version = "c"
+def mc_version = "1.14.4"
+def forge_version = "28.2.0"
+def postfix_version = "a"
 
 version = "${mc_version}-${postfix_version}"
 group = "mods.skipsign"
 archivesBaseName = "SkipSign"
 
+sourceCompatibility =
+targetCompatibility =
+compileJava.sourceCompatibility =
+compileJava.targetCompatibility = '1.8'
+
 minecraft {
-    mappings channel: 'snapshot', version: '20180921-1.13'
+    mappings channel: 'snapshot', version: '20200119-1.14.4'
     runs {
         client {
             workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
             mods {
-                skipsign {
+                horseinfo {
                     source sourceSets.main
                 }
             }
         }
         server {
             workingDirectory file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
             mods {
-                skipsign {
+                horseinfo {
                     source sourceSets.main
                 }
             }
