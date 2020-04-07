@@ -1,21 +1,26 @@
 package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 import mods.skipsign.SkipSignMod;
 
 public class SignTileEntityRendererEx extends SignTileEntityRenderer
 {
-    public SignTileEntityRendererEx()
+    public SignTileEntityRendererEx(TileEntityRendererDispatcher rendererDispatcher)
     {
-        super();
+        super(rendererDispatcher);
     }
 
     public ITextComponent [] getSignText(SignTileEntity entity)
@@ -43,10 +48,10 @@ public class SignTileEntityRendererEx extends SignTileEntityRenderer
     }
 
     @Override
-    public void render(SignTileEntity entity, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(SignTileEntity entity, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
         if (!Config.enableMod.get()) {
-            super.render(entity, x, y, z, partialTicks, destroyStage);
+            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
             ITextComponent [] temporaryText = null;
             boolean visible = isVisible(entity);
@@ -58,7 +63,7 @@ public class SignTileEntityRendererEx extends SignTileEntityRenderer
             }
 
             if (!Config.dropOffSignBoard.get() || (Config.dropOffSignBoard.get() && visible)) {
-                super.render(entity, x, y, z, partialTicks, destroyStage);
+                super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
 
             if (temporaryText != null) {
@@ -75,7 +80,7 @@ public class SignTileEntityRendererEx extends SignTileEntityRenderer
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
+        if (InputMappings.isKeyDown(mc.getMainWindow().getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(

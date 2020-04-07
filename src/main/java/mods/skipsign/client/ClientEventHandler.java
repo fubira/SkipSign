@@ -63,7 +63,7 @@ public final class ClientEventHandler {
 
         if (event.phase == TickEvent.Phase.START) {
             if (mc.player != null) {
-                DrawableApi.beginFrustum(event.renderTickTime);
+                // DrawableApi.beginFrustum(event.renderTickTime);
             }
         } else if (event.phase == TickEvent.Phase.END) {
         }

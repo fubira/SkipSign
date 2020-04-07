@@ -47,10 +47,10 @@ public class Config {
         viewModeChest   = builder.defineEnum("viewModeChest", () -> ViewMode.NORMAL, obj -> true, ViewMode.class);
         viewModeSkull   = builder.defineEnum("viewModeSkull", () -> ViewMode.NORMAL, obj -> true, ViewMode.class);
         
-        viewRangeSign   = builder.defineInRange("viewRangeSign", 20, 1, 128); 
-        viewRangeFrame  = builder.defineInRange("viewRangeFrame", 20, 1, 128); 
-        viewRangeChest  = builder.defineInRange("viewRangeChest", 64, 1, 128); 
-        viewRangeSkull  = builder.defineInRange("viewRangeSkull", 64, 1, 128); 
+        viewRangeSign   = builder.defineInRange("viewRangeSign", 20, 1, 64); 
+        viewRangeFrame  = builder.defineInRange("viewRangeFrame", 20, 1, 64); 
+        viewRangeChest  = builder.defineInRange("viewRangeChest", 64, 1, 64); 
+        viewRangeSkull  = builder.defineInRange("viewRangeSkull", 64, 1, 64); 
 
         dropOffSignBoard  = builder.define("dropOffSignBoard", false);
         dropOffFrameBoard = builder.define("dropOffFrameBoard", false);

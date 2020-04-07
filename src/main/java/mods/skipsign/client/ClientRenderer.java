@@ -3,10 +3,13 @@ package mods.skipsign.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.tileentity.SkullTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import mods.skipsign.client.renderer.ItemFrameRendererEx;
@@ -17,9 +20,11 @@ import mods.skipsign.client.renderer.SkullTileEntityRendererEx;
 public class ClientRenderer {
 
     public static void registerTileEntity() {
-        ClientRegistry.bindTileEntitySpecialRenderer(SignTileEntity.class, new SignTileEntityRendererEx());
-        ClientRegistry.bindTileEntitySpecialRenderer(ChestTileEntity.class, new ChestTileEntityRendererEx<ChestTileEntity>());
-        ClientRegistry.bindTileEntitySpecialRenderer(SkullTileEntity.class, new SkullTileEntityRendererEx());
+        TileEntityRendererDispatcher rendererDispatcher = TileEntityRendererDispatcher.instance;
+        rendererDispatcher.setSpecialRendererInternal(TileEntityType.SIGN, new SignTileEntityRendererEx(rendererDispatcher));
+        rendererDispatcher.setSpecialRendererInternal(TileEntityType.CHEST, new ChestTileEntityRendererEx<ChestTileEntity>(rendererDispatcher));
+        rendererDispatcher.setSpecialRendererInternal(TileEntityType.TRAPPED_CHEST, new ChestTileEntityRendererEx<ChestTileEntity>(rendererDispatcher));
+        rendererDispatcher.setSpecialRendererInternal(TileEntityType.SKULL, new SkullTileEntityRendererEx(rendererDispatcher));
     }
 
     public static void registerItemFrame() {
@@ -27,7 +32,7 @@ public class ClientRenderer {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         ItemFrameRendererEx itemFrameRenderer = new ItemFrameRendererEx(rendererManager, itemRenderer);
 
-        rendererManager.renderers.remove(ItemFrameEntity.class);
-        rendererManager.renderers.put(ItemFrameEntity.class, itemFrameRenderer);
+        rendererManager.renderers.remove(EntityType.ITEM_FRAME);
+        rendererManager.renderers.put(EntityType.ITEM_FRAME, itemFrameRenderer);
     }
 }

@@ -12,8 +12,8 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 
-def mc_version = "1.14.4"
-def forge_version = "28.2.0"
+def mc_version = "1.15.2"
+def forge_version = "31.1.0"
 def postfix_version = "a"
 
 version = "${mc_version}-${postfix_version}"
@@ -26,7 +26,7 @@ compileJava.sourceCompatibility =
 compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200119-1.14.4'
+    mappings channel: 'snapshot', version: '20200225-1.15.1'
     runs {
         client {
             workingDirectory project.file('run')

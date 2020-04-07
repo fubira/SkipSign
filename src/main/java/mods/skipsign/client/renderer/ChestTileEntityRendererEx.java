@@ -1,27 +1,29 @@
 package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 
 public class ChestTileEntityRendererEx<T extends TileEntity & IChestLid> extends ChestTileEntityRenderer<T>
 {
-    public ChestTileEntityRendererEx()
+    public ChestTileEntityRendererEx(TileEntityRendererDispatcher rendererDispatcher)
     {
-        super();
+        super(rendererDispatcher);
     }
 
     @Override
-    public void render(T entity, double x, double y, double z, float partialTicks, int destroyStage)
-    {
-        if (!Config.enableMod.get() || Minecraft.getInstance().player == null || entity.getWorld() == null || isVisible(entity))
-        {
-            super.render(entity, x, y, z, partialTicks, destroyStage);
+    public void render(T entity, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        if (!Config.enableMod.get() || Minecraft.getInstance().player == null || entity.getWorld() == null || isVisible(entity)) {
+            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
     }
 
@@ -33,7 +35,7 @@ public class ChestTileEntityRendererEx<T extends TileEntity & IChestLid> extends
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
+        if (InputMappings.isKeyDown(mc.getMainWindow().getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
