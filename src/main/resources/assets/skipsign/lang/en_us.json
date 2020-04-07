@@ -23,8 +23,8 @@
     "skipsign.setting.framebase.show": "Show board",
     "skipsign.setting.framebase.hide": "Hide board",
 
-    "skipsign.setting.mod.isenabled": "SkipSign Enabled",
-    "skipsign.setting.mod.isdisabled": "SkipSign Disabled",
+    "skipsign.setting.mod.isenabled": "SkipSign On",
+    "skipsign.setting.mod.isdisabled": "SkipSign Off",
 
     "skipsign.setting.slider.range.prefix": "Visible Range:",
     "skipsign.setting.slider.range.postfix": "m"

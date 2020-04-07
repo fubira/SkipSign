@@ -1,14 +1,14 @@
 package mods.skipsign.client;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.Frustum;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.tileentity.SkullTileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,7 +23,8 @@ public class DrawableApi
 
     public static void beginFrustum(float tick)
     {
-        EntityPlayer player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player = mc.player;
 
         DX = player.prevPosX + (player.posX - player.prevPosX) * (double)tick;
         DY = player.prevPosY + (player.posY - player.prevPosY) * (double)tick;
@@ -31,7 +32,7 @@ public class DrawableApi
 
         frustum.setPosition(DX, DY, DZ);
 
-        // Minecraft.getInstance().renderGlobal.clipRenderersByFrustum(frustum, f);
+        // mc.renderGlobal.clipRenderersByFrustum(frustum, f);
     }
 
     public static boolean isDraw(World w, int x, int y, int z)
@@ -44,7 +45,7 @@ public class DrawableApi
         return DrawableApi.isDraw1(w, x, y, z, DX, DY, DZ) && (ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(bb));
     }
 
-    public static boolean isDraw(TileEntityChest tileEntity, double x, double y, double z)
+    public static boolean isDraw(ChestTileEntity tileEntity, double x, double y, double z)
     {
         Block chest = Blocks.STONE;
         // AxisAlignedBB bb = chest.getCollisionBoundingBox(chest.getDefaultState(), tileEntity.getWorld(), tileEntity.getPos());
@@ -54,7 +55,7 @@ public class DrawableApi
         return DrawableApi.isDraw1(tileEntity, DX, DY, DZ) && (ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(bb));
     }
 
-    public static boolean isDraw(TileEntitySign tileEntity, double x, double y, double z)
+    public static boolean isDraw(SignTileEntity tileEntity, double x, double y, double z)
     {
         Block sign = Blocks.STONE;
         // AxisAlignedBB bb = sign.getCollisionBoundingBox(sign.getDefaultState(), tileEntity.getWorld(), tileEntity.getPos());
@@ -64,7 +65,7 @@ public class DrawableApi
         return DrawableApi.isDraw1(tileEntity, DX, DY, DZ) && (ignoreFrustumCheck || frustum.isBoundingBoxInFrustum(bb));
     }
 
-    public static boolean isDraw(TileEntitySkull tileEntity, double x, double y, double z)
+    public static boolean isDraw(SkullTileEntity tileEntity, double x, double y, double z)
     {
         Block sign = Blocks.STONE;
         // AxisAlignedBB bb = sign.getCollisionBoundingBox(sign.getDefaultState(), tileEntity.getWorld(), tileEntity.getPos());

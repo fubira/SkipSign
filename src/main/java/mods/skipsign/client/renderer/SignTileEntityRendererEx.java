@@ -1,49 +1,49 @@
 package mods.skipsign.client.renderer;
 
-import net.minecraft.client.renderer.tileentity.TileEntitySignRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-
+import net.minecraft.util.text.StringTextComponent;
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 import mods.skipsign.SkipSignMod;
 
-public class TileEntitySignRendererEx extends TileEntitySignRenderer
+public class SignTileEntityRendererEx extends SignTileEntityRenderer
 {
-    public TileEntitySignRendererEx()
+    public SignTileEntityRendererEx()
     {
         super();
     }
 
-    public ITextComponent [] getSignText(TileEntitySign entity)
+    public ITextComponent [] getSignText(SignTileEntity entity)
     {
         ITextComponent [] tempSignText = new ITextComponent[entity.signText.length];
 
         for (int i = 0; i < entity.signText.length; i++)
-            tempSignText[i] = entity.func_212366_a(i);  // TileEntitySign.getText(i)
+            tempSignText[i] = entity.getText(i);  // TileEntitySign.getText(i)
 
         return tempSignText;
     }
 
-    public void setSignText(TileEntitySign entity, ITextComponent [] text)
+    public void setSignText(SignTileEntity entity, ITextComponent [] text)
     {
         for (int i = 0; i < entity.signText.length; i++) {
-            entity.func_212365_a(i, text[i]);   // TileEntitySign.setText(i)
+            entity.setText(i, text[i]);   // TileEntitySign.setText(i)
         }
     }
 
-    public void deleteSignText(TileEntitySign entity)
+    public void deleteSignText(SignTileEntity entity)
     {
         for (int i = 0; i < entity.signText.length; i++) {
-            entity.func_212365_a(i, null);      // TileEntitySign.getText(i)
+            entity.setText(i, new StringTextComponent(""));
         }
     }
 
     @Override
-    public void render(TileEntitySign entity, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(SignTileEntity entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!Config.enableMod.get()) {
             super.render(entity, x, y, z, partialTicks, destroyStage);
@@ -67,14 +67,15 @@ public class TileEntitySignRendererEx extends TileEntitySignRenderer
         }
     }
 
-    public boolean isVisible(TileEntitySign tileEntitySign)
+    public boolean isVisible(SignTileEntity tileEntitySign)
     {
         if (Config.viewModeSign.get() == ViewMode.FORCE)
             return true;
         if (Config.viewModeSign.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
+        Minecraft mc = Minecraft.getInstance();
+        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(

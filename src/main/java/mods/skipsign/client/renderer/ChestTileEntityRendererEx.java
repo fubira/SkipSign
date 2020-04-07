@@ -1,18 +1,17 @@
 package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
+import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 
-public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends TileEntityChestRenderer<T>
+public class ChestTileEntityRendererEx<T extends TileEntity & IChestLid> extends ChestTileEntityRenderer<T>
 {
-    public TileEntityChestRendererEx()
+    public ChestTileEntityRendererEx()
     {
         super();
     }
@@ -33,13 +32,15 @@ public class TileEntityChestRendererEx<T extends TileEntity & IChestLid> extends
         if (Config.viewModeChest.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
+        Minecraft mc = Minecraft.getInstance();
+        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
                 RendererHelper.GetDistancePlayerToTileEntity(tileEntityChest),
-                Config.viewRangeChest.get()))
+                Config.viewRangeChest.get())) {
             return true;
+        }
 
         return false;
     }

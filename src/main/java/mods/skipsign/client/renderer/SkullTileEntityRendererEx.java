@@ -1,23 +1,22 @@
 package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
+import net.minecraft.client.renderer.tileentity.SkullTileEntityRenderer;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.tileentity.SkullTileEntity;
 
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 
-public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
+public class SkullTileEntityRendererEx extends SkullTileEntityRenderer
 {
-    public TileEntitySkullRendererEx()
+    public SkullTileEntityRendererEx()
     {
         super();
     }
 
     @Override
-    public void render(TileEntitySkull entity, double x, double y, double z, float partialTicks, int destroyStage)
+    public void render(SkullTileEntity entity, double x, double y, double z, float partialTicks, int destroyStage)
     {
         if (!Config.enableMod.get() || Minecraft.getInstance().player == null || entity.getWorld() == null || isVisible(entity))
         {
@@ -25,14 +24,15 @@ public class TileEntitySkullRendererEx extends TileEntitySkullRenderer
         }
     }
 
-    public boolean isVisible(TileEntitySkull tileEntitySkull)
+    public boolean isVisible(SkullTileEntity tileEntitySkull)
     {
         if (Config.viewModeSkull.get() == ViewMode.FORCE)
             return true;
         if (Config.viewModeSkull.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
+        Minecraft mc = Minecraft.getInstance();
+        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(

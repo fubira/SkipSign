@@ -2,7 +2,7 @@ package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 
@@ -10,19 +10,21 @@ public class RendererHelper
 {
     public static double GetDistancePlayerToTileEntity(TileEntity tileEntity)
     {
-        EntityPlayer player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player = mc.player;
         BlockPos pos = tileEntity.getPos();
 
         double x = pos.getX();
         double y = pos.getY();
         double z = pos.getZ();
 
-        return player.getDistance(x, y, z);
+        return Math.sqrt(player.getDistanceSq(x, y, z));
     }
 
     public static double GetDistancePlayerToEntity(Entity entity)
     {
-        EntityPlayer player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player = mc.player;
         return player.getDistance(entity);
     }
 

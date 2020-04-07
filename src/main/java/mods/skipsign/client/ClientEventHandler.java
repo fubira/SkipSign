@@ -1,22 +1,17 @@
 package mods.skipsign.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import mods.skipsign.Config;
-import mods.skipsign.SkipSignConfig;
 import mods.skipsign.SkipSignMod;
-import mods.skipsign.client.DrawableApi;
 import mods.skipsign.client.gui.GuiConfigScreen;
 
 @OnlyIn(Dist.CLIENT)
@@ -45,12 +40,13 @@ public final class ClientEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (Minecraft.getInstance().currentScreen != null) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.currentScreen != null) {
             return;
         }
 
         if (!key_down && ClientKeyBindings.keyBindingOption.isPressed()) {
-            Minecraft.getInstance().displayGuiScreen(new GuiConfigScreen(null));
+            mc.displayGuiScreen(new GuiConfigScreen(null, new StringTextComponent("SkipSign")));
             key_down = true;
         } else if (key_down && !ClientKeyBindings.keyBindingOption.isPressed()) {
             key_down = false;
@@ -63,8 +59,10 @@ public final class ClientEventHandler {
 
     @SubscribeEvent
     public void RenderTickEvent(TickEvent.RenderTickEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+
         if (event.phase == TickEvent.Phase.START) {
-            if (Minecraft.getInstance().player != null) {
+            if (mc.player != null) {
                 DrawableApi.beginFrustum(event.renderTickTime);
             }
         } else if (event.phase == TickEvent.Phase.END) {

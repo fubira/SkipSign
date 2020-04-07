@@ -2,33 +2,32 @@ package mods.skipsign.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.tileentity.SkullTileEntity;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-import mods.skipsign.SkipSignMod;
-import mods.skipsign.client.renderer.RenderItemFrameEx;
-import mods.skipsign.client.renderer.TileEntityChestRendererEx;
-import mods.skipsign.client.renderer.TileEntitySignRendererEx;
-import mods.skipsign.client.renderer.TileEntitySkullRendererEx;
+import mods.skipsign.client.renderer.ItemFrameRendererEx;
+import mods.skipsign.client.renderer.ChestTileEntityRendererEx;
+import mods.skipsign.client.renderer.SignTileEntityRendererEx;
+import mods.skipsign.client.renderer.SkullTileEntityRendererEx;
 
 public class ClientRenderer {
 
     public static void registerTileEntity() {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySign.class, new TileEntitySignRendererEx());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChest.class, new TileEntityChestRendererEx());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkull.class, new TileEntitySkullRendererEx());
+        ClientRegistry.bindTileEntitySpecialRenderer(SignTileEntity.class, new SignTileEntityRendererEx());
+        ClientRegistry.bindTileEntitySpecialRenderer(ChestTileEntity.class, new ChestTileEntityRendererEx<ChestTileEntity>());
+        ClientRegistry.bindTileEntitySpecialRenderer(SkullTileEntity.class, new SkullTileEntityRendererEx());
     }
 
     public static void registerItemFrame() {
-        RenderManager renderManager = Minecraft.getInstance().getRenderManager();
+        EntityRendererManager rendererManager = Minecraft.getInstance().getRenderManager();
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        RenderItemFrameEx renderItemFrame = new RenderItemFrameEx(renderManager, itemRenderer);
+        ItemFrameRendererEx itemFrameRenderer = new ItemFrameRendererEx(rendererManager, itemRenderer);
 
-        renderManager.entityRenderMap.remove(EntityItemFrame.class);
-        renderManager.entityRenderMap.put(EntityItemFrame.class, renderItemFrame);
+        rendererManager.renderers.remove(ItemFrameEntity.class);
+        rendererManager.renderers.put(ItemFrameEntity.class, itemFrameRenderer);
     }
 }

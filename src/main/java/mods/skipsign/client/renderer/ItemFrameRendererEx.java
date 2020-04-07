@@ -1,10 +1,11 @@
 package mods.skipsign.client.renderer;
 
-import net.minecraft.client.renderer.entity.RenderItemFrame;
+import net.minecraft.client.renderer.entity.ItemFrameRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.item.EntityItemFrame;
+import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
@@ -12,15 +13,15 @@ import net.minecraftforge.eventbus.api.Event;
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 
-public class RenderItemFrameEx extends RenderItemFrame
+public class ItemFrameRendererEx extends ItemFrameRenderer
 {
-    public RenderItemFrameEx(RenderManager renderManager, ItemRenderer itemRenderer)
+    public ItemFrameRendererEx(EntityRendererManager rendererManager, ItemRenderer itemRenderer)
     {
-        super(renderManager, itemRenderer);
+        super(rendererManager, itemRenderer);
     }
 
     @Override
-    public void doRender(EntityItemFrame entity, double x, double y, double z, float entityYaw, float partialTicks)
+    public void doRender(ItemFrameEntity entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         if (!Config.enableMod.get()) {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
@@ -45,14 +46,15 @@ public class RenderItemFrameEx extends RenderItemFrame
 
     }
 
-    public boolean isVisible(EntityItemFrame entityItemFrame)
+    public boolean isVisible(ItemFrameEntity entityItemFrame)
     {
         if (Config.viewModeFrame.get() == ViewMode.FORCE)
             return true;
         if (Config.viewModeFrame.get() == ViewMode.NONE)
             return false;
 
-        if (InputMappings.isKeyDown(Config.keyCodeZoom.get()))
+        Minecraft mc = Minecraft.getInstance();
+        if (InputMappings.isKeyDown(mc.mainWindow.getHandle(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
