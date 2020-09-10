@@ -25,9 +25,9 @@ public class SignTileEntityRendererEx extends SignTileEntityRenderer
 
     public ITextComponent [] getSignText(SignTileEntity entity)
     {
-        ITextComponent [] tempSignText = new ITextComponent[entity.signText.length];
+        ITextComponent [] tempSignText = new ITextComponent[4];
 
-        for (int i = 0; i < entity.signText.length; i++)
+        for (int i = 0; i < 4; i++)
             tempSignText[i] = entity.getText(i);  // TileEntitySign.getText(i)
 
         return tempSignText;
@@ -35,14 +35,14 @@ public class SignTileEntityRendererEx extends SignTileEntityRenderer
 
     public void setSignText(SignTileEntity entity, ITextComponent [] text)
     {
-        for (int i = 0; i < entity.signText.length; i++) {
+        for (int i = 0; i < 4; i++) {
             entity.setText(i, text[i]);   // TileEntitySign.setText(i)
         }
     }
 
     public void deleteSignText(SignTileEntity entity)
     {
-        for (int i = 0; i < entity.signText.length; i++) {
+        for (int i = 0; i < 4; i++) {
             entity.setText(i, new StringTextComponent(""));
         }
     }

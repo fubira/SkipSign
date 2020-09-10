@@ -5,12 +5,8 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.SignTileEntity;
-import net.minecraft.tileentity.SkullTileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import mods.skipsign.client.renderer.ItemFrameRendererEx;
 import mods.skipsign.client.renderer.ChestTileEntityRendererEx;

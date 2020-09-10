@@ -1,11 +1,14 @@
 package mods.skipsign.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.widget.Slider;
@@ -40,50 +43,55 @@ public class GuiConfigScreen extends Screen
 
     private static final int maxRange = 64;
 
+    // protected void init()
     @Override
-    public void init()
+    protected void func_231160_c_()
     {
-        super.init();
-        this.buttons.clear();
+        super.func_231160_c_();
+        this.field_230710_m_.clear();
 
-        int left = (this.width - 360) / 2;
-        int top = (this.height - 200) / 2;
+        int left = (this.field_230708_k_ - 360) / 2;    // this.width
+        int top = (this.field_230709_l_ - 200) / 2;     // this.height
 
-        btnViewModeSign     = addButton(new ExtendedButton(left +  55, top +   25, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onPress));
-        btnViewModeFrame    = addButton(new ExtendedButton(left +  55, top +   50, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onPress));
-        btnViewModeChest    = addButton(new ExtendedButton(left +  55, top +   75, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onPress));
-        btnViewModeSkull    = addButton(new ExtendedButton(left +  55, top +  100, 60, 20, I18n.format("skipsign.setting.viewmode.normal"), this::onPress));
+        // this.addButton
+        btnViewModeSign     = this.func_230480_a_(new ExtendedButton(left +  55, top +   25, 60, 20, new TranslationTextComponent("skipsign.setting.viewmode.normal"), this::onPress));
+        btnViewModeFrame    = this.func_230480_a_(new ExtendedButton(left +  55, top +   50, 60, 20, new TranslationTextComponent("skipsign.setting.viewmode.normal"), this::onPress));
+        btnViewModeChest    = this.func_230480_a_(new ExtendedButton(left +  55, top +   75, 60, 20, new TranslationTextComponent("skipsign.setting.viewmode.normal"), this::onPress));
+        btnViewModeSkull    = this.func_230480_a_(new ExtendedButton(left +  55, top +  100, 60, 20, new TranslationTextComponent("skipsign.setting.viewmode.normal"), this::onPress));
 
-        sliderRangeSign     = addButton(new Slider(left + 120, top +  25, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), false, true, this::onPress, this::onChangeSliderValue));
-        sliderRangeFrame    = addButton(new Slider(left + 120, top +  50, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), false, true, this::onPress, this::onChangeSliderValue));
-        sliderRangeChest    = addButton(new Slider(left + 120, top +  75, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), false, true, this::onPress, this::onChangeSliderValue));
-        sliderRangeSkull    = addButton(new Slider(left + 120, top + 100, 128, 20, I18n.format("skipsign.setting.slider.range.prefix"), I18n.format("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), false, true, this::onPress, this::onChangeSliderValue));
+        sliderRangeSign     = this.func_230480_a_(new Slider(left + 120, top +  25, 128, 20, new TranslationTextComponent("skipsign.setting.slider.range.prefix"), new TranslationTextComponent("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSign.get(), false, true, this::onPress, this::onChangeSliderValue));
+        sliderRangeFrame    = this.func_230480_a_(new Slider(left + 120, top +  50, 128, 20, new TranslationTextComponent("skipsign.setting.slider.range.prefix"), new TranslationTextComponent("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeFrame.get(), false, true, this::onPress, this::onChangeSliderValue));
+        sliderRangeChest    = this.func_230480_a_(new Slider(left + 120, top +  75, 128, 20, new TranslationTextComponent("skipsign.setting.slider.range.prefix"), new TranslationTextComponent("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeChest.get(), false, true, this::onPress, this::onChangeSliderValue));
+        sliderRangeSkull    = this.func_230480_a_(new Slider(left + 120, top + 100, 128, 20, new TranslationTextComponent("skipsign.setting.slider.range.prefix"), new TranslationTextComponent("skipsign.setting.slider.range.postfix"), 0, maxRange, Config.viewRangeSkull.get(), false, true, this::onPress, this::onChangeSliderValue));
 
-        btnOutofRangeSign   = addButton(new ExtendedButton(left + 253, top +  25, 120, 20, I18n.format("skipsign.setting.outofrange.sign.show"), this::onPress));
-        btnOutofRangeFrame  = addButton(new ExtendedButton(left + 253, top +  50, 120, 20, I18n.format("skipsign.setting.outofrange.frame.show"), this::onPress));
+        btnOutofRangeSign   = this.func_230480_a_(new ExtendedButton(left + 253, top +  25, 120, 20, new TranslationTextComponent("skipsign.setting.outofrange.sign.show"), this::onPress));
+        btnOutofRangeFrame  = this.func_230480_a_(new ExtendedButton(left + 253, top +  50, 120, 20, new TranslationTextComponent("skipsign.setting.outofrange.frame.show"), this::onPress));
 
-        btnEnableMod        = addButton(new ExtendedButton(left, top + 140, 100, 20, I18n.format("skipsign.setting.mod.enable"), this::onPress));
+        btnEnableMod        = this.func_230480_a_(new ExtendedButton(left, top + 140, 100, 20, new TranslationTextComponent("skipsign.setting.mod.enable"), this::onPress));
         update();
     }
 
+    // public void render()
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks)
+    public void func_230430_a_(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
         Minecraft mc = Minecraft.getInstance();
         FontRenderer fontRenderer = mc.fontRenderer;
 
-        int left = (this.width - 380) / 2;
-        int top = (this.height - 200) / 2;
+        int left = (this.field_230708_k_ - 380) / 2;    // this.width
+        int top = (this.field_230709_l_ - 200) / 2;     // this.height
         
-        this.renderBackground();
+        // this.renderBackground
+        this.func_230446_a_(matrixStack);
 
-        this.drawString(fontRenderer, I18n.format("skipsign.setting.title")             , left, top          , 0xffffff);
-        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.sign")  , left, top +  25 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.frame") , left, top +  50 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.chest") , left, top +  75 + 5, 0xffffff);
-        this.drawString(fontRenderer, I18n.format("skipsign.setting.description.skull") , left, top + 100 + 5, 0xffffff);
+        // this.drawString
+        this.func_238475_b_(matrixStack, fontRenderer, new TranslationTextComponent("skipsign.setting.title")             , left, top          , 0xffffff);
+        this.func_238475_b_(matrixStack, fontRenderer, new TranslationTextComponent("skipsign.setting.description.sign")  , left, top +  25 + 5, 0xffffff);
+        this.func_238475_b_(matrixStack, fontRenderer, new TranslationTextComponent("skipsign.setting.description.frame") , left, top +  50 + 5, 0xffffff);
+        this.func_238475_b_(matrixStack, fontRenderer, new TranslationTextComponent("skipsign.setting.description.chest") , left, top +  75 + 5, 0xffffff);
+        this.func_238475_b_(matrixStack, fontRenderer, new TranslationTextComponent("skipsign.setting.description.skull") , left, top + 100 + 5, 0xffffff);
         
-        super.render(mouseX, mouseY, partialTicks);
+        super.func_230430_a_(matrixStack, mouseX, mouseY, partialTicks);
     }
 
     private ViewMode toggleViewMode(final ViewMode current) {
@@ -149,29 +157,29 @@ public class GuiConfigScreen extends Screen
     private void update()
     {
         switch (Config.viewModeSign.get()) {
-            case NORMAL: btnViewModeSign.setMessage(I18n.format("skipsign.setting.viewmode.normal")); break;
-            case FORCE:  btnViewModeSign.setMessage(I18n.format("skipsign.setting.viewmode.force")); break;
-            case NONE:   btnViewModeSign.setMessage(I18n.format("skipsign.setting.viewmode.none")); break;
+            case NORMAL: btnViewModeSign.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.normal")); break;
+            case FORCE:  btnViewModeSign.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.force")); break;
+            case NONE:   btnViewModeSign.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.none")); break;
         }
         switch (Config.viewModeFrame.get()) {
-            case NORMAL: btnViewModeFrame.setMessage(I18n.format("skipsign.setting.viewmode.normal")); break;
-            case FORCE:  btnViewModeFrame.setMessage(I18n.format("skipsign.setting.viewmode.force")); break;
-            case NONE:   btnViewModeFrame.setMessage(I18n.format("skipsign.setting.viewmode.none")); break;
+            case NORMAL: btnViewModeFrame.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.normal")); break;
+            case FORCE:  btnViewModeFrame.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.force")); break;
+            case NONE:   btnViewModeFrame.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.none")); break;
         }
         switch (Config.viewModeChest.get()) {
-            case NORMAL: btnViewModeChest.setMessage(I18n.format("skipsign.setting.viewmode.normal")); break;
-            case FORCE:  btnViewModeChest.setMessage(I18n.format("skipsign.setting.viewmode.force")); break;
-            case NONE:   btnViewModeChest.setMessage(I18n.format("skipsign.setting.viewmode.none")); break;
+            case NORMAL: btnViewModeChest.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.normal")); break;
+            case FORCE:  btnViewModeChest.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.force")); break;
+            case NONE:   btnViewModeChest.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.none")); break;
         }
         switch (Config.viewModeSkull.get()) {
-            case NORMAL: btnViewModeSkull.setMessage(I18n.format("skipsign.setting.viewmode.normal")); break;
-            case FORCE:  btnViewModeSkull.setMessage(I18n.format("skipsign.setting.viewmode.force")); break;
-            case NONE:   btnViewModeSkull.setMessage(I18n.format("skipsign.setting.viewmode.none")); break;
+            case NORMAL: btnViewModeSkull.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.normal")); break;
+            case FORCE:  btnViewModeSkull.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.force")); break;
+            case NONE:   btnViewModeSkull.func_238482_a_(new TranslationTextComponent("skipsign.setting.viewmode.none")); break;
         }
         
-        btnOutofRangeSign.setMessage(Config.dropOffSignBoard.get() ? I18n.format("skipsign.setting.outofrange.sign.hide") : I18n.format("skipsign.setting.outofrange.sign.show"));
-        btnOutofRangeFrame.setMessage(Config.dropOffFrameBoard.get() ? I18n.format("skipsign.setting.outofrange.frame.hide") : I18n.format("skipsign.setting.outofrange.frame.show"));
+        btnOutofRangeSign.func_238482_a_(Config.dropOffSignBoard.get() ? new TranslationTextComponent("skipsign.setting.outofrange.sign.hide") : new TranslationTextComponent("skipsign.setting.outofrange.sign.show"));
+        btnOutofRangeFrame.func_238482_a_(Config.dropOffFrameBoard.get() ? new TranslationTextComponent("skipsign.setting.outofrange.frame.hide") : new TranslationTextComponent("skipsign.setting.outofrange.frame.show"));
 
-        btnEnableMod.setMessage(Config.enableMod.get() ? I18n.format("skipsign.setting.mod.isenabled") : I18n.format("skipsign.setting.mod.isdisabled"));
+        btnEnableMod.func_238482_a_(Config.enableMod.get() ? new TranslationTextComponent("skipsign.setting.mod.isenabled") : new TranslationTextComponent("skipsign.setting.mod.isdisabled"));
     }
 }
