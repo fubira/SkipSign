@@ -5,6 +5,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -22,8 +23,10 @@ public final class ClientEventHandler {
     public ClientEventHandler(){
         SkipSignMod.logger.info("ClientEventHandler::register");
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-		MinecraftForge.EVENT_BUS.register(this);
-	}
+        // MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TickEvent.ClientTickEvent.class, this::onTick);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TickEvent.RenderTickEvent.class, this::RenderTickEvent);
+    }
 
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event) {
@@ -38,7 +41,6 @@ public final class ClientEventHandler {
         ClientRenderer.registerItemFrame();
     }
 
-    @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.currentScreen != null) {
@@ -57,7 +59,6 @@ public final class ClientEventHandler {
          return key_down;
     }
 
-    @SubscribeEvent
     public void RenderTickEvent(TickEvent.RenderTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
 
