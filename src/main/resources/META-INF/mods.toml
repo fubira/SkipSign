@@ -1,7 +1,8 @@
 modLoader="javafml"
-loaderVersion="[31,)" 
+loaderVersion="[33,)" 
 
 author="fubira"
+license="Copyright (c) TTTA2 / fubira"
 issueTrackerURL="https://github.com/fubira/SkipSign/issues"
 
 [[mods]]
@@ -21,14 +22,14 @@ And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 [[dependencies.skipsign]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15,)"
+    versionRange="[1.16,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.skipsign]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[33,)"
     ordering="NONE"
     side="BOTH"
 
