@@ -1,7 +1,7 @@
 package mods.skipsign.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -18,7 +18,6 @@ import mods.skipsign.client.gui.GuiConfigScreen;
 @OnlyIn(Dist.CLIENT)
 public final class ClientEventHandler {
     private boolean key_down = false;
-    private int HoldTime = 0;
 
     public ClientEventHandler(){
         SkipSignMod.logger.info("ClientEventHandler::register");
@@ -32,25 +31,25 @@ public final class ClientEventHandler {
     public void onClientSetup(FMLClientSetupEvent event) {
         SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
         ClientKeyBindings.register();
-        ClientRenderer.registerTileEntity();
+        ClientRenderer.registerBlockEntityRenderer();
     }
 
     @SubscribeEvent
     public void onInterModEnqueue(InterModEnqueueEvent event) {
         SkipSignMod.logger.info("ClientEventHandler::InterModEnqueueEvent");
-        ClientRenderer.registerItemFrame();
+        ClientRenderer.registerItemFrameRenderer();
     }
 
     public void onTick(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.currentScreen != null) {
+        if (mc.screen != null) {
             return;
         }
 
-        if (!key_down && ClientKeyBindings.keyBindingOption.isPressed()) {
-            mc.displayGuiScreen(new GuiConfigScreen(null, new StringTextComponent("SkipSign")));
+        if (!key_down && ClientKeyBindings.keyMappingOption.isDown()) {
+            mc.setScreen(new GuiConfigScreen(new TextComponent("SkipSign")));
             key_down = true;
-        } else if (key_down && !ClientKeyBindings.keyBindingOption.isPressed()) {
+        } else if (key_down && !ClientKeyBindings.keyMappingOption.isDown()) {
             key_down = false;
         }
     }

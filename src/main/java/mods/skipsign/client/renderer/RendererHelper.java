@@ -1,31 +1,31 @@
 package mods.skipsign.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class RendererHelper
 {
-    public static double GetDistancePlayerToTileEntity(TileEntity tileEntity)
+    public static double GetDistancePlayerToBlockEntity(BlockEntity entity)
     {
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.player;
-        BlockPos pos = tileEntity.getPos();
+        Player player = mc.player;
+        BlockPos pos = entity.getBlockPos();
 
         double x = pos.getX();
         double y = pos.getY();
         double z = pos.getZ();
 
-        return Math.sqrt(player.getDistanceSq(x, y, z));
+        return Math.sqrt(player.distanceToSqr(x, y, z));
     }
 
     public static double GetDistancePlayerToEntity(Entity entity)
     {
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.player;
-        return player.getDistance(entity);
+        Player player = mc.player;
+        return player.distanceToSqr(entity);
     }
 
     public static boolean IsInRangeToRenderDist(double dist, double range)

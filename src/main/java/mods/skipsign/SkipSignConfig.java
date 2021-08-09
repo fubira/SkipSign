@@ -1,6 +1,5 @@
 package mods.skipsign;
 
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.fml.config.ModConfig;
 import java.util.function.Function;

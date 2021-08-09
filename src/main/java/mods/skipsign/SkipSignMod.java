@@ -1,9 +1,8 @@
 package mods.skipsign;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -34,7 +33,7 @@ public class SkipSignMod
     }
     
 	@SubscribeEvent
-	public void onConfigLoading(final ModConfig.Loading event){
+	public void onConfigLoading(final ModConfigEvent event){
         config = new SkipSignConfig(event.getConfig());
         config.save();
 	}

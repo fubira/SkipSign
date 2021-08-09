@@ -1,30 +1,28 @@
 package mods.skipsign.client.renderer;
 
-import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.item.ItemFrameEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.eventbus.api.Cancelable;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraft.client.renderer.entity.ItemFrameRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.decoration.ItemFrame;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mods.skipsign.Config;
 import mods.skipsign.ViewMode;
 
-public class ItemFrameRendererEx extends ItemFrameRenderer
+public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<T>
 {
-    public ItemFrameRendererEx(EntityRendererManager rendererManager, ItemRenderer itemRenderer)
+    public ItemFrameRendererEx(EntityRendererProvider.Context context)
     {
-        super(rendererManager, itemRenderer);
+        super(context);
     }
 
     @Override
-    public void render(ItemFrameEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(T entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
+    {
         if (!Config.enableMod.get()) {
             super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         } else {
@@ -32,8 +30,8 @@ public class ItemFrameRendererEx extends ItemFrameRenderer
             boolean visible = isVisible(entity);
     
             if (!visible) {
-                frameItemStack = entity.getDisplayedItem();
-                entity.setDisplayedItem(ItemStack.EMPTY);
+                frameItemStack = entity.getItem();
+                entity.setItem(ItemStack.EMPTY);
             }
     
             if ((!Config.dropOffFrameBoard.get()) || (Config.dropOffFrameBoard.get() && visible)) {
@@ -41,12 +39,12 @@ public class ItemFrameRendererEx extends ItemFrameRenderer
             }
     
             if (!frameItemStack.isEmpty()) {
-                entity.setDisplayedItem(frameItemStack);
+                entity.setItem(frameItemStack);
             }
         }
     }
 
-    public boolean isVisible(ItemFrameEntity entityItemFrame)
+    public boolean isVisible(ItemFrame entity)
     {
         if (Config.viewModeFrame.get() == ViewMode.FORCE)
             return true;
@@ -54,11 +52,11 @@ public class ItemFrameRendererEx extends ItemFrameRenderer
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputMappings.isKeyDown(mc.getMainWindow().getHandle(), Config.keyCodeZoom.get()))
+        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), Config.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToEntity(entityItemFrame),
+                RendererHelper.GetDistancePlayerToEntity(entity),
                 Config.viewRangeFrame.get()))
             return true;
 

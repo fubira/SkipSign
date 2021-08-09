@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[33,)" 
+loaderVersion="[37,)" 
 
 author="fubira"
 license="Copyright (c) TTTA2 / fubira"
@@ -22,14 +22,14 @@ And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 [[dependencies.skipsign]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,)"
+    versionRange="[1.17,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.skipsign]]
     modId="forge"
     mandatory=true
-    versionRange="[33,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 

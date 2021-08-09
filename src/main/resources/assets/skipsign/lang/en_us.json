@@ -14,11 +14,11 @@
     "skipsign.setting.viewmode.force": "Force",
     "skipsign.setting.viewmode.none": "None",
 
-    "skipsign.setting.outofrange.sign.show": "Hide only text",
-    "skipsign.setting.outofrange.sign.hide": "Hide signboard",
+    "skipsign.setting.outofrange.sign.show": "Skip inner text",
+    "skipsign.setting.outofrange.sign.hide": "Skip entire signboard",
 
-    "skipsign.setting.outofrange.frame.show": "Hide only content",
-    "skipsign.setting.outofrange.frame.hide": "Hide frameboard",
+    "skipsign.setting.outofrange.frame.show": "Skip inner content",
+    "skipsign.setting.outofrange.frame.hide": "Skip entire frameboard",
 
     "skipsign.setting.framebase.show": "Show board",
     "skipsign.setting.framebase.hide": "Hide board",
