@@ -25,7 +25,7 @@ public class RendererHelper
     {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
-        return player.distanceToSqr(entity);
+        return Math.sqrt(player.distanceToSqr(entity));
     }
 
     public static boolean IsInRangeToRenderDist(double dist, double range)
@@ -34,7 +34,6 @@ public class RendererHelper
         {
             return true;
         }
-
         return false;
     }
 }
