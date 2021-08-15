@@ -1,0 +1,27 @@
+{
+    "skipsign.keybinding.category.skipsign": "SkipSign",
+    "skipsign.keybinding.desc.option": "設定画面を開く",
+    "skipsign.keybinding.desc.zoom": "一時無効",
+
+    "skipsign.setting.title": "SkipSign 設定",
+    "skipsign.setting.description.sign": "看板",
+    "skipsign.setting.description.frame": "フレーム",
+    "skipsign.setting.description.chest": "チェスト",
+    "skipsign.setting.description.skull": "ヘッド",
+
+    "skipsign.setting.viewmode.normal": "範囲描画",
+    "skipsign.setting.viewmode.force": "すべて描画",
+    "skipsign.setting.viewmode.none": "描画しない",
+
+    "skipsign.setting.outofrange.sign.show": "文字列を非表示",
+    "skipsign.setting.outofrange.sign.hide": "看板ごと非表示",
+
+    "skipsign.setting.outofrange.frame.show": "内容物を非表示",
+    "skipsign.setting.outofrange.frame.hide": "額縁ごと非表示",
+
+    "skipsign.setting.mod.isenabled": "SkipSign有効",
+    "skipsign.setting.mod.isdisabled": "SkipSign無効",
+
+    "setting.slider.range.prefix": "描画範囲:",
+    "setting.slider.range.postfix": "m"
+}

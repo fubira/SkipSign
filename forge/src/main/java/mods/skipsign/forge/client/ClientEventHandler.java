@@ -1,0 +1,70 @@
+package mods.skipsign.forge.client;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import mods.skipsign.forge.SkipSignMod;
+import mods.skipsign.forge.client.gui.GuiConfigScreen;
+
+@OnlyIn(Dist.CLIENT)
+public final class ClientEventHandler {
+    private boolean key_down = false;
+
+    public ClientEventHandler(){
+        SkipSignMod.logger.info("ClientEventHandler::register");
+        FMLJavaModLoadingContext.get().getModEventBus().register(this);
+        // MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TickEvent.ClientTickEvent.class, this::onTick);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TickEvent.RenderTickEvent.class, this::RenderTickEvent);
+    }
+
+    @SubscribeEvent
+    public void onClientSetup(FMLClientSetupEvent event) {
+        SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
+        ClientKeyBindings.register();
+        ClientRenderer.registerBlockEntityRenderer();
+    }
+
+    @SubscribeEvent
+    public void onInterModEnqueue(InterModEnqueueEvent event) {
+        SkipSignMod.logger.info("ClientEventHandler::InterModEnqueueEvent");
+        ClientRenderer.registerItemFrameRenderer();
+    }
+
+    public void onTick(TickEvent.ClientTickEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.screen != null) {
+            return;
+        }
+
+        if (!key_down && ClientKeyBindings.keyMappingOption.isDown()) {
+            mc.setScreen(new GuiConfigScreen(new TextComponent("SkipSign")));
+            key_down = true;
+        } else if (key_down && !ClientKeyBindings.keyMappingOption.isDown()) {
+            key_down = false;
+        }
+    }
+
+    public boolean GetHoldKey() {
+         return key_down;
+    }
+
+    public void RenderTickEvent(TickEvent.RenderTickEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+
+        if (event.phase == TickEvent.Phase.START) {
+            if (mc.player != null) {
+                // DrawableApi.beginFrustum(event.renderTickTime);
+            }
+        } else if (event.phase == TickEvent.Phase.END) {
+        }
+    }
+}

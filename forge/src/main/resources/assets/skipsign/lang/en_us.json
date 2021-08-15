@@ -1,0 +1,31 @@
+{
+    "skipsign.keybinding.category": "SkipSign",
+    "skipsign.keybinding.desc.option": "Open setting menu",
+    "skipsign.keybinding.desc.zoom": "Temporarily disable",
+
+    "skipsign.setting.title": "SkipSign Settings",
+
+    "skipsign.setting.description.sign": "Sign",
+    "skipsign.setting.description.frame": "Frame",
+    "skipsign.setting.description.chest": "Chest",
+    "skipsign.setting.description.skull": "Head",
+
+    "skipsign.setting.viewmode.normal": "Range",
+    "skipsign.setting.viewmode.force": "Force",
+    "skipsign.setting.viewmode.none": "None",
+
+    "skipsign.setting.outofrange.sign.show": "Skip inner text",
+    "skipsign.setting.outofrange.sign.hide": "Skip entire signboard",
+
+    "skipsign.setting.outofrange.frame.show": "Skip inner content",
+    "skipsign.setting.outofrange.frame.hide": "Skip entire frameboard",
+
+    "skipsign.setting.framebase.show": "Show board",
+    "skipsign.setting.framebase.hide": "Hide board",
+
+    "skipsign.setting.mod.isenabled": "SkipSign On",
+    "skipsign.setting.mod.isdisabled": "SkipSign Off",
+
+    "skipsign.setting.slider.range.prefix": "Visible Range:",
+    "skipsign.setting.slider.range.postfix": "m"
+}

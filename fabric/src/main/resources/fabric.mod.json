@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "${modId}",
+  "version": "${version}",
+  "name": "${modName}",
+  "description": "SkipSign",
+  
+  "authors": [
+    "fubira"
+  ],
+  "contact": {
+    "homepage": "https://github.com/fubira/SkipSign/",
+    "issues": "https://github.com/fubira/SkipSign/issues"
+  },
+  "license": "GPL3.0",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "mods.skipsign.fabric.SkipSignMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "cloth-config2": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}
