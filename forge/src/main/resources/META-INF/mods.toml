@@ -1,17 +1,17 @@
 modLoader="javafml"
 loaderVersion="[37,)" 
 
-author="fubira"
-license="Copyright (c) TTTA2 / fubira"
+author = "${author}"
+license = "Copyright (c) ${author}"
 issueTrackerURL="https://github.com/fubira/SkipSign/issues"
 
 [[mods]]
-modId="skipsign"
-version="${file.jarVersion}"
-displayName="SkipSign"
+modId = "${modId}"
+version = "${version}"
+displayName = "${modName}"
 displayURL="https://github.com/fubira/SkipSign/"
-credits="Original by TTTA2, Maintained by fubira/KenmoMinecraftClub"
-author="TTTA2,fubira"
+credits="${vendor}"
+author = "${author}"
 
 description='''
 SkipSign is optimization mod that reduces the load of multibyte character fonts by limiting the drawing of Sign.

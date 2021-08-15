@@ -7,20 +7,20 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
 @Config(name = "horseinforeloaded")
 public class FabricConfig implements ConfigData {
-    public ViewMode viewModeSign;
-    public ViewMode viewModeFrame;
-    public ViewMode viewModeChest;
-    public ViewMode viewModeSkull;
+    public ViewMode viewModeSign = ViewMode.NORMAL;
+    public ViewMode viewModeFrame = ViewMode.NORMAL;
+    public ViewMode viewModeChest = ViewMode.NORMAL;
+    public ViewMode viewModeSkull = ViewMode.NORMAL;
 
-    public int viewRangeSign;
-    public int viewRangeFrame;
-    public int viewRangeChest;
-    public int viewRangeSkull;
+    public int viewRangeSign = 16;
+    public int viewRangeFrame = 16;
+    public int viewRangeChest = 32;
+    public int viewRangeSkull = 32;
 
-    public boolean dropOffSignBoard;
-    public boolean dropOffFrameBoard;
+    public boolean dropOffSignBoard = false;
+    public boolean dropOffFrameBoard = false;
 
-    public boolean enableMod;
+    public boolean enableMod = true;
 
 	public static FabricConfig register(){
 		var configHolder = AutoConfig.register(FabricConfig.class, GsonConfigSerializer::new);
