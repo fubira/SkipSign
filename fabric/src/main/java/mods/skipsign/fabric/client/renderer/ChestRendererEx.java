@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 
@@ -21,7 +22,8 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
 
     @Override
     public void render(T entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        if (!SkipSignMod.config.enableMod || Minecraft.getInstance().player == null || isVisible(entity)) {
+        Minecraft client = Minecraft.getInstance();
+        if (!SkipSignMod.config.enableMod || entity.getBlockPos() == BlockPos.ZERO || client.player == null || isVisible(entity)) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
     }
