@@ -6,7 +6,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
 @Config(name = "horseinforeloaded")
-public class FabricConfig implements ConfigData {
+public class SkipSignConfig implements ConfigData {
     public ViewMode viewModeSign = ViewMode.NORMAL;
     public ViewMode viewModeFrame = ViewMode.NORMAL;
     public ViewMode viewModeChest = ViewMode.NORMAL;
@@ -22,8 +22,8 @@ public class FabricConfig implements ConfigData {
 
     public boolean enableMod = true;
 
-	public static FabricConfig register(){
-		var configHolder = AutoConfig.register(FabricConfig.class, GsonConfigSerializer::new);
+	public static SkipSignConfig register(){
+		var configHolder = AutoConfig.register(SkipSignConfig.class, GsonConfigSerializer::new);
 
         return configHolder.getConfig();
 	}

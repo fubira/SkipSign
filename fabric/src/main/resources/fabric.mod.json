@@ -13,7 +13,7 @@
     "issues": "https://github.com/fubira/SkipSign/issues"
   },
   "license": "MIT",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "mods.skipsign.fabric.SkipSignMod"

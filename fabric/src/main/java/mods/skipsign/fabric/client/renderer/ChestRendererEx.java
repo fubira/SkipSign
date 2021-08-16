@@ -28,17 +28,17 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
 
     public boolean isVisible(T entity)
     {
-        if (SkipSignMod.config.viewModeChest == ViewMode.FORCE)
-            return true;
-        if (SkipSignMod.config.viewModeChest == ViewMode.NONE)
-            return false;
-
-        Minecraft mc = Minecraft.getInstance();
-
-        if (SkipSignMod.client.isZooming() || mc.player.isScoping()) {
+        if (SkipSignMod.config.viewModeChest == ViewMode.FORCE) {
             return true;
         }
+        if (SkipSignMod.config.viewModeChest == ViewMode.NONE) {
+            return false;
+        }
 
+        if (SkipSignMod.client.isZooming()) {
+            return true;
+        }
+    
         if (RendererHelper.IsInRangeToRenderDist(
                 RendererHelper.GetDistancePlayerToBlockEntity(entity),
                 SkipSignMod.config.viewRangeChest)) {

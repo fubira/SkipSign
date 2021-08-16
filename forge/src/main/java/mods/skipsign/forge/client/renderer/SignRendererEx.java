@@ -1,6 +1,5 @@
 package mods.skipsign.forge.client.renderer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -10,10 +9,9 @@ import net.minecraft.network.chat.TextComponent;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.ForgeConfig;
+import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
-
-import com.mojang.blaze3d.platform.InputConstants;
 
 public class SignRendererEx extends SignRenderer
 {
@@ -49,7 +47,7 @@ public class SignRendererEx extends SignRenderer
     @Override
     public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
-        if (!ForgeConfig.enableMod.get()) {
+        if (!SkipSignConfig.enableMod.get()) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
             Component [] temporaryText = null;
@@ -61,7 +59,7 @@ public class SignRendererEx extends SignRenderer
                 emptySignMessage(entity);
             }
 
-            if (!ForgeConfig.dropOffSignBoard.get() || (ForgeConfig.dropOffSignBoard.get() && visible)) {
+            if (!SkipSignConfig.dropOffSignBoard.get() || (SkipSignConfig.dropOffSignBoard.get() && visible)) {
                 super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
 
@@ -73,19 +71,20 @@ public class SignRendererEx extends SignRenderer
 
     public boolean isVisible(SignBlockEntity entity)
     {
-        if (ForgeConfig.viewModeSign.get() == ViewMode.FORCE)
+        if (SkipSignConfig.viewModeSign.get() == ViewMode.FORCE) {
             return true;
-        if (ForgeConfig.viewModeSign.get() == ViewMode.NONE)
+        }
+        if (SkipSignConfig.viewModeSign.get() == ViewMode.NONE) {
             return false;
+        }
 
-        Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
+        if (SkipSignMod.client.isZooming()) {
             return true;
-
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                ForgeConfig.viewRangeSign.get()))
+        }
+    
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignConfig.viewRangeSign.get())) {
             return true;
+        }
 
         return false;
     }

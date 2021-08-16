@@ -71,19 +71,18 @@ public class SignRendererEx extends SignRenderer
 
     public boolean isVisible(SignBlockEntity entity)
     {
-        if (SkipSignMod.config.viewModeSign == ViewMode.FORCE)
-            return true;
-        if (SkipSignMod.config.viewModeSign == ViewMode.NONE)
-            return false;
-
-        Minecraft mc = Minecraft.getInstance();
-        if (SkipSignMod.client.isZooming() || mc.player.isScoping()) {
+        if (SkipSignMod.config.viewModeSign == ViewMode.FORCE) {
             return true;
         }
+        if (SkipSignMod.config.viewModeSign == ViewMode.NONE) {
+            return false;
+        }
 
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                SkipSignMod.config.viewRangeSign)) {
+        if (SkipSignMod.client.isZooming()) {
+            return true;
+        }
+    
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignMod.config.viewRangeSign)) {
             return true;
         }
 

@@ -45,19 +45,18 @@ public class ItemFrameRendererEx extends ItemFrameRenderer<ItemFrame>
 
     public boolean isVisible(ItemFrame entity)
     {
-        if (SkipSignMod.config.viewModeFrame == ViewMode.FORCE)
-            return true;
-        if (SkipSignMod.config.viewModeFrame == ViewMode.NONE)
-            return false;
-
-        Minecraft mc = Minecraft.getInstance();
-        if (SkipSignMod.client.isZooming() || mc.player.isScoping()) {
+        if (SkipSignMod.config.viewModeFrame == ViewMode.FORCE) {
             return true;
         }
+        if (SkipSignMod.config.viewModeFrame == ViewMode.NONE) {
+            return false;
+        }
 
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToEntity(entity),
-                SkipSignMod.config.viewRangeFrame)) {
+        if (SkipSignMod.client.isZooming()) {
+            return true;
+        }
+    
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntity(entity), SkipSignMod.config.viewRangeFrame)) {
             return true;
         }
 

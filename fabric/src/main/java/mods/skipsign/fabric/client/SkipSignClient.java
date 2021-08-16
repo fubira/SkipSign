@@ -41,8 +41,9 @@ public final class SkipSignClient {
     }
 
     public boolean isZooming() {
-        return is_zooming;
-    } 
+        Minecraft client = Minecraft.getInstance();
+        return is_zooming || client.player.isScoping();
+   }
 
     public void onTick(Minecraft client) {
         if (client.screen != null) {

@@ -1,16 +1,15 @@
 package mods.skipsign.forge.client.renderer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.decoration.ItemFrame;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.ForgeConfig;
+import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
 public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<T>
@@ -23,7 +22,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
     @Override
     public void render(T entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
     {
-        if (!ForgeConfig.enableMod.get()) {
+        if (!SkipSignConfig.enableMod.get()) {
             super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         } else {
             ItemStack frameItemStack = ItemStack.EMPTY;
@@ -34,7 +33,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
                 entity.setItem(ItemStack.EMPTY);
             }
     
-            if ((!ForgeConfig.dropOffFrameBoard.get()) || (ForgeConfig.dropOffFrameBoard.get() && visible)) {
+            if ((!SkipSignConfig.dropOffFrameBoard.get()) || (SkipSignConfig.dropOffFrameBoard.get() && visible)) {
                 super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
     
@@ -46,19 +45,20 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
 
     public boolean isVisible(ItemFrame entity)
     {
-        if (ForgeConfig.viewModeFrame.get() == ViewMode.FORCE)
+        if (SkipSignConfig.viewModeFrame.get() == ViewMode.FORCE) {
             return true;
-        if (ForgeConfig.viewModeFrame.get() == ViewMode.NONE)
+        }
+        if (SkipSignConfig.viewModeFrame.get() == ViewMode.NONE) {
             return false;
+        }
 
-        Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
+        if (SkipSignMod.client.isZooming()) {
             return true;
+        }
 
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToEntity(entity),
-                ForgeConfig.viewRangeFrame.get()))
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntity(entity), SkipSignConfig.viewRangeFrame.get())) {
             return true;
+        }
 
         return false;
     }

@@ -6,10 +6,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.ForgeConfig;
+import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
 public class SkullRendererEx extends SkullBlockRenderer
@@ -21,7 +21,7 @@ public class SkullRendererEx extends SkullBlockRenderer
     @Override
     public void render(SkullBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
-        if (!ForgeConfig.enableMod.get() || Minecraft.getInstance().player == null || isVisible(entity))
+        if (!SkipSignConfig.enableMod.get() || Minecraft.getInstance().player == null || isVisible(entity))
         {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
@@ -29,19 +29,20 @@ public class SkullRendererEx extends SkullBlockRenderer
 
     public boolean isVisible(SkullBlockEntity entity)
     {
-        if (ForgeConfig.viewModeSkull.get() == ViewMode.FORCE)
+        if (SkipSignConfig.viewModeSkull.get() == ViewMode.FORCE) {
             return true;
-        if (ForgeConfig.viewModeSkull.get() == ViewMode.NONE)
+        }
+        if (SkipSignConfig.viewModeSkull.get() == ViewMode.NONE) {
             return false;
+        }
 
-        Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
+        if (SkipSignMod.client.isZooming()) {
             return true;
+        }
 
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                ForgeConfig.viewRangeSkull.get()))
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignConfig.viewRangeSkull.get())) {
             return true;
+        }
 
         return false;
     }

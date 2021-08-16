@@ -28,20 +28,20 @@ public class SkullRendererEx extends SkullBlockRenderer
 
     public boolean isVisible(SkullBlockEntity entity)
     {
-        if (SkipSignMod.config.viewModeSkull == ViewMode.FORCE)
+        if (SkipSignMod.config.viewModeSkull == ViewMode.FORCE) {
             return true;
-        if (SkipSignMod.config.viewModeSkull == ViewMode.NONE)
+        }
+        if (SkipSignMod.config.viewModeSkull == ViewMode.NONE) {
             return false;
+        }
 
-        Minecraft mc = Minecraft.getInstance();
-        if (SkipSignMod.client.isZooming() || mc.player.isScoping()) {
+        if (SkipSignMod.client.isZooming()) {
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(
-                RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                SkipSignMod.config.viewRangeSkull))
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignMod.config.viewRangeSkull)) {
             return true;
+        }
 
         return false;
     }
