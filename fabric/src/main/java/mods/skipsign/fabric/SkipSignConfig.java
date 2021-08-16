@@ -5,7 +5,7 @@ import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
-@Config(name = "horseinforeloaded")
+@Config(name = "skipsign")
 public class SkipSignConfig implements ConfigData {
     public ViewMode viewModeSign = ViewMode.NORMAL;
     public ViewMode viewModeFrame = ViewMode.NORMAL;
