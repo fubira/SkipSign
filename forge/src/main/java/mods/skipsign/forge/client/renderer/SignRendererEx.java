@@ -9,7 +9,7 @@ import net.minecraft.network.chat.TextComponent;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
@@ -47,7 +47,7 @@ public class SignRendererEx extends SignRenderer
     @Override
     public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
-        if (!SkipSignConfig.enableMod.get()) {
+        if (!ForgeConfig.enableMod.get()) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
             Component [] temporaryText = null;
@@ -59,7 +59,7 @@ public class SignRendererEx extends SignRenderer
                 emptySignMessage(entity);
             }
 
-            if (!SkipSignConfig.dropOffSignBoard.get() || (SkipSignConfig.dropOffSignBoard.get() && visible)) {
+            if (!ForgeConfig.dropOffSignBoard.get() || (ForgeConfig.dropOffSignBoard.get() && visible)) {
                 super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
 
@@ -71,10 +71,10 @@ public class SignRendererEx extends SignRenderer
 
     public boolean isVisible(SignBlockEntity entity)
     {
-        if (SkipSignConfig.viewModeSign.get() == ViewMode.FORCE) {
+        if (ForgeConfig.viewModeSign.get() == ViewMode.FORCE) {
             return true;
         }
-        if (SkipSignConfig.viewModeSign.get() == ViewMode.NONE) {
+        if (ForgeConfig.viewModeSign.get() == ViewMode.NONE) {
             return false;
         }
 
@@ -82,7 +82,7 @@ public class SignRendererEx extends SignRenderer
             return true;
         }
     
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignConfig.viewRangeSign.get())) {
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), ForgeConfig.viewRangeSign.get())) {
             return true;
         }
 

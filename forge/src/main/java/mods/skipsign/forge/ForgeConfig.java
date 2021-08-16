@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
-public class SkipSignConfig {
+public class ForgeConfig {
     public static final EnumValue<ViewMode> viewModeSign;
     public static final EnumValue<ViewMode> viewModeFrame;
     public static final EnumValue<ViewMode> viewModeChest;

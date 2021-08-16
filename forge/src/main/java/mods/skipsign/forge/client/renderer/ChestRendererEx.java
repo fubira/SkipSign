@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
@@ -23,17 +23,17 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
 
     @Override
     public void render(T entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        if (!SkipSignConfig.enableMod.get() || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity)) {
+        if (!ForgeConfig.enableMod.get() || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity)) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
     }
 
     public boolean isVisible(T entity)
     {
-        if (SkipSignConfig.viewModeChest.get() == ViewMode.FORCE) {
+        if (ForgeConfig.viewModeChest.get() == ViewMode.FORCE) {
             return true;
         }
-        if (SkipSignConfig.viewModeChest.get() == ViewMode.NONE) {
+        if (ForgeConfig.viewModeChest.get() == ViewMode.NONE) {
             return false;
         }
 
@@ -41,7 +41,7 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignConfig.viewRangeChest.get())) {
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), ForgeConfig.viewRangeChest.get())) {
             return true;
         }
 

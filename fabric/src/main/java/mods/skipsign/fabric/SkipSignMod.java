@@ -10,7 +10,7 @@ import mods.skipsign.fabric.client.SkipSignClient;
 public class SkipSignMod implements ClientModInitializer
 {
     public static Logger logger = LogManager.getLogger("SkipSign");
-    public static SkipSignConfig config;
+    public static FabricConfig config;
     public static SkipSignClient client;
 
     @Override
@@ -21,7 +21,7 @@ public class SkipSignMod implements ClientModInitializer
         logger.error("error log!!!");
         logger.fatal("fatal log!!!");
 
-        config = SkipSignConfig.register();
+        config = FabricConfig.register();
         client = new SkipSignClient();
     }
 }

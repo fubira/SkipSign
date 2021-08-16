@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
@@ -22,7 +22,7 @@ public class SkullRendererEx extends SkullBlockRenderer
     @Override
     public void render(SkullBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
-        if (!SkipSignConfig.enableMod.get() || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity))
+        if (!ForgeConfig.enableMod.get() || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity))
         {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
@@ -30,10 +30,10 @@ public class SkullRendererEx extends SkullBlockRenderer
 
     public boolean isVisible(SkullBlockEntity entity)
     {
-        if (SkipSignConfig.viewModeSkull.get() == ViewMode.FORCE) {
+        if (ForgeConfig.viewModeSkull.get() == ViewMode.FORCE) {
             return true;
         }
-        if (SkipSignConfig.viewModeSkull.get() == ViewMode.NONE) {
+        if (ForgeConfig.viewModeSkull.get() == ViewMode.NONE) {
             return false;
         }
 
@@ -41,7 +41,7 @@ public class SkullRendererEx extends SkullBlockRenderer
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), SkipSignConfig.viewRangeSkull.get())) {
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), ForgeConfig.viewRangeSkull.get())) {
             return true;
         }
 

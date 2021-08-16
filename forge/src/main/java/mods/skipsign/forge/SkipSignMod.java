@@ -1,9 +1,7 @@
 package mods.skipsign.forge;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +19,7 @@ public class SkipSignMod
 
     public SkipSignMod() {
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        SkipSignConfig.register(ModLoadingContext.get());
+        ForgeConfig.register(ModLoadingContext.get());
 
         client = new SkipSignClient();
     }

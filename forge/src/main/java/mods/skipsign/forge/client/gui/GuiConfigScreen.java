@@ -9,7 +9,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.gui.screens.Screen;
-import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.client.gui.widget.FrameDropOffModeButton;
 import mods.skipsign.forge.client.gui.widget.ModToggleButton;
 import mods.skipsign.forge.client.gui.widget.SignDropOffModeButton;
@@ -47,37 +47,37 @@ public class GuiConfigScreen extends Screen
         int left = (this.width - 380) / 2;
         int top = (this.height - 200) / 2;
 
-        btnEnableMod        = addRenderableWidget(new ModToggleButton(left + 100, top, 100, 20, SkipSignConfig.enableMod.get()));
-        btnViewModeSign     = addRenderableWidget(new ViewModeToggleButton(left +  55, top +   50, 60, 20, SkipSignConfig.viewModeSign.get()));
-        btnViewModeFrame    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +   75, 60, 20, SkipSignConfig.viewModeFrame.get()));
-        btnViewModeChest    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +  100, 60, 20, SkipSignConfig.viewModeChest.get()));
-        btnViewModeSkull    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +  125, 60, 20, SkipSignConfig.viewModeSkull.get()));
+        btnEnableMod        = addRenderableWidget(new ModToggleButton(left + 100, top, 100, 20, ForgeConfig.enableMod.get()));
+        btnViewModeSign     = addRenderableWidget(new ViewModeToggleButton(left +  55, top +   50, 60, 20, ForgeConfig.viewModeSign.get()));
+        btnViewModeFrame    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +   75, 60, 20, ForgeConfig.viewModeFrame.get()));
+        btnViewModeChest    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +  100, 60, 20, ForgeConfig.viewModeChest.get()));
+        btnViewModeSkull    = addRenderableWidget(new ViewModeToggleButton(left +  55, top +  125, 60, 20, ForgeConfig.viewModeSkull.get()));
 
-        sliderRangeSign     = addRenderableWidget(new ViewRangeSlider(left + 120, top +  50, 128, 20, maxRange, SkipSignConfig.viewRangeSign.get()));
-        sliderRangeFrame    = addRenderableWidget(new ViewRangeSlider(left + 120, top +  75, 128, 20, maxRange, SkipSignConfig.viewRangeFrame.get()));
-        sliderRangeChest    = addRenderableWidget(new ViewRangeSlider(left + 120, top + 100, 128, 20, maxRange, SkipSignConfig.viewRangeChest.get()));
-        sliderRangeSkull    = addRenderableWidget(new ViewRangeSlider(left + 120, top + 125, 128, 20, maxRange, SkipSignConfig.viewRangeSkull.get()));
+        sliderRangeSign     = addRenderableWidget(new ViewRangeSlider(left + 120, top +  50, 128, 20, maxRange, ForgeConfig.viewRangeSign.get()));
+        sliderRangeFrame    = addRenderableWidget(new ViewRangeSlider(left + 120, top +  75, 128, 20, maxRange, ForgeConfig.viewRangeFrame.get()));
+        sliderRangeChest    = addRenderableWidget(new ViewRangeSlider(left + 120, top + 100, 128, 20, maxRange, ForgeConfig.viewRangeChest.get()));
+        sliderRangeSkull    = addRenderableWidget(new ViewRangeSlider(left + 120, top + 125, 128, 20, maxRange, ForgeConfig.viewRangeSkull.get()));
 
-        btnOutofRangeSign   = addRenderableWidget(new SignDropOffModeButton(left + 253, top +  50, 130, 20, SkipSignConfig.dropOffSignBoard.get()));
-        btnOutofRangeFrame  = addRenderableWidget(new FrameDropOffModeButton(left + 253, top +  75, 130, 20, SkipSignConfig.dropOffFrameBoard.get()));
+        btnOutofRangeSign   = addRenderableWidget(new SignDropOffModeButton(left + 253, top +  50, 130, 20, ForgeConfig.dropOffSignBoard.get()));
+        btnOutofRangeFrame  = addRenderableWidget(new FrameDropOffModeButton(left + 253, top +  75, 130, 20, ForgeConfig.dropOffFrameBoard.get()));
     }
 
     @Override
     public void onClose() {
-        SkipSignConfig.enableMod.set(btnEnableMod.getValue());
+        ForgeConfig.enableMod.set(btnEnableMod.getValue());
 
-        SkipSignConfig.viewModeSign.set(btnViewModeSign.getValue());
-        SkipSignConfig.viewModeChest.set(btnViewModeChest.getValue());
-        SkipSignConfig.viewModeFrame.set(btnViewModeFrame.getValue());
-        SkipSignConfig.viewModeSkull.set(btnViewModeSkull.getValue());
+        ForgeConfig.viewModeSign.set(btnViewModeSign.getValue());
+        ForgeConfig.viewModeChest.set(btnViewModeChest.getValue());
+        ForgeConfig.viewModeFrame.set(btnViewModeFrame.getValue());
+        ForgeConfig.viewModeSkull.set(btnViewModeSkull.getValue());
 
-        SkipSignConfig.viewRangeChest.set(sliderRangeChest.getValue());
-        SkipSignConfig.viewRangeSign.set(sliderRangeSign.getValue());
-        SkipSignConfig.viewRangeFrame.set(sliderRangeFrame.getValue());
-        SkipSignConfig.viewRangeSkull.set(sliderRangeSkull.getValue());
+        ForgeConfig.viewRangeChest.set(sliderRangeChest.getValue());
+        ForgeConfig.viewRangeSign.set(sliderRangeSign.getValue());
+        ForgeConfig.viewRangeFrame.set(sliderRangeFrame.getValue());
+        ForgeConfig.viewRangeSkull.set(sliderRangeSkull.getValue());
 
-        SkipSignConfig.dropOffFrameBoard.set(btnOutofRangeFrame.getValue());
-        SkipSignConfig.dropOffSignBoard.set(btnOutofRangeSign.getValue());
+        ForgeConfig.dropOffFrameBoard.set(btnOutofRangeFrame.getValue());
+        ForgeConfig.dropOffSignBoard.set(btnOutofRangeSign.getValue());
         super.onClose();
     }
 

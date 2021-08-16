@@ -8,7 +8,7 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.SkipSignConfig;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.SkipSignMod;
 import mods.skipsign.forge.ViewMode;
 
@@ -22,7 +22,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
     @Override
     public void render(T entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
     {
-        if (!SkipSignConfig.enableMod.get()) {
+        if (!ForgeConfig.enableMod.get()) {
             super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         } else {
             ItemStack frameItemStack = ItemStack.EMPTY;
@@ -33,7 +33,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
                 entity.setItem(ItemStack.EMPTY);
             }
     
-            if ((!SkipSignConfig.dropOffFrameBoard.get()) || (SkipSignConfig.dropOffFrameBoard.get() && visible)) {
+            if ((!ForgeConfig.dropOffFrameBoard.get()) || (ForgeConfig.dropOffFrameBoard.get() && visible)) {
                 super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
     
@@ -45,10 +45,10 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
 
     public boolean isVisible(ItemFrame entity)
     {
-        if (SkipSignConfig.viewModeFrame.get() == ViewMode.FORCE) {
+        if (ForgeConfig.viewModeFrame.get() == ViewMode.FORCE) {
             return true;
         }
-        if (SkipSignConfig.viewModeFrame.get() == ViewMode.NONE) {
+        if (ForgeConfig.viewModeFrame.get() == ViewMode.NONE) {
             return false;
         }
 
@@ -56,7 +56,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntity(entity), SkipSignConfig.viewRangeFrame.get())) {
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntity(entity), ForgeConfig.viewRangeFrame.get())) {
             return true;
         }
 

@@ -75,6 +75,7 @@ public class GuiConfigScreen extends Screen
 
         SkipSignMod.config.dropOffFrameBoard = btnOutofRangeFrame.getValue();
         SkipSignMod.config.dropOffSignBoard = btnOutofRangeSign.getValue();
+        SkipSignMod.config.save();
         super.onClose();
     }
 
