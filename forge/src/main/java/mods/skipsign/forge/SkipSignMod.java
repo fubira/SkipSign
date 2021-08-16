@@ -16,7 +16,6 @@ public class SkipSignMod
 {
     public static final String modId = "skipsign";
     public static SkipSignClient client;
-    public static ForgeConfig config;
 
     public static Logger logger = LogManager.getLogger();
 
@@ -26,10 +25,4 @@ public class SkipSignMod
 
         client = new SkipSignClient();
     }
-
-	@SubscribeEvent
-	public void onConfigLoading(final ModConfigEvent event){
-        config = new ForgeConfig(event.getConfig());
-        config.save();
-	}
 }
