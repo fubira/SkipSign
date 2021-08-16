@@ -3,16 +3,16 @@
   "id": "${modId}",
   "version": "${version}",
   "name": "${modName}",
-  "description": "SkipSign",
+  "description": "SkipSign is optimization mod that reduces the load of multibyte character fonts by limiting the drawing of Sign",
   
   "authors": [
-    "fubira"
+    "${author}"
   ],
   "contact": {
     "homepage": "https://github.com/fubira/SkipSign/",
     "issues": "https://github.com/fubira/SkipSign/issues"
   },
-  "license": "GPL3.0",
+  "license": "MIT",
   "environment": "*",
   "entrypoints": {
     "client": [

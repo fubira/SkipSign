@@ -10,7 +10,7 @@ import net.minecraft.network.chat.TextComponent;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.Config;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.ViewMode;
 
 import com.mojang.blaze3d.platform.InputConstants;
@@ -49,7 +49,7 @@ public class SignRendererEx extends SignRenderer
     @Override
     public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
     {
-        if (!Config.enableMod.get()) {
+        if (!ForgeConfig.enableMod.get()) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
             Component [] temporaryText = null;
@@ -61,7 +61,7 @@ public class SignRendererEx extends SignRenderer
                 emptySignMessage(entity);
             }
 
-            if (!Config.dropOffSignBoard.get() || (Config.dropOffSignBoard.get() && visible)) {
+            if (!ForgeConfig.dropOffSignBoard.get() || (ForgeConfig.dropOffSignBoard.get() && visible)) {
                 super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
 
@@ -73,18 +73,18 @@ public class SignRendererEx extends SignRenderer
 
     public boolean isVisible(SignBlockEntity entity)
     {
-        if (Config.viewModeSign.get() == ViewMode.FORCE)
+        if (ForgeConfig.viewModeSign.get() == ViewMode.FORCE)
             return true;
-        if (Config.viewModeSign.get() == ViewMode.NONE)
+        if (ForgeConfig.viewModeSign.get() == ViewMode.NONE)
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), Config.keyCodeZoom.get()))
+        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
                 RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                Config.viewRangeSign.get()))
+                ForgeConfig.viewRangeSign.get()))
             return true;
 
         return false;

@@ -26,7 +26,7 @@ public final class SkipSignClient {
         new KeyMapping("skipsign.keybinding.desc.option", GLFW.GLFW_KEY_F8, "skipsign.keybinding.category")
     );
     public static final KeyMapping keyMappingZoom = KeyBindingHelper.registerKeyBinding(
-        new KeyMapping("skipsign.keybinding.desc.zoom", GLFW.GLFW_KEY_RIGHT_ALT, "skipsign.keybinding.zoom")
+        new KeyMapping("skipsign.keybinding.desc.zoom", GLFW.GLFW_KEY_RIGHT_ALT, "skipsign.keybinding.category")
     );
 
     public SkipSignClient() {

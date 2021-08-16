@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.LidBlockEntity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.Config;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.ViewMode;
 
 import com.mojang.blaze3d.platform.InputConstants;
@@ -23,25 +23,25 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
 
     @Override
     public void render(T entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        if (!Config.enableMod.get() || Minecraft.getInstance().player == null || isVisible(entity)) {
+        if (!ForgeConfig.enableMod.get() || Minecraft.getInstance().player == null || isVisible(entity)) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         }
     }
 
     public boolean isVisible(T entity)
     {
-        if (Config.viewModeChest.get() == ViewMode.FORCE)
+        if (ForgeConfig.viewModeChest.get() == ViewMode.FORCE)
             return true;
-        if (Config.viewModeChest.get() == ViewMode.NONE)
+        if (ForgeConfig.viewModeChest.get() == ViewMode.NONE)
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), Config.keyCodeZoom.get()))
+        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
                 RendererHelper.GetDistancePlayerToBlockEntity(entity),
-                Config.viewRangeChest.get())) {
+                ForgeConfig.viewRangeChest.get())) {
             return true;
         }
 

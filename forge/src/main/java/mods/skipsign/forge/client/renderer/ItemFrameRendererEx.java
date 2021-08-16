@@ -10,7 +10,7 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import mods.skipsign.forge.Config;
+import mods.skipsign.forge.ForgeConfig;
 import mods.skipsign.forge.ViewMode;
 
 public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<T>
@@ -23,7 +23,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
     @Override
     public void render(T entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
     {
-        if (!Config.enableMod.get()) {
+        if (!ForgeConfig.enableMod.get()) {
             super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         } else {
             ItemStack frameItemStack = ItemStack.EMPTY;
@@ -34,7 +34,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
                 entity.setItem(ItemStack.EMPTY);
             }
     
-            if ((!Config.dropOffFrameBoard.get()) || (Config.dropOffFrameBoard.get() && visible)) {
+            if ((!ForgeConfig.dropOffFrameBoard.get()) || (ForgeConfig.dropOffFrameBoard.get() && visible)) {
                 super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
             }
     
@@ -46,18 +46,18 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
 
     public boolean isVisible(ItemFrame entity)
     {
-        if (Config.viewModeFrame.get() == ViewMode.FORCE)
+        if (ForgeConfig.viewModeFrame.get() == ViewMode.FORCE)
             return true;
-        if (Config.viewModeFrame.get() == ViewMode.NONE)
+        if (ForgeConfig.viewModeFrame.get() == ViewMode.NONE)
             return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), Config.keyCodeZoom.get()))
+        if (InputConstants.isKeyDown(mc.getWindow().getWindow(), ForgeConfig.keyCodeZoom.get()))
             return true;
 
         if (RendererHelper.IsInRangeToRenderDist(
                 RendererHelper.GetDistancePlayerToEntity(entity),
-                Config.viewRangeFrame.get()))
+                ForgeConfig.viewRangeFrame.get()))
             return true;
 
         return false;

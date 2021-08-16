@@ -13,21 +13,4 @@ public class SkipSignMod implements ClientModInitializer
         config = FabricConfig.register();
         client = new SkipSignClient();
     }
-
-
-    /*
-    public static final String modId = "skipsign";
-    public static final String buildId = "2019-6";
-    public static String modVersion;
-
-    public SkipSignMod() {
-        FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        new ClientEventHandler();
-
-        Config.register(ModLoadingContext.get());
-        modVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
-
-        SkipSignMod.logger.info("*** SkipSign " + modVersion + " initialized ***");
-    }
-    */
 }

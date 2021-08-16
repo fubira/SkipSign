@@ -9,7 +9,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 import org.lwjgl.glfw.GLFW;
 
-public class Config {
+public class ForgeConfig {
     public static final IntValue keyCodeVisible;
     public static final IntValue keyCodeZoom;
     
