@@ -35,13 +35,13 @@ loom {
     }
 
     runs {
-        create("horseInfoReloadedClient") {
+        create("skipSignClient") {
             client()
 
             property("fabric.log.level", "debug")
             vmArg("-XX:+ShowCodeDetailsInExceptionMessages")
         }
-        create("horseInfoReloadedServer") {
+        create("skipSignServer") {
             server()
 
             property("fabric.log.level", "debug")

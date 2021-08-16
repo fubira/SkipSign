@@ -20,7 +20,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
-                horseinforeloaded {
+                skipsign {
                     source sourceSets.main
                 }
             }
@@ -30,7 +30,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             mods {
-                horseinforeloaded {
+                skipsign {
                     source sourceSets.main
                 }
             }
@@ -40,9 +40,9 @@ minecraft {
             workingDirectory project.file('../run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'horseinforeloaded', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'skipsign', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
-                horseinforeloaded {
+                skipsign {
                     source sourceSets.main
                 }
             }
