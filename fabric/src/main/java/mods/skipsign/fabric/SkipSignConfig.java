@@ -12,10 +12,10 @@ public class SkipSignConfig implements ConfigData {
     public ViewMode viewModeChest = ViewMode.NORMAL;
     public ViewMode viewModeSkull = ViewMode.NORMAL;
 
-    public int viewRangeSign = 16;
-    public int viewRangeFrame = 16;
-    public int viewRangeChest = 32;
-    public int viewRangeSkull = 32;
+    public int viewRangeSign = 20;
+    public int viewRangeFrame = 20;
+    public int viewRangeChest = 64;
+    public int viewRangeSkull = 64;
 
     public boolean dropOffSignBoard = false;
     public boolean dropOffFrameBoard = false;

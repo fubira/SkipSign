@@ -1,6 +1,5 @@
 package mods.skipsign.fabric.client.renderer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
