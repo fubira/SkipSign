@@ -2,8 +2,8 @@ package mods.skipsign.fabric.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TextComponent;
@@ -32,12 +32,12 @@ public final class SkipSignClient {
     public SkipSignClient() {
         ClientTickEvents.END_CLIENT_TICK.register(this::onTick);
 
-        BlockEntityRendererRegistry.INSTANCE.register(BlockEntityType.SIGN, SignRendererEx::new);
-        BlockEntityRendererRegistry.INSTANCE.register(BlockEntityType.CHEST, ChestRendererEx::new);
-        BlockEntityRendererRegistry.INSTANCE.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
-        BlockEntityRendererRegistry.INSTANCE.register(BlockEntityType.SKULL, SkullRendererEx::new);
+        BlockEntityRendererRegistry.register(BlockEntityType.SIGN, SignRendererEx::new);
+        BlockEntityRendererRegistry.register(BlockEntityType.CHEST, ChestRendererEx::new);
+        BlockEntityRendererRegistry.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
+        BlockEntityRendererRegistry.register(BlockEntityType.SKULL, SkullRendererEx::new);
 
-        EntityRendererRegistry.INSTANCE.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
+        EntityRendererRegistry.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
     }
 
     public boolean isZooming() {

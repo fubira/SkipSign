@@ -25,7 +25,7 @@ public class SignRendererEx extends SignRenderer
         Component [] tempSignText = new Component[4];
 
         for (int i = 0; i < 4; i++) {
-            tempSignText[i] = entity.getMessage(i, true);
+            tempSignText[i] = entity.getMessage(i, true).copy();
         }
         return tempSignText;
     }
@@ -40,7 +40,7 @@ public class SignRendererEx extends SignRenderer
     public void emptySignMessage(SignBlockEntity entity)
     {
         for (int i = 0; i < 4; i++) {
-            entity.setMessage(i, new TextComponent(""));
+            entity.setMessage(i, TextComponent.EMPTY);
         }
     }
 
@@ -50,21 +50,16 @@ public class SignRendererEx extends SignRenderer
         if (!ForgeConfig.enableMod.get()) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
-            Component [] temporaryText = null;
             boolean visible = isVisible(entity);
+            SignBlockEntity entityForRender = entity;
 
             if (!visible) {
-                // Hide text/signboard
-                temporaryText = getSignText(entity);
-                emptySignMessage(entity);
+                // Create empty SignBlockEntity for render
+                entityForRender = new SignBlockEntity(entity.getBlockPos(), entity.getBlockState());
             }
 
             if (!ForgeConfig.dropOffSignBoard.get() || (ForgeConfig.dropOffSignBoard.get() && visible)) {
-                super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
-            }
-
-            if (temporaryText != null) {
-                setSignMessage(entity, temporaryText);
+                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
         }
     }

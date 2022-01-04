@@ -3,9 +3,13 @@ package mods.skipsign.fabric.client.renderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.EntityType.EntityFactory;
+import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+
+import java.lang.System.Logger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -24,7 +28,7 @@ public class SignRendererEx extends SignRenderer
         Component [] tempSignText = new Component[4];
 
         for (int i = 0; i < 4; i++) {
-            tempSignText[i] = entity.getMessage(i, true);
+            tempSignText[i] = entity.getMessage(i, true).copy();
         }
         return tempSignText;
     }
@@ -32,14 +36,14 @@ public class SignRendererEx extends SignRenderer
     public void setSignMessage(SignBlockEntity entity, Component [] text)
     {
         for (int i = 0; i < 4; i++) {
-            entity.setMessage(i, text[i]);
+            entity.setMessage(i, text[i].copy());
         }
     }
 
     public void emptySignMessage(SignBlockEntity entity)
     {
         for (int i = 0; i < 4; i++) {
-            entity.setMessage(i, new TextComponent(""));
+            entity.setMessage(i, TextComponent.EMPTY);
         }
     }
 
@@ -49,21 +53,16 @@ public class SignRendererEx extends SignRenderer
         if (!SkipSignMod.config.enableMod) {
             super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
         } else {
-            Component [] temporaryText = null;
             boolean visible = isVisible(entity);
+            SignBlockEntity entityForRender = entity;
 
             if (!visible) {
-                // Hide text/signboard
-                temporaryText = getSignText(entity);
-                emptySignMessage(entity);
+                // Create empty SignBlockEntity for render
+                entityForRender = new SignBlockEntity(entity.getBlockPos(), entity.getBlockState());
             }
 
             if (!SkipSignMod.config.dropOffSignBoard || (SkipSignMod.config.dropOffSignBoard && visible)) {
-                super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
-            }
-
-            if (temporaryText != null) {
-                setSignMessage(entity, temporaryText);
+                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
             }
         }
     }
