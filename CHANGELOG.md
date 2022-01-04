@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.17.1-3.3] - 2022-01-05
+
+- Updated fabric version
+- Changed the rendering skipping method of SignBlockEntity
+
 ## [1.17.1-3.2] - 2021-08-17
 
 - Fixed an issue where settings could not be saved in fabric.
