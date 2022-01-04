@@ -3,13 +3,9 @@ package mods.skipsign.fabric.client.renderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.entity.EntityType.EntityFactory;
-import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-
-import java.lang.System.Logger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
