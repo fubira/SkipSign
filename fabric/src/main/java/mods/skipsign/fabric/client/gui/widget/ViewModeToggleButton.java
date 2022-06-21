@@ -2,14 +2,13 @@ package mods.skipsign.fabric.client.gui.widget;
 
 import mods.skipsign.fabric.ViewMode;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public class ViewModeToggleButton extends Button {
     private ViewMode value;
 
     public ViewModeToggleButton(int x, int y, int width, int height, ViewMode defaultValue) {
-        super(x, y, width, height, TextComponent.EMPTY, button -> {});
+        super(x, y, width, height, Component.empty(), button -> {});
         this.value = defaultValue;
         update();
     }
@@ -41,9 +40,9 @@ public class ViewModeToggleButton extends Button {
 
     public void update() {
         switch(this.value) {
-            case NORMAL: setMessage(new TranslatableComponent("skipsign.setting.viewmode.normal")); break;
-            case FORCE:  setMessage(new TranslatableComponent("skipsign.setting.viewmode.force")); break;
-            case NONE:   setMessage(new TranslatableComponent("skipsign.setting.viewmode.none")); break;
+            case NORMAL: setMessage(Component.translatable("skipsign.setting.viewmode.normal")); break;
+            case FORCE:  setMessage(Component.translatable("skipsign.setting.viewmode.force")); break;
+            case NONE:   setMessage(Component.translatable("skipsign.setting.viewmode.none")); break;
         }
     }
 }

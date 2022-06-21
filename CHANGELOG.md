@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.19-3.4] - 2022-06-21
+
+- minecraft 1.19
+
 ## [1.17.1-3.3] - 2022-01-05
 
 - Updated fabric version

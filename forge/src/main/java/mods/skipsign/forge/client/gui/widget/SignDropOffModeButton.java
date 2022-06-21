@@ -1,14 +1,13 @@
 package mods.skipsign.forge.client.gui.widget;
 
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public class SignDropOffModeButton extends Button {
     private Boolean value;
 
     public SignDropOffModeButton(int x, int y, int width, int height, Boolean defaultValue) {
-        super(x, y, width, height, TextComponent.EMPTY, button -> {});
+        super(x, y, width, height, Component.empty(), button -> {});
         this.value = defaultValue;
         update();
     }
@@ -26,8 +25,8 @@ public class SignDropOffModeButton extends Button {
 
     public void update() {
         setMessage(this.value
-            ? new TranslatableComponent("skipsign.setting.outofrange.sign.hide")
-            : new TranslatableComponent("skipsign.setting.outofrange.sign.show")
+            ? Component.translatable("skipsign.setting.outofrange.sign.hide")
+            : Component.translatable("skipsign.setting.outofrange.sign.show")
         );
     }
 }

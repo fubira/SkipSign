@@ -4,8 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.Screen;
 import mods.skipsign.fabric.SkipSignMod;
 import mods.skipsign.fabric.client.gui.widget.FrameDropOffModeButton;
@@ -16,7 +15,7 @@ import mods.skipsign.fabric.client.gui.widget.ViewRangeSlider;
 
 public class GuiConfigScreen extends Screen
 {
-    public GuiConfigScreen(TextComponent titleIn){
+    public GuiConfigScreen(Component titleIn){
         super(titleIn);
     }
 
@@ -90,11 +89,12 @@ public class GuiConfigScreen extends Screen
 
         renderBackground(matrixStack);
 
-        drawString(matrixStack, font, new TranslatableComponent("skipsign.setting.title")             , left, top          , 0xffffff);
-        drawString(matrixStack, font, new TranslatableComponent("skipsign.setting.description.sign")  , left, top +  50 + 5, 0xffffff);
-        drawString(matrixStack, font, new TranslatableComponent("skipsign.setting.description.frame") , left, top +  75 + 5, 0xffffff);
-        drawString(matrixStack, font, new TranslatableComponent("skipsign.setting.description.chest") , left, top + 100 + 5, 0xffffff);
-        drawString(matrixStack, font, new TranslatableComponent("skipsign.setting.description.skull") , left, top + 125 + 5, 0xffffff);
+        
+        drawString(matrixStack, font, Component.translatable("skipsign.setting.title")             , left, top          , 0xffffff);
+        drawString(matrixStack, font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, 0xffffff);
+        drawString(matrixStack, font, Component.translatable("skipsign.setting.description.frame") , left, top +  75 + 5, 0xffffff);
+        drawString(matrixStack, font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, 0xffffff);
+        drawString(matrixStack, font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, 0xffffff);
         
         super.render(matrixStack, mouseX, mouseY, partialTicks);
     }

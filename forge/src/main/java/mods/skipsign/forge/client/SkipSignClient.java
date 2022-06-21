@@ -4,7 +4,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -69,7 +69,7 @@ public final class SkipSignClient {
         is_zooming = keyMappingZoom.isDown();
 
         if (!key_down && keyMappingOption.consumeClick()) {
-            client.setScreen(new GuiConfigScreen(new TextComponent("SkipSign")));
+            client.setScreen(new GuiConfigScreen(Component.Serializer.fromJson("{\"text\":\"SkipSign\"}")));
             key_down = true;
         } else if (key_down && !keyMappingOption.consumeClick()) {
             key_down = false;
