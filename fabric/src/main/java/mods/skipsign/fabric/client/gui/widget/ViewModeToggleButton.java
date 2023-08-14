@@ -8,7 +8,7 @@ public class ViewModeToggleButton extends Button {
     private ViewMode value;
 
     public ViewModeToggleButton(int x, int y, int width, int height, ViewMode defaultValue) {
-        super(x, y, width, height, Component.empty(), button -> {});
+        super(x, y, width, height, Component.empty(), button -> {}, Button.DEFAULT_NARRATION);
         this.value = defaultValue;
         update();
     }

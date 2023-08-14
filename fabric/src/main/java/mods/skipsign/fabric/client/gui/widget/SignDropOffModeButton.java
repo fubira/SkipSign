@@ -7,7 +7,7 @@ public class SignDropOffModeButton extends Button {
     private Boolean value;
 
     public SignDropOffModeButton(int x, int y, int width, int height, Boolean defaultValue) {
-        super(x, y, width, height, Component.empty(), button -> {});
+        super(x, y, width, height, Component.empty(), button -> {}, Button.DEFAULT_NARRATION);
         this.value = defaultValue;
         update();
     }

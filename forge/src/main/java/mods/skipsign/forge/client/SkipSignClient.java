@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,9 +44,6 @@ public final class SkipSignClient {
     public void onClientSetup(FMLClientSetupEvent event) {
         SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
  
-        ClientRegistry.registerKeyBinding(keyMappingOption);
-        ClientRegistry.registerKeyBinding(keyMappingZoom);
-
         BlockEntityRenderers.register(BlockEntityType.SIGN, SignRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
@@ -54,6 +51,13 @@ public final class SkipSignClient {
 
         EntityRenderers.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
     }
+
+    @OnlyIn(Dist.CLIENT)
+    public void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(keyMappingOption);
+        event.register(keyMappingZoom);
+    }
+
 
     public boolean isZooming() {
         Minecraft client = Minecraft.getInstance();

@@ -9,11 +9,11 @@ pluginManagement {
     }
 
     plugins {
-        id("fabric-loom").version("${loom_version}")
+        id "fabric-loom" version "${loom_version}"
+        id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
     }
 }
 
-enableFeaturePreview("VERSION_CATALOGS")
 rootProject.name = "SkipSign"
 
 include("common")

@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
-import net.minecraft.network.chat.Component;
+// import net.minecraft.network.chat.Component;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -16,30 +16,6 @@ public class SignRendererEx extends SignRenderer
     public SignRendererEx(BlockEntityRendererProvider.Context context)
     {
         super(context);
-    }
-
-    public Component [] getSignText(SignBlockEntity entity)
-    {
-        Component [] tempSignText = new Component[4];
-
-        for (int i = 0; i < 4; i++) {
-            tempSignText[i] = entity.getMessage(i, true).copy();
-        }
-        return tempSignText;
-    }
-
-    public void setSignMessage(SignBlockEntity entity, Component [] text)
-    {
-        for (int i = 0; i < 4; i++) {
-            entity.setMessage(i, text[i].copy());
-        }
-    }
-
-    public void emptySignMessage(SignBlockEntity entity)
-    {
-        for (int i = 0; i < 4; i++) {
-            entity.setMessage(i, Component.empty());
-        }
     }
 
     @Override

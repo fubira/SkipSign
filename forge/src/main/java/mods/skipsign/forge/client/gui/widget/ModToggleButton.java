@@ -8,7 +8,7 @@ public class ModToggleButton extends Button {
   private boolean value;
 
   public ModToggleButton(int x, int y, int width, int height, boolean defaultValue) {
-      super(x, y, width, height, Component.empty(), button -> {});
+      super(x, y, width, height, Component.empty(), button -> {}, Button.DEFAULT_NARRATION);
       this.value = defaultValue;
       update();
   }
