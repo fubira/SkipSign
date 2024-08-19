@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
@@ -22,6 +21,7 @@ import org.lwjgl.glfw.GLFW;
 import mods.skipsign.neoforge.SkipSignMod;
 import mods.skipsign.neoforge.client.gui.GuiConfigScreen;
 import mods.skipsign.neoforge.client.renderer.ChestRendererEx;
+import mods.skipsign.neoforge.client.renderer.HangingSignRendererEx;
 import mods.skipsign.neoforge.client.renderer.ItemFrameRendererEx;
 import mods.skipsign.neoforge.client.renderer.SignRendererEx;
 import mods.skipsign.neoforge.client.renderer.SkullRendererEx;
@@ -38,7 +38,7 @@ public final class SkipSignClient {
         modBus.addListener(this::onClientSetup);
         modBus.addListener(this::onRegisterKeyMappings);
 
-        NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, ClientTickEvent.class, this::onTick);
+        NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, ClientTickEvent.Pre.class, this::onTick);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -46,6 +46,7 @@ public final class SkipSignClient {
         SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
  
         BlockEntityRenderers.register(BlockEntityType.SIGN, SignRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.HANGING_SIGN, HangingSignRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.SKULL, SkullRendererEx::new);
@@ -65,7 +66,7 @@ public final class SkipSignClient {
         return is_zooming || client.player.isScoping();
    }
 
-   public void onTick(ClientTickEvent event) {
+   public void onTick(ClientTickEvent.Pre event) {
         Minecraft client = Minecraft.getInstance();
         if (client.screen != null) {
             return;

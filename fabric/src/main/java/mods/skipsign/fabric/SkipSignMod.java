@@ -15,12 +15,6 @@ public class SkipSignMod implements ClientModInitializer
 
     @Override
     public void onInitializeClient() {
-        logger.info("info log!!!");
-        logger.debug("debug log!!!");
-        logger.warn("warn log!!!");
-        logger.error("error log!!!");
-        logger.fatal("fatal log!!!");
-
         config = FabricConfig.register();
         client = new SkipSignClient();
     }

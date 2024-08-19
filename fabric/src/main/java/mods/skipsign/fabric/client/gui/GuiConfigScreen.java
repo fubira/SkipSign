@@ -82,6 +82,8 @@ public class GuiConfigScreen extends Screen
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
     {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
 
@@ -96,6 +98,5 @@ public class GuiConfigScreen extends Screen
         guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, 0xffffff);
         guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, 0xffffff);
         
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 }

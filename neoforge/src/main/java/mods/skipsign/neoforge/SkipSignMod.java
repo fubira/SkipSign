@@ -19,7 +19,7 @@ public class SkipSignMod
     public static Logger logger = LogManager.getLogger();
 
     public SkipSignMod(IEventBus modBus, ModContainer modContainer) {
-        modContainer.registerConfig(ModConfig.Type.CLIENT, NeoForgeConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, NeoForgeConfig.SPEC);
 
         client = new SkipSignClient(modBus);
     }

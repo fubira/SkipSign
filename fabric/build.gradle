@@ -37,13 +37,13 @@ loom {
     }
 
     runs {
-        create("flightViewReloadedClient") {
+        create("skipSignClient") {
             client()
 
             property("fabric.log.level", "debug")
             vmArg("-XX:+ShowCodeDetailsInExceptionMessages")
         }
-        create("flightViewReloadedServer") {
+        create("skipSignServer") {
             server()
 
             property("fabric.log.level", "debug")
