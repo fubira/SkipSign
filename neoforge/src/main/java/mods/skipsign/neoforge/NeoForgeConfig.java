@@ -45,4 +45,5 @@ public class NeoForgeConfig {
         builder.pop();
         SPEC = builder.build();
     }
+
 }

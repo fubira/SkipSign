@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-
+import net.neoforged.neoforge.common.NeoForge;
 import mods.skipsign.neoforge.NeoForgeConfig;
 import mods.skipsign.neoforge.client.gui.widget.FrameDropOffModeButton;
 import mods.skipsign.neoforge.client.gui.widget.ModToggleButton;
@@ -78,6 +78,8 @@ public class GuiConfigScreen extends Screen
 
         NeoForgeConfig.dropOffFrameBoard.set(btnOutofRangeFrame.getValue());
         NeoForgeConfig.dropOffSignBoard.set(btnOutofRangeSign.getValue());
+
+        NeoForgeConfig.SPEC.save();
         super.onClose();
     }
 
