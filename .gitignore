@@ -39,6 +39,7 @@ CHANGELOG
 LICENSE.txt
 *.bat
 *.sh
+.eclipse/
 
 # Misc
 *.rej

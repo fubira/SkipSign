@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -14,6 +15,7 @@ import org.lwjgl.glfw.GLFW;
 
 import mods.skipsign.fabric.client.gui.GuiConfigScreen;
 import mods.skipsign.fabric.client.renderer.ChestRendererEx;
+import mods.skipsign.fabric.client.renderer.HangingSignRendererEx;
 import mods.skipsign.fabric.client.renderer.ItemFrameRendererEx;
 import mods.skipsign.fabric.client.renderer.SignRendererEx;
 import mods.skipsign.fabric.client.renderer.SkullRendererEx;
@@ -32,10 +34,11 @@ public final class SkipSignClient {
     public SkipSignClient() {
         ClientTickEvents.END_CLIENT_TICK.register(this::onTick);
 
-        BlockEntityRendererRegistry.register(BlockEntityType.SIGN, SignRendererEx::new);
-        BlockEntityRendererRegistry.register(BlockEntityType.CHEST, ChestRendererEx::new);
-        BlockEntityRendererRegistry.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
-        BlockEntityRendererRegistry.register(BlockEntityType.SKULL, SkullRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.SIGN, SignRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.HANGING_SIGN, HangingSignRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.CHEST, ChestRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.SKULL, SkullRendererEx::new);
 
         EntityRendererRegistry.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
     }
@@ -53,7 +56,7 @@ public final class SkipSignClient {
         is_zooming = keyMappingZoom.isDown();
 
         if (!key_down && keyMappingOption.consumeClick()) {
-            client.setScreen(new GuiConfigScreen(Component.Serializer.fromJson("{\"text\":\"SkipSign\"}")));
+            client.setScreen(new GuiConfigScreen(Component.Serializer.fromJson("{\"text\":\"SkipSign\"}", client.player.registryAccess())));
             key_down = true;
         } else if (key_down && !keyMappingOption.consumeClick()) {
             key_down = false;
