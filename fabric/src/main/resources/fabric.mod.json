@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "${modId}",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "${modName}",
+  "name": "${mod_name}",
   "description": "SkipSign is optimization mod that reduces the load of multibyte character fonts by limiting the drawing of Sign",
   
   "authors": [
-    "${author}"
+    "${authors}"
   ],
   "contact": {
     "homepage": "https://github.com/fubira/SkipSign/",
@@ -16,14 +16,14 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "mods.skipsign.fabric.SkipSignMod"
+      "${mod_group_id}.fabric.SkipSignMod"
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14.22",
+    "fabricloader": ">=0.15.1",
     "fabric": "*",
     "cloth-config2": "*",
-    "minecraft": "1.20.x",
-    "java": ">=17"
+    "minecraft": "1.21.x",
+    "java": ">=21"
   }
 }

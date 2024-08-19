@@ -88,8 +88,7 @@ public class GuiConfigScreen extends Screen
         int left = (this.width - 380) / 2;
         int top = (this.height - 200) / 2;
 
-        renderBackground(guiGraphics);
-
+        // renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         
         guiGraphics.drawString(font, Component.translatable("skipsign.setting.title")             , left, top          , 0xffffff);
         guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, 0xffffff);
