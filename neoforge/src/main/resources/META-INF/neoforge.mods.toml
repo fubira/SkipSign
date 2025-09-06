@@ -1,17 +1,17 @@
 modLoader = "javafml"
-loaderVersion = "${fml_loader_version_range}"
+loaderVersion = "${modloader_version_range}"
 
-author = "${authors}"
-license = "Copyright (c) ${authors}"
+author = "${mod_authors}"
+license = "${mod_license}, Copyright (c) ${mod_vendor}"
 issueTrackerURL="https://github.com/fubira/SkipSign/issues"
 
 [[mods]]
 modId = "${mod_id}"
-version = "${version}"
+version = "${mod_version}"
 displayName = "${mod_name}"
 displayURL = "https://github.com/fubira/SkipSign/"
-credits = "${vendor}"
-author = "${authors}"
+credits = "${mod_vendor}"
+author = "${mod_authors}"
 
 description='''
 SkipSign is optimization mod that reduces the load of multibyte character fonts by limiting the drawing of Sign.
@@ -29,7 +29,7 @@ And you can also limit the drawing of ItemFrame, Chest, Head, etc.
 [[dependencies.skipsign]]
     modId="neoforge"
     mandatory=true
-    versionRange="${neoforge_version_range}"
+    versionRange="${neo_version_range}"
     ordering="NONE"
     side="BOTH"
 

@@ -51,6 +51,7 @@ public final class SkipSignClient {
         BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.SKULL, SkullRendererEx::new);
 
+        EntityRenderers.register(EntityType.GLOW_ITEM_FRAME, ItemFrameRendererEx::new);
         EntityRenderers.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
     }
 
@@ -75,7 +76,7 @@ public final class SkipSignClient {
         is_zooming = keyMappingZoom.isDown();
 
         if (!key_down && keyMappingOption.consumeClick()) {
-            client.setScreen(new GuiConfigScreen(Component.Serializer.fromJson("{\"text\":\"SkipSign\"}", client.player.registryAccess())));
+            client.setScreen(new GuiConfigScreen(Component.literal("SkipSign")));
             key_down = true;
         } else if (key_down && !keyMappingOption.consumeClick()) {
             key_down = false;

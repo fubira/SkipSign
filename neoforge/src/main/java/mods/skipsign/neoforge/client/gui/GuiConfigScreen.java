@@ -4,11 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 import net.minecraft.client.gui.screens.Screen;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.NeoForge;
 import mods.skipsign.neoforge.NeoForgeConfig;
 import mods.skipsign.neoforge.client.gui.widget.FrameDropOffModeButton;
 import mods.skipsign.neoforge.client.gui.widget.ModToggleButton;
@@ -96,10 +96,10 @@ public class GuiConfigScreen extends Screen
 
         // renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.title")             , left, top          , 0xffffff);
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, 0xffffff);
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.frame") , left, top +  75 + 5, 0xffffff);
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, 0xffffff);
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, 0xffffff);
+        guiGraphics.drawString(font, Component.translatable("skipsign.setting.title")             , left, top          , ARGB.color(224, 224, 224));
+        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.frame") , left, top +  75 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, ARGB.color(224, 224, 224));
     }
 }

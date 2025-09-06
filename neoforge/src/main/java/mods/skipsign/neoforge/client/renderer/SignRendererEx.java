@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -19,10 +20,10 @@ public class SignRendererEx extends SignRenderer
     }
 
     @Override
-    public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn)
+    public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 pos)
     {
         if (!NeoForgeConfig.enableMod.get()) {
-            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
         } else {
             boolean visible = isVisible(entity);
             SignBlockEntity entityForRender = entity;
@@ -33,7 +34,7 @@ public class SignRendererEx extends SignRenderer
             }
 
             if (!NeoForgeConfig.dropOffSignBoard.get() || (NeoForgeConfig.dropOffSignBoard.get() && visible)) {
-                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn);
+                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
             }
         }
     }

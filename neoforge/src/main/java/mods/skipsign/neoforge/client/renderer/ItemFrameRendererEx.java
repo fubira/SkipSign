@@ -1,9 +1,10 @@
 package mods.skipsign.neoforge.client.renderer;
 
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.entity.state.ItemFrameRenderState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.decoration.ItemFrame;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -20,30 +21,31 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
     }
 
     @Override
-    public void render(T entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
+    public void render(ItemFrameRenderState renderState, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
     {
         if (!NeoForgeConfig.enableMod.get()) {
-            super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+            super.render(renderState, matrixStackIn, bufferIn, packedLightIn);
         } else {
-            ItemStack frameItemStack = ItemStack.EMPTY;
-            boolean visible = isVisible(entity);
-    
+            ItemFrameRenderState targetRenderState = renderState;
+            boolean visible = isVisible(renderState);
+
             if (!visible) {
-                frameItemStack = entity.getItem();
-                entity.setItem(ItemStack.EMPTY);
+                targetRenderState = new ItemFrameRenderState();
+                targetRenderState.isGlowFrame = renderState.isGlowFrame;
+                targetRenderState.direction = renderState.direction;
+                targetRenderState.rotation = renderState.rotation;
+                targetRenderState.x = renderState.x;
+                targetRenderState.y = renderState.y;
+                targetRenderState.z = renderState.z;
             }
     
             if ((!NeoForgeConfig.dropOffFrameBoard.get()) || (NeoForgeConfig.dropOffFrameBoard.get() && visible)) {
-                super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
-            }
-    
-            if (!frameItemStack.isEmpty()) {
-                entity.setItem(frameItemStack);
+                super.render(targetRenderState, matrixStackIn, bufferIn, packedLightIn);
             }
         }
     }
 
-    public boolean isVisible(ItemFrame entity)
+    public boolean isVisible(EntityRenderState renderState)
     {
         if (NeoForgeConfig.viewModeFrame.get() == ViewMode.FORCE) {
             return true;
@@ -56,7 +58,7 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntity(entity), NeoForgeConfig.viewRangeFrame.get())) {
+        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntityRenderState(renderState), NeoForgeConfig.viewRangeFrame.get())) {
             return true;
         }
 

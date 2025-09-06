@@ -2,7 +2,6 @@ package mods.skipsign.fabric.client;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -40,6 +39,7 @@ public final class SkipSignClient {
         BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.SKULL, SkullRendererEx::new);
 
+        EntityRendererRegistry.register(EntityType.GLOW_ITEM_FRAME, ItemFrameRendererEx::new);
         EntityRendererRegistry.register(EntityType.ITEM_FRAME, ItemFrameRendererEx::new);
     }
 
@@ -56,7 +56,7 @@ public final class SkipSignClient {
         is_zooming = keyMappingZoom.isDown();
 
         if (!key_down && keyMappingOption.consumeClick()) {
-            client.setScreen(new GuiConfigScreen(Component.Serializer.fromJson("{\"text\":\"SkipSign\"}", client.player.registryAccess())));
+            client.setScreen(new GuiConfigScreen(Component.literal("SkipSign")));
             key_down = true;
         } else if (key_down && !keyMappingOption.consumeClick()) {
             key_down = false;
