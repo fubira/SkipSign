@@ -1,9 +1,14 @@
 package mods.skipsign.neoforge.client.renderer;
 
-import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
+import net.minecraft.client.renderer.blockentity.state.StandingSignRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,7 +17,7 @@ import mods.skipsign.neoforge.NeoForgeConfig;
 import mods.skipsign.neoforge.SkipSignMod;
 import mods.skipsign.neoforge.ViewMode;
 
-public class SignRendererEx extends SignRenderer
+public class SignRendererEx extends StandingSignRenderer
 {
     public SignRendererEx(BlockEntityRendererProvider.Context context)
     {
@@ -20,26 +25,31 @@ public class SignRendererEx extends SignRenderer
     }
 
     @Override
-    public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 pos)
+    public void extractRenderState(SignBlockEntity entity, StandingSignRenderState renderState, float partialTicks, Vec3 pos, ModelFeatureRenderer.CrumblingOverlay crumblingOverlay)
     {
-        if (!NeoForgeConfig.enableMod.get()) {
-            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
-        } else {
-            boolean visible = isVisible(entity);
-            SignBlockEntity entityForRender = entity;
+        super.extractRenderState(entity, renderState, partialTicks, pos, crumblingOverlay);
 
-            if (!visible) {
-                // Create empty SignBlockEntity for render
-                entityForRender = new SignBlockEntity(entity.getBlockPos(), entity.getBlockState());
-            }
-
-            if (!NeoForgeConfig.dropOffSignBoard.get() || (NeoForgeConfig.dropOffSignBoard.get() && visible)) {
-                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
-            }
+        if (NeoForgeConfig.enableMod.get() && !isVisible(entity)) {
+            renderState.frontText = new SignText();
+            renderState.backText = new SignText();
         }
     }
 
+    @Override
+    public void submit(StandingSignRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        if (NeoForgeConfig.enableMod.get() && NeoForgeConfig.dropOffSignBoard.get() && !isVisible(renderState.blockPos)) {
+            return;
+        }
+
+        super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);
+    }
+
     public boolean isVisible(SignBlockEntity entity)
+    {
+        return isVisible(entity.getBlockPos());
+    }
+
+    public boolean isVisible(BlockPos pos)
     {
         if (NeoForgeConfig.viewModeSign.get() == ViewMode.FORCE) {
             return true;
@@ -51,11 +61,10 @@ public class SignRendererEx extends SignRenderer
         if (SkipSignMod.client.isZooming()) {
             return true;
         }
-    
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), NeoForgeConfig.viewRangeSign.get())) {
-            return true;
-        }
 
-        return false;
+        return RendererHelper.IsInRangeToRenderDist(
+            RendererHelper.GetDistancePlayerToBlockPos(pos),
+            NeoForgeConfig.viewRangeSign.get()
+        );
     }
 }

@@ -11,9 +11,13 @@ public class RendererHelper
 {
     public static double GetDistancePlayerToBlockEntity(BlockEntity entity)
     {
+        return GetDistancePlayerToBlockPos(entity.getBlockPos());
+    }
+
+    public static double GetDistancePlayerToBlockPos(BlockPos pos)
+    {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
-        BlockPos pos = entity.getBlockPos();
 
         double x = pos.getX();
         double y = pos.getY();

@@ -2,9 +2,11 @@ package mods.skipsign.neoforge.client;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
@@ -30,9 +32,12 @@ import mods.skipsign.neoforge.client.renderer.SkullRendererEx;
 public final class SkipSignClient {
     private boolean key_down = false;
     private boolean is_zooming = false;
+    private static final KeyMapping.Category CATEGORY = new KeyMapping.Category(
+        Identifier.fromNamespaceAndPath("skipsign", "keybinding")
+    );
 
-    public static final KeyMapping keyMappingOption = new KeyMapping("skipsign.keybinding.desc.option", GLFW.GLFW_KEY_F8, "skipsign.keybinding.category");
-    public static final KeyMapping keyMappingZoom = new KeyMapping("skipsign.keybinding.desc.zoom", GLFW.GLFW_KEY_RIGHT_ALT, "skipsign.keybinding.category");
+    public static final KeyMapping keyMappingOption = new KeyMapping("skipsign.keybinding.desc.option", GLFW.GLFW_KEY_F8, CATEGORY);
+    public static final KeyMapping keyMappingZoom = new KeyMapping("skipsign.keybinding.desc.zoom", GLFW.GLFW_KEY_RIGHT_ALT, CATEGORY);
 
     public SkipSignClient(IEventBus modBus){
         modBus.addListener(this::onClientSetup);
@@ -46,7 +51,7 @@ public final class SkipSignClient {
         SkipSignMod.logger.info("ClientEventHandler::FMLClientSetupEvent");
  
         BlockEntityRenderers.register(BlockEntityType.SIGN, SignRendererEx::new);
-        BlockEntityRenderers.register(BlockEntityType.HANGING_SIGN, HangingSignRendererEx::new);
+        BlockEntityRenderers.register(BlockEntityType.HANGING_SIGN, context -> (BlockEntityRenderer) new HangingSignRendererEx(context));
         BlockEntityRenderers.register(BlockEntityType.CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.TRAPPED_CHEST, ChestRendererEx::new);
         BlockEntityRenderers.register(BlockEntityType.SKULL, SkullRendererEx::new);

@@ -1,5 +1,6 @@
 {
-    "skipsign.keybinding.category.skipsign": "SkipSign",
+    "skipsign.keybinding.category": "SkipSign",
+    "key.categories.skipsign.keybinding": "SkipSign",
     "skipsign.keybinding.desc.option": "設定画面を開く",
     "skipsign.keybinding.desc.zoom": "一時無効",
 
@@ -22,6 +23,6 @@
     "skipsign.setting.mod.isenabled": "SkipSign有効",
     "skipsign.setting.mod.isdisabled": "SkipSign無効",
 
-    "setting.slider.range.prefix": "描画範囲:",
-    "setting.slider.range.postfix": "m"
+    "skipsign.setting.slider.range.prefix": "描画範囲:",
+    "skipsign.setting.slider.range.postfix": "m"
 }

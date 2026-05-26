@@ -1,7 +1,9 @@
 package mods.skipsign.fabric.client.gui.widget;
 
 import mods.skipsign.fabric.ViewMode;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.Component;
 
 public class ViewModeToggleButton extends Button {
@@ -29,9 +31,16 @@ public class ViewModeToggleButton extends Button {
         return next;
     }  
 
-    public void onPress() {
+    @Override
+    public void onPress(InputWithModifiers input) {
         this.value = toggleViewMode(this.value);
         update();
+    }
+
+    @Override
+    protected void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        extractDefaultSprite(guiGraphics);
+        extractDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.TOOLTIP_AND_CURSOR));
     }
 
     public ViewMode getValue() {

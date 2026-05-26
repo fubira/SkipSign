@@ -1,10 +1,11 @@
 package mods.skipsign.neoforge.client.renderer;
 
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.ItemFrameRenderState;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.entity.decoration.ItemFrame;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,28 +22,24 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
     }
 
     @Override
-    public void render(ItemFrameRenderState renderState, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn)
+    public void extractRenderState(T entity, ItemFrameRenderState renderState, float partialTicks)
     {
-        if (!NeoForgeConfig.enableMod.get()) {
-            super.render(renderState, matrixStackIn, bufferIn, packedLightIn);
-        } else {
-            ItemFrameRenderState targetRenderState = renderState;
-            boolean visible = isVisible(renderState);
+        super.extractRenderState(entity, renderState, partialTicks);
 
-            if (!visible) {
-                targetRenderState = new ItemFrameRenderState();
-                targetRenderState.isGlowFrame = renderState.isGlowFrame;
-                targetRenderState.direction = renderState.direction;
-                targetRenderState.rotation = renderState.rotation;
-                targetRenderState.x = renderState.x;
-                targetRenderState.y = renderState.y;
-                targetRenderState.z = renderState.z;
-            }
-    
-            if ((!NeoForgeConfig.dropOffFrameBoard.get()) || (NeoForgeConfig.dropOffFrameBoard.get() && visible)) {
-                super.render(targetRenderState, matrixStackIn, bufferIn, packedLightIn);
-            }
+        if (NeoForgeConfig.enableMod.get() && !isVisible(renderState)) {
+            renderState.item.clear();
+            renderState.mapId = null;
+            renderState.mapRenderState.texture = null;
         }
+    }
+
+    @Override
+    public void submit(ItemFrameRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        if (NeoForgeConfig.enableMod.get() && NeoForgeConfig.dropOffFrameBoard.get() && !isVisible(renderState)) {
+            return;
+        }
+
+        super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);
     }
 
     public boolean isVisible(EntityRenderState renderState)
@@ -58,10 +55,9 @@ public class ItemFrameRendererEx<T extends ItemFrame> extends ItemFrameRenderer<
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToEntityRenderState(renderState), NeoForgeConfig.viewRangeFrame.get())) {
-            return true;
-        }
-
-        return false;
+        return RendererHelper.IsInRangeToRenderDist(
+            RendererHelper.GetDistancePlayerToEntityRenderState(renderState),
+            NeoForgeConfig.viewRangeFrame.get()
+        );
     }
 }

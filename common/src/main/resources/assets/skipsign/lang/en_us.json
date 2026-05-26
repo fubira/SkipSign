@@ -1,5 +1,6 @@
 {
     "skipsign.keybinding.category": "SkipSign",
+    "key.categories.skipsign.keybinding": "SkipSign",
     "skipsign.keybinding.desc.option": "Open setting menu",
     "skipsign.keybinding.desc.zoom": "Temporarily disable",
 

@@ -1,13 +1,14 @@
 package mods.skipsign.neoforge.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
+import net.minecraft.client.renderer.blockentity.state.ChestRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
-import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -23,13 +24,19 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
     }
 
     @Override
-    public void render(T entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 pos) {
-        if (!NeoForgeConfig.enableMod.get() || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity)) {
-            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
+    public void submit(ChestRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        Minecraft client = Minecraft.getInstance();
+        if (!NeoForgeConfig.enableMod.get() || renderState.blockPos == BlockPos.ZERO || client.player == null || isVisible(renderState.blockPos)) {
+            super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);
         }
     }
 
     public boolean isVisible(T entity)
+    {
+        return isVisible(entity.getBlockPos());
+    }
+
+    public boolean isVisible(BlockPos pos)
     {
         if (NeoForgeConfig.viewModeChest.get() == ViewMode.FORCE) {
             return true;
@@ -42,10 +49,9 @@ public class ChestRendererEx<T extends BlockEntity & LidBlockEntity> extends Che
             return true;
         }
 
-        if (RendererHelper.IsInRangeToRenderDist(RendererHelper.GetDistancePlayerToBlockEntity(entity), NeoForgeConfig.viewRangeChest.get())) {
-            return true;
-        }
-
-        return false;
+        return RendererHelper.IsInRangeToRenderDist(
+            RendererHelper.GetDistancePlayerToBlockPos(pos),
+            NeoForgeConfig.viewRangeChest.get()
+        );
     }
 }

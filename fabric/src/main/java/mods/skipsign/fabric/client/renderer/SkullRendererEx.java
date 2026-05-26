@@ -1,12 +1,13 @@
 package mods.skipsign.fabric.client.renderer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.blockentity.state.SkullBlockRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
-import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -20,11 +21,11 @@ public class SkullRendererEx extends SkullBlockRenderer
     }
 
     @Override
-    public void render(SkullBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 pos)
+    public void submit(SkullBlockRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState)
     {
-        if (!SkipSignMod.config.enableMod || entity.getBlockPos() == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(entity))
+        if (!SkipSignMod.config.enableMod || renderState.blockPos == BlockPos.ZERO || Minecraft.getInstance().player == null || isVisible(renderState.blockPos))
         {
-            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
+            super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);
         }
     }
 
@@ -46,5 +47,24 @@ public class SkullRendererEx extends SkullBlockRenderer
         }
 
         return false;
+    }
+
+    public boolean isVisible(BlockPos pos)
+    {
+        if (SkipSignMod.config.viewModeSkull == ViewMode.FORCE) {
+            return true;
+        }
+        if (SkipSignMod.config.viewModeSkull == ViewMode.NONE) {
+            return false;
+        }
+
+        if (SkipSignMod.client.isZooming()) {
+            return true;
+        }
+
+        return RendererHelper.IsInRangeToRenderDist(
+            RendererHelper.GetDistancePlayerToBlockPos(pos),
+            SkipSignMod.config.viewRangeSkull
+        );
     }
 }

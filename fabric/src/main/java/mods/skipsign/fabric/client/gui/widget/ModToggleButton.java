@@ -1,7 +1,9 @@
 package mods.skipsign.fabric.client.gui.widget;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.Component;
 
 public class ModToggleButton extends Button {
@@ -14,10 +16,16 @@ public class ModToggleButton extends Button {
   }
 
   @Override
-  public void onPress() {
+  public void onPress(InputWithModifiers input) {
     this.value = !this.value;
     update();
-    super.onPress();
+    super.onPress(input);
+  }
+
+  @Override
+  protected void extractContents(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    extractDefaultSprite(guiGraphics);
+    extractDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.TOOLTIP_AND_CURSOR));
   }
 
   public boolean getValue() {

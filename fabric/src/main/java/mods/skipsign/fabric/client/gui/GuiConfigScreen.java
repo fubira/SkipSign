@@ -4,7 +4,7 @@ package mods.skipsign.fabric.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.ARGB;
 import net.minecraft.client.gui.screens.Screen;
@@ -81,9 +81,9 @@ public class GuiConfigScreen extends Screen
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks)
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks)
     {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
 
         Minecraft mc = Minecraft.getInstance();
         Font font = mc.font;
@@ -93,11 +93,11 @@ public class GuiConfigScreen extends Screen
 
         // renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.title")             , left, top          , ARGB.color(224, 224, 224));
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, ARGB.color(224, 224, 224));
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.frame") , left, top +  75 + 5, ARGB.color(224, 224, 224));
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, ARGB.color(224, 224, 224));
-        guiGraphics.drawString(font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.text(font, Component.translatable("skipsign.setting.title")             , left, top          , ARGB.color(224, 224, 224));
+        guiGraphics.text(font, Component.translatable("skipsign.setting.description.sign")  , left, top +  50 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.text(font, Component.translatable("skipsign.setting.description.frame") , left, top +  75 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.text(font, Component.translatable("skipsign.setting.description.chest") , left, top + 100 + 5, ARGB.color(224, 224, 224));
+        guiGraphics.text(font, Component.translatable("skipsign.setting.description.skull") , left, top + 125 + 5, ARGB.color(224, 224, 224));
 
     }
 }

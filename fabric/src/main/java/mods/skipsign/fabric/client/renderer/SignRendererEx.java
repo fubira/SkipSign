@@ -1,10 +1,14 @@
 package mods.skipsign.fabric.client.renderer;
 
-import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
+import net.minecraft.client.renderer.blockentity.state.StandingSignRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
-// import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.phys.Vec3;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,7 +16,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mods.skipsign.fabric.SkipSignMod;
 import mods.skipsign.fabric.ViewMode;
 
-public class SignRendererEx extends SignRenderer
+public class SignRendererEx extends StandingSignRenderer
 {
     public SignRendererEx(BlockEntityRendererProvider.Context context)
     {
@@ -20,23 +24,23 @@ public class SignRendererEx extends SignRenderer
     }
 
     @Override
-    public void render(SignBlockEntity entity, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn, Vec3 pos)
+    public void extractRenderState(SignBlockEntity entity, StandingSignRenderState renderState, float partialTicks, Vec3 pos, ModelFeatureRenderer.CrumblingOverlay crumblingOverlay)
     {
-        if (!SkipSignMod.config.enableMod) {
-            super.render(entity, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
-        } else {
-            boolean visible = isVisible(entity);
-            SignBlockEntity entityForRender = entity;
+        super.extractRenderState(entity, renderState, partialTicks, pos, crumblingOverlay);
 
-            if (!visible) {
-                // Create empty SignBlockEntity for render
-                entityForRender = new SignBlockEntity(entity.getBlockPos(), entity.getBlockState());
-            }
-
-            if (!SkipSignMod.config.dropOffSignBoard || (SkipSignMod.config.dropOffSignBoard && visible)) {
-                super.render(entityForRender, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, pos);
-            }
+        if (SkipSignMod.config.enableMod && !isVisible(entity)) {
+            renderState.frontText = new SignText();
+            renderState.backText = new SignText();
         }
+    }
+
+    @Override
+    public void submit(StandingSignRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        if (SkipSignMod.config.enableMod && SkipSignMod.config.dropOffSignBoard && !isVisible(renderState.blockPos)) {
+            return;
+        }
+
+        super.submit(renderState, poseStack, submitNodeCollector, cameraRenderState);
     }
 
     public boolean isVisible(SignBlockEntity entity)
@@ -57,5 +61,24 @@ public class SignRendererEx extends SignRenderer
         }
 
         return false;
+    }
+
+    public boolean isVisible(BlockPos pos)
+    {
+        if (SkipSignMod.config.viewModeSign == ViewMode.FORCE) {
+            return true;
+        }
+        if (SkipSignMod.config.viewModeSign == ViewMode.NONE) {
+            return false;
+        }
+
+        if (SkipSignMod.client.isZooming()) {
+            return true;
+        }
+
+        return RendererHelper.IsInRangeToRenderDist(
+            RendererHelper.GetDistancePlayerToBlockPos(pos),
+            SkipSignMod.config.viewRangeSign
+        );
     }
 }
